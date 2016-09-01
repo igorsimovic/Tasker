@@ -1,0 +1,42 @@
+{
+  "version": 2,
+  "exports": {
+    "DataLayer/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6.1",
+      "compile": {
+        "bin/Debug/DataLayer.dll": {}
+      },
+      "runtime": {
+        "../packages/MongoDB.Bson.2.2.4/lib/net45/MongoDB.Bson.dll": {},
+        "../packages/MongoDB.Driver.2.2.4/lib/net45/MongoDB.Driver.dll": {},
+        "../packages/MongoDB.Driver.Core.2.2.4/lib/net45/MongoDB.Driver.Core.dll": {},
+        "bin/Debug/DataLayer.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/DataLayer.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    },
+    "DomainModel/1.0.0": {
+      "type": "project",
+      "framework": ".NETFramework,Version=v4.6.1",
+      "compile": {
+        "bin/Debug/DomainModel.dll": {}
+      },
+      "runtime": {
+        "bin/Debug/DomainModel.dll": {}
+      },
+      "contentFiles": {
+        "bin/Debug/DomainModel.pdb": {
+          "buildAction": "None",
+          "codeLanguage": "any",
+          "copyToOutput": true
+        }
+      }
+    }
+  }
+}

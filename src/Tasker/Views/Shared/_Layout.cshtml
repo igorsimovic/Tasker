@@ -54,9 +54,9 @@
         <script src="~/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
         <script src="~/js/config.js"></script>
         <script src="~/js/app.js"></script>
-        <script asp-src-include="~/js/modules/*.js"></script>
-        <script asp-src-include="~/js/modules/**/*.js"></script>
-        <script asp-src-include="~/js/modules/**/**/*.js"></script>
+        <script src="~/js/consts.js"></script>
+        <script asp-src-include="~/js/**/**/**/*.js"
+                asp-src-exclude="~/js/*.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment names="Staging,Production">

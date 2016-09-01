@@ -16,8 +16,8 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpProvider',
   function ($httpProvider) {
-      $httpProvider.interceptors.push('AcceptLanguageHeaderInjector');
-      $httpProvider.interceptors.push('HttpErrorResponseInterceptor');
+      //$httpProvider.interceptors.push('AcceptLanguageHeaderInjector');
+      //$httpProvider.interceptors.push('HttpErrorResponseInterceptor');
   }
 ]);
 
@@ -39,7 +39,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpPro
 // Redirect to home view when route not found
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRouterProvider',
   function ($urlRouterProvider) {
-      $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/boards');
   }
 ]);
 

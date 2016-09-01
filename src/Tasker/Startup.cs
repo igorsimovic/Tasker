@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using Tasker.Data;
 using Tasker.Models;
 using Tasker.Services;
+using DomainModel.Repositories;
+using DataLayer.Repositories;
+using DataLayer;
 
 namespace Tasker
 {
@@ -52,6 +55,8 @@ namespace Tasker
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddSingleton<IBoardRepository, BoardRepository>();
+            services.AddSingleton<MongoDBAccess, MongoDBAccess>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
