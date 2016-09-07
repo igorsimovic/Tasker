@@ -28,7 +28,10 @@ namespace DataLayer.Repositories
         public BoardDTO GetById(string id)
         {
             BoardModel board = db_.GetBoardById(id);
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.BoardStuff);
+            IEnumerable<ListDTO> lists = db_.GetListByBoardId(id)
+               .Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description));
+
+            return new BoardDTO(board.Id.ToString(), board.BoardName, board.BoardStuff, lists);
         }
     }
 }

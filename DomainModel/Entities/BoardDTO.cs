@@ -12,12 +12,21 @@ namespace DomainModel.Entities
         public string Id { get; set; }
         public string BoardName { get; set; }
         public string BoardStuff { get; set; }
+        public IEnumerable<ListDTO> Lists { get; private set; }
 
         public BoardDTO(string id, string boardName, string boardStuff)
         {
             this.Id = id;
             this.BoardName = boardName;
             this.BoardStuff = boardStuff;
+        }
+
+        public BoardDTO(string id, string boardName, string boardStuff, IEnumerable<ListDTO> lists)
+        {
+            this.Id = id;
+            this.BoardName = boardName;
+            this.BoardStuff = boardStuff;
+            this.Lists = lists;
         }
 
     }

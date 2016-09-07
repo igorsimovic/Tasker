@@ -13,7 +13,6 @@ namespace Tasker.Controllers.API
     [Route("api/v1/boards")]
     public class BoardController : Controller
     {
-
         private readonly IBoardRepository board_repo_;
 
         public BoardController(IBoardRepository board_repo)
@@ -21,14 +20,14 @@ namespace Tasker.Controllers.API
             board_repo_ = board_repo;
         }
 
-        // GET: api/values
+        // GET: api/boards
         [HttpGet("")]
         public IEnumerable<BoardDTO> Get()
         {
             return board_repo_.GetAll();
         }
 
-        // GET api/values/5
+        // GET api/boards/57cf0a9636fc06fa4628c3c5
         [HttpGet("{id}")]
         public BoardDTO Get(string id)
         {

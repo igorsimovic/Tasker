@@ -40,8 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\ListDTO.cs" />
     <Compile Include="Entities\BoardDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IListRepository.cs" />
     <Compile Include="Repositories\IBoardRepository.cs" />
   </ItemGroup>
   <ItemGroup />

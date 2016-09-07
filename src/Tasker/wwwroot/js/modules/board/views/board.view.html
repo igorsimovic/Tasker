@@ -1,1 +1,5 @@
-﻿<h1>This is board: {{vm.board}}</h1>
+﻿<h1>Welcome to: {{vm.board.boardName}}</h1>
+
+<ul>
+    <li ng-repeat="list in vm.board.lists">{{list.name}}</li>
+</ul>

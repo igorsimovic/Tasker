@@ -37,5 +37,16 @@ namespace DataLayer
 
             return result;
         }
+
+        public IEnumerable<ListModel> GetListByBoardId(string boardId)
+        {
+            var board = this.GetBoardById(boardId);
+
+            var filter = Builders<ListModel>.Filter.In("_id", board.Lists);
+            var result = db_.GetCollection<ListModel>("Lists").Find(filter).ToEnumerable<ListModel>();
+
+            return result;
+        }
+
     }
 }
