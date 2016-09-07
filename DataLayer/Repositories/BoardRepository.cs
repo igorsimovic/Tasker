@@ -31,7 +31,7 @@ namespace DataLayer.Repositories
             IEnumerable<ListDTO> lists = db_.GetListByBoardId(id)
                .Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description));
 
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.BoardStuff, lists);
+            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, lists);
         }
     }
 }
