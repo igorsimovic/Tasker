@@ -8,15 +8,17 @@ namespace DomainModel.Entities
 {
     public class BoardDTO
     {
+
         public string Id { get; set; }
         public string BoardName { get; set; }
         public string BoardStuff { get; set; }
 
-        public BoardDTO(string id, string bn, string bf)
+        public BoardDTO(string id, string boardName, string boardStuff)
         {
             this.Id = id;
-            this.BoardName = bn;
-            this.BoardStuff = bf;
+            this.BoardName = boardName;
+            this.BoardStuff = boardStuff;
         }
+
     }
 }

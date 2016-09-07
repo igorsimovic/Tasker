@@ -30,9 +30,9 @@ namespace Tasker.Controllers.API
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public BoardDTO Get(string id)
         {
-            return "value";
+            return board_repo_.GetById(id);
         }
 
         // POST api/values

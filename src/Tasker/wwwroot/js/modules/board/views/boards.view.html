@@ -1,0 +1,4 @@
+﻿<h1>{{vm.title}}</h1>
+<div ng-repeat="board in vm.boards">
+    <a ui-sref="board({id: board.id})">{{board.boardName}}</a>
+</div>
