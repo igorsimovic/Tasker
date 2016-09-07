@@ -22,13 +22,13 @@ namespace DataLayer.Repositories
         public IEnumerable<BoardDTO> GetAll()
         {
            return db_.GetAllBoards()
-                .Select(b=> new BoardDTO(b.Id.ToString(),b.BoardName,b.BoardStuff));
+                .Select(b=> new BoardDTO(b.Id.ToString(),b.BoardName,b.Starred));
         }
 
         public BoardDTO GetById(string id)
         {
             BoardModel board = db_.GetBoardById(id);
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.BoardStuff);
+            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred);
         }
     }
 }

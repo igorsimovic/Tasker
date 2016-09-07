@@ -9,7 +9,7 @@
 
     function boardsController(boardService) {
         var vm = this;
-        vm.title = 'boards';
+        vm.title = 'This is the board page';
 
         activate();
 

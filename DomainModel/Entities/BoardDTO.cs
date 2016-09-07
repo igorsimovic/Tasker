@@ -11,13 +11,13 @@ namespace DomainModel.Entities
 
         public string Id { get; set; }
         public string BoardName { get; set; }
-        public string BoardStuff { get; set; }
+        public bool Starred { get; set; }
 
-        public BoardDTO(string id, string boardName, string boardStuff)
+        public BoardDTO(string id, string boardName, bool Starred)
         {
             this.Id = id;
             this.BoardName = boardName;
-            this.BoardStuff = boardStuff;
+            this.Starred = Starred;
         }
 
     }
