@@ -13,19 +13,20 @@ namespace DomainModel.Entities
         public string BoardName { get; set; }
         public string BoardStuff { get; set; }
         public IEnumerable<ListDTO> Lists { get; private set; }
+        public bool Starred { get; set; }
 
-        public BoardDTO(string id, string boardName, string boardStuff)
+        public BoardDTO(string id, string boardName, bool Starred)
         {
             this.Id = id;
             this.BoardName = boardName;
-            this.BoardStuff = boardStuff;
+            this.Starred = Starred;
         }
 
-        public BoardDTO(string id, string boardName, string boardStuff, IEnumerable<ListDTO> lists)
+        public BoardDTO(string id, string boardName, bool stared, IEnumerable<ListDTO> lists)
         {
             this.Id = id;
             this.BoardName = boardName;
-            this.BoardStuff = boardStuff;
+            this.Starred = stared;
             this.Lists = lists;
         }
 

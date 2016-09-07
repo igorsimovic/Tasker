@@ -18,5 +18,7 @@ namespace DataLayer.DataModel.MongoData
 
         [BsonElement("Lists")]
         public IEnumerable<ObjectId> Lists{ get; set; }
+        [BsonElement("Starred")]
+        public bool Starred { get; set; }
     }
 }

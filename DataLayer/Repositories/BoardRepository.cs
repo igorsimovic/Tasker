@@ -22,7 +22,7 @@ namespace DataLayer.Repositories
         public IEnumerable<BoardDTO> GetAll()
         {
            return db_.GetAllBoards()
-                .Select(b=> new BoardDTO(b.Id.ToString(),b.BoardName,b.BoardStuff));
+                .Select(b=> new BoardDTO(b.Id.ToString(),b.BoardName,b.Starred));
         }
 
         public BoardDTO GetById(string id)
