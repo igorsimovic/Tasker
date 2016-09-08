@@ -10,5 +10,7 @@ namespace DomainModel.Repositories
     public interface IBoardRepository
     {
         IEnumerable<BoardDTO> GetAll();
+
+        BoardDTO GetById(string id);
     }
 }

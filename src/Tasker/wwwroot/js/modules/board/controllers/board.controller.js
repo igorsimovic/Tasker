@@ -5,21 +5,27 @@
         .module('board')
         .controller('boardController', boardController);
 
-    boardController.$inject = ['boardService'];
+    boardController.$inject = ['$stateParams', 'boardService'];
 
-    function boardController(boardService) {
+    function boardController($stateParams, boardService) {
         var vm = this;
         vm.title = 'board';
+
+        var id = $stateParams.id || null;
 
         activate();
 
         function activate() {
-            boardService.getAll().then(function (response) {
-                vm.boards = response.data;
-                console.log(vm.boards);
-            }, function (err) {
-                console.error(err);
-            });
+            if (id) {
+                boardService.getById(id).then(function (response) {
+                    vm.board = response.data;
+                    console.log(vm.board);
+                }, function (err) {
+                    console.error(err);
+                });
+            } else {
+                console.error('Board id not provided');
+            }
         }
     }
 })();

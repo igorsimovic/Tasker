@@ -9,8 +9,15 @@
 
     function board($http) {
         this.getAll = getAll;
+        this.getById = getById;
+
         function getAll() {
             return $http.get('/api/v1/boards');
         }
+
+        function getById(id) {
+            return $http.get('/api/v1/boards/' + id);
+        }
+
     }
 })();

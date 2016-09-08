@@ -1,0 +1,40 @@
+﻿<h1>{{vm.title}}</h1>
+<div class="container">
+    <div ng-repeat="board in vm.boards">
+        <a ui-sref="board({id: board.id})"> <div ng-if="board.starred">***</div> {{board.boardName}}</a>
+    </div>
+    <div class="row">
+        <h1>Starred</h1>
+        <div class="col-md-4">
+            <ul dnd-list="vm.starred" class="list-inline">
+                <li ng-repeat="board in vm.starred"
+                    dnd-draggable="board"
+                    dnd-effect-allowed="move"
+                    dnd-selected="vm.selectedBoard = board"
+                    ng-class="{'drag-selected': vm.selectedBoard === board}"
+                    dnd-moved="vm.starred.splice($index,1)">
+                    {{board.boardName}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+        <h1>Personal boards</h1>
+        <div class="col-md-4">
+            <ul dnd-list="vm.boards" class="list-inline">
+                <li ng-repeat="board in vm.boards"
+                    dnd-draggable="board"
+                    dnd-effect-allowed="move"
+                    dnd-selected="vm.selectedBoard = board"
+                    ng-class="{'drag-selected':vm.selectedBoard === board}"
+                    dnd-moved="vm.boards.splice($index,1)">
+                    {{board.boardName}}
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+      {{vm.selectedBoard}}
+    </div>
+</div>

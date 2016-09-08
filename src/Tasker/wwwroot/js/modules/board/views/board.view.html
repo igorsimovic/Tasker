@@ -1,4 +1,5 @@
-﻿<h1>Mrdjan je fantastican</h1>
-<div ng-repeat="board in vm.boards">
-    {{board.boardName}}
-</div>
+﻿<h1>Welcome to: {{vm.board.boardName}}</h1>
+
+<ul>
+    <li ng-repeat="list in vm.board.lists">{{list.name}}</li>
+</ul>

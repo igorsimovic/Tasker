@@ -6,6 +6,7 @@ var ApplicationConfiguration = (function () {
     var applicationModuleName = 'tasker';
     var applicationModuleVendorDependencies = [
         'ui.router',
+        'dndLists',
     ];
 
     // Add a new vertical module

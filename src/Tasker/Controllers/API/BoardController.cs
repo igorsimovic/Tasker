@@ -14,7 +14,6 @@ namespace Tasker.Controllers.API
     [Route("api/v1/boards")]
     public class BoardController : Controller
     {
-
         private readonly IBoardRepository board_repo_;
 
         public BoardController(IBoardRepository board_repo)
@@ -22,7 +21,7 @@ namespace Tasker.Controllers.API
             board_repo_ = board_repo;
         }
 
-        // GET: api/values
+        // GET: api/boards
         [HttpGet("")]
         [Authorize(Policy = "TaskerUser")]
         public string Get()
@@ -30,11 +29,11 @@ namespace Tasker.Controllers.API
             return "pera";
         }
 
-        // GET api/values/5
+        // GET api/boards/57cf0a9636fc06fa4628c3c5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public BoardDTO Get(string id)
         {
-            return "value";
+            return board_repo_.GetById(id);
         }
 
         // POST api/values

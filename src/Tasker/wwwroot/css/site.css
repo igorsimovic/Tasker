@@ -48,3 +48,6 @@ textarea {
     display: none
   }
 }
+.drag-selected {
+    color:red;
+}

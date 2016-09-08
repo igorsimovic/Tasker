@@ -25,7 +25,28 @@ namespace DataLayer
         public IEnumerable<BoardModel> GetAllBoards()
         {
             var filter = new BsonDocument();
-            return db_.GetCollection<BoardModel>("Boards").Find(filter).ToEnumerable<BoardModel>();
+            var result = db_.GetCollection<BoardModel>("Boards").Find(filter).ToEnumerable<BoardModel>();
+
+            return result;
         }
+
+        public BoardModel GetBoardById(string id)
+        {
+            var filter = Builders<BoardModel>.Filter.Eq("_id", new ObjectId(id));
+            var result = db_.GetCollection<BoardModel>("Boards").Find(filter).FirstOrDefault();
+
+            return result;
+        }
+
+        public IEnumerable<ListModel> GetListByBoardId(string boardId)
+        {
+            var board = this.GetBoardById(boardId);
+
+            var filter = Builders<ListModel>.Filter.In("_id", board.Lists);
+            var result = db_.GetCollection<ListModel>("Lists").Find(filter).ToEnumerable<ListModel>();
+
+            return result;
+        }
+
     }
 }
