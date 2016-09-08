@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DomainModel.Repositories;
 using DomainModel.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,9 +24,10 @@ namespace Tasker.Controllers.API
 
         // GET: api/values
         [HttpGet("")]
-        public IEnumerable<BoardDTO> Get()
+        [Authorize(Policy = "TaskerUser")]
+        public string Get()
         {
-            return board_repo_.GetAll();
+            return "pera";
         }
 
         // GET api/values/5
