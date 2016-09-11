@@ -9,6 +9,10 @@
         @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />*@
         <link rel="stylesheet" href="~/css/site.css" />
         <link asp-href-include="~/theme/css/*.css" rel="stylesheet" />
+        <link asp-href-include="~/lib/font-awesome/css/*.css" rel="stylesheet" />
+        <link asp-href-include="~/lib/angular-ui-select/dist/select.css" rel="stylesheet" />
+        <link asp-href-include="~/lib/angular-bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" />
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -21,7 +25,7 @@
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom white-bg">
-                <nav class="navbar navbar-static-top" role="navigation">
+                <nav class="navbar navbar-static-top" role="navigation" ng-controller="headerController as vm">
                     <div class="navbar-header">
                         <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                             <i class="fa fa-reorder"></i>
@@ -33,55 +37,49 @@
                             <li class="active">
                                 <a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>
                             </li>
-                            <li class="dropdown">
-                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                                <ul role="menu" class="dropdown-menu">
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                                <ul role="menu" class="dropdown-menu">
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                                <ul role="menu" class="dropdown-menu">
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                                <ul role="menu" class="dropdown-menu">
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                    <li><a href="">Menu item</a></li>
-                                </ul>
+
+                        </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a ng-click="vm.showSection('add')">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+
+                                </a>
                             </li>
                         </ul>
                         <ul class="nav navbar-top-links navbar-right">
                             <li>
-                                <a href="login.html">
-                                    <i class="fa fa-sign-out"></i> Log out
+                                <a ng-click="vm.showSection('info')">
+                                    <i class="fa fa-info" aria-hidden="true"></i>
+
                                 </a>
                             </li>
                         </ul>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <a ng-click="vm.showSection('user')">
+                                    <i class="fa fa-user-md" aria-hidden="true"></i> UserName
+
+                                </a>
+                            </li>
+                        </ul>
+                        <div ng-if="vm.sections['user']" on-blur="vm.blur()" class="header-popup-item">
+                            this is user section
+                        </div>
+                        <div ng-if="vm.sections['info']" class="header-popup-item">
+                            this is info item
+                        </div>
+                        <div ng-if="vm.sections['add']" class="header-popup-item">
+                            this is add section
+                        </div>
+
                     </div>
                 </nav>
+
+
             </div>
             <div class="wrapper wrapper-content">
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="ibox float-e-margins">
@@ -132,6 +130,8 @@
         <script src="~/lib/angular/angular.js"></script>
         <script src="~/lib/angular-ui-router/release/angular-ui-router.js"></script>
         <script src="~/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
+        <script src="~/lib/angular-ui-select/dist/select.js"></script>
+        <script src="~/lib/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
         <script src="~/js/config.js"></script>
         <script src="~/js/app.js"></script>
         <script src="~/js/consts.js"></script>

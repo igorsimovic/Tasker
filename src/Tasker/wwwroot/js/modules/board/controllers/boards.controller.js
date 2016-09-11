@@ -13,13 +13,41 @@
         vm.starred = [];
         vm.boards = [];
         vm.selectedBoard = {};
-        //$scope.$watch(function () {
-        //    return vm.models.selected;
-        //}, function (current, original) {
-        //    console.log('old ', original);
-        //    console.log('new ', current);
-        //});
+        vm.toggleStarredStatus = toggleStarredStatus;
+        vm.toggleCreationMode = toggleCreationMode;
+        vm.createBoard = createBoard;
+        vm.newBoard = {};
         activate();
+        vm.creationMode = false;
+        function toggleCreationMode() {
+            vm.creationMode = !vm.creationMode;
+        }
+
+        function createBoard() {
+            boardService.createBoard(vm.newBoard).then(function (response) {
+                vm.boards.push(response.data);
+                vm.creationMode = false;
+            }, function (err) {
+                console.log(err);
+            }).finally(function () {
+                vm.newBoard = {};
+            });
+        }
+
+        function toggleStarredStatus(event, index, item, external, type) {
+            var originalStarred = angular.copy(vm.starred);
+            var originalBoards = angular.copy(vm.boards);
+            item.starred = !item.starred;
+            boardService.updateBoard(item).then(function () {
+            }, function (err) {
+                item.starred = !item.starred;
+                vm.starred = angular.copy(originalStarred);
+                vm.originalBoards = angular.copy(originalBoards);
+            }).finally(function () {
+                var originalStarred = null;
+                var originalBoards = null;
+            });
+        }
 
         function activate() {
             boardService.getAll().then(function (response) {
@@ -36,13 +64,4 @@
         }
     }
 })();
-Array.prototype.filterAndRemove = function (propName, propVal) {
-    var resultArr = [];
-    this.forEach(function (item, index) {
-        if (item[propName] === propVal) {
-            resultArr = item;
-            this.splice(index, 0);
-        };
-    });
-    return resultArr;
-}
+

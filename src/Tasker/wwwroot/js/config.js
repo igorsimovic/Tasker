@@ -7,6 +7,8 @@ var ApplicationConfiguration = (function () {
     var applicationModuleVendorDependencies = [
         'ui.router',
         'dndLists',
+        'ui.select',
+        'colorpicker.module',
     ];
 
     // Add a new vertical module
