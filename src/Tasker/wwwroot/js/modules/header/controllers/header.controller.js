@@ -15,8 +15,9 @@
             add: false,
             info: false,
         };
-        activate();
         vm.showSection = showSection;
+        vm.closeSections = closeSections;
+        activate();
         function showSection(name) {
             for (var prop in vm.sections) {
                 if (vm.sections.hasOwnProperty(prop)) {
@@ -28,6 +29,14 @@
                 }
             }
         }
+        function closeSections() {
+            for (var prop in vm.sections) {
+                if (vm.sections.hasOwnProperty(prop)) {
+                    vm.sections[prop] = false;
+                }
+            }
+        }
+
 
         function activate() { }
     }

@@ -5,9 +5,9 @@
         .module('board')
         .controller('boardsController', boardsController);
 
-    boardsController.$inject = ['boardService', '$scope'];
+    boardsController.$inject = ['boardService', '$scope', '$document'];
 
-    function boardsController(boardService, $scope) {
+    function boardsController(boardService, $scope, $document) {
         var vm = this;
         vm.title = 'This is the board page';
         vm.starred = [];
@@ -19,6 +19,8 @@
         vm.newBoard = {};
         activate();
         vm.creationMode = false;
+
+
         function toggleCreationMode() {
             vm.creationMode = !vm.creationMode;
         }
@@ -35,17 +37,34 @@
         }
 
         function toggleStarredStatus(event, index, item, external, type) {
-            var originalStarred = angular.copy(vm.starred);
+            var originalStarred = angular.copy(vm.starred); //this is bad. should use drad-end or smth like this.
             var originalBoards = angular.copy(vm.boards);
+            var originalStarredStatus = item.starred;
+            var originalIndex = -1;
+            if (originalStarredStatus) {
+                originalIndex = originalStarred.indexOfObj(item.id);
+            } else {
+                originalIndex = originalBoards.indexOfObj(item.id);
+            }
+            //console.log('originals', originalStarred, ' ', originalBoards);
             item.starred = !item.starred;
             boardService.updateBoard(item).then(function () {
+                if (originalStarredStatus) {
+                    vm.starred.splice(originalIndex, 1);
+                    vm.boards.push(item);
+                } else {
+                    vm.boards.splice(originalIndex, 1);
+                    vm.starred.push(item);
+                }
             }, function (err) {
                 item.starred = !item.starred;
                 vm.starred = angular.copy(originalStarred);
                 vm.originalBoards = angular.copy(originalBoards);
             }).finally(function () {
-                var originalStarred = null;
-                var originalBoards = null;
+                originalStarred = null;
+                originalBoards = null;
+                originalStarredStatus = null;
+                originalIndex = -1;
             });
         }
 
@@ -64,4 +83,10 @@
         }
     }
 })();
+
+Array.prototype.indexOfObj = function (key) {
+    return this.map(function (item) {
+        return item.id;
+    }).indexOf(key);
+}
 

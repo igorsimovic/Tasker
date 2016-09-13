@@ -9,6 +9,7 @@ var ApplicationConfiguration = (function () {
         'dndLists',
         'ui.select',
         'colorpicker.module',
+        'ui.bootstrap',
     ];
 
     // Add a new vertical module

@@ -1,0 +1,54 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-1">
+            <div class="user-picture-item">
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Full Name</label>
+                <br />
+                <input type="text" class="form-controller" ng-model="sharedData.bio.fullName" />
+            </div>
+            <div class="form-group">
+                <label>Username</label>
+                <br />
+                <input type="text" class="form-controller" ng-model="sharedData.bio.userName" />
+            </div>
+            <div class="form-group">
+                <label>Initials</label>
+                <br />
+                <input type="text" class="form-controller" ng-model="sharedData.bio.initials" />
+            </div>
+            <div class="form-group">
+                <label>Bio(optional)</label>
+                <br />
+                <textarea class="form-controller" ng-model="vm.userFullName"></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn-default"> Save</button>
+                <button class="btn-info"> Cancel</button>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="tab-section">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="tab in vm.tabs" ng-class="{active: tab.active}" style="cursor: pointer;">
+                    <a ng-click="vm.changeTab(tab.name);" data-toggle="tab">{{tab.name}}</a>
+                </li>
+            </ul>
+
+            <div id="tabs" class="tab-content no-horizontal-padd">
+                <div class="tab-pane fade in active" role="tabpanel">
+                    <div ui-view></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>

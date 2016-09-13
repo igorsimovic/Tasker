@@ -106,10 +106,44 @@ textarea {
 
 .header-popup-item {
     color: black;
-    height: 350px;
+    height: auto;
     width: 300px;
+    font-weight: 900;
     top: 100%;
     left: 84%;
+    background-color: #F3F3F4;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    position: absolute;
+    box-shadow: 2px 2px 2px 2px #888888;
+}
+
+.nav-tabs > li {
+    float: none !important;
+    display: inline-block !important;
+    right: 10% !important;
+}
+
+.nav-tabs {
+    text-align: center;
+}
+
+.user-picture-item {
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+}
+
+.user-settings-href > a {
+    text-decoration: underline;
+    font-size: 20px;
+}
+.href-popup-item {
+    color: black;
+    height: auto;
+    width: 300px;
+    font-weight: 900;
     background-color: #F3F3F4;
     border-style: solid;
     border-width: 1px;

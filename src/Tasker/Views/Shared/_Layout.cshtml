@@ -13,6 +13,7 @@
         <link asp-href-include="~/lib/angular-ui-select/dist/select.css" rel="stylesheet" />
         <link asp-href-include="~/lib/angular-bootstrap-colorpicker/css/colorpicker.css" rel="stylesheet" />
 
+
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
@@ -32,7 +33,7 @@
                         </button>
                         <a href="#" class="navbar-brand">Tasker</a>
                     </div>
-                    <div class="navbar-collapse collapse" id="navbar">
+                    <div class="navbar-collapse collapse" click-off="vm.closeSections();" id="navbar">
                         <ul class="nav navbar-nav">
                             <li class="active">
                                 <a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>
@@ -63,8 +64,30 @@
                                 </a>
                             </li>
                         </ul>
-                        <div ng-if="vm.sections['user']" on-blur="vm.blur()" class="header-popup-item">
-                            this is user section
+                        <div ng-if="vm.sections['user']" class="header-popup-item">
+                            <div>
+                                <div class="text-center">
+                                    <p style="color:gray">UserName</p>
+                                </div>
+                                <hr />
+                                <ul style="list-style:none">
+                                    <li><a ui-sref="user.profile"> Profile </a></li>
+                                    <li><a ui-sref="user.cards"> Card </a></li>
+                                    <li><a ui-sref="user.settings"> Settings </a></li>
+                                </ul>
+                                <hr />
+                                <ul style="list-style:none">
+                                    <li>Help</li>
+                                    <li>Shortcut</li>
+                                    <li>Change language</li>
+                                </ul>
+                                <hr />
+                                <ul style="list-style:none">
+                                    <li>Log out</li>
+                                </ul>
+
+
+                            </div>
                         </div>
                         <div ng-if="vm.sections['info']" class="header-popup-item">
                             this is info item
@@ -132,6 +155,7 @@
         <script src="~/lib/angular-drag-and-drop-lists/angular-drag-and-drop-lists.js"></script>
         <script src="~/lib/angular-ui-select/dist/select.js"></script>
         <script src="~/lib/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js"></script>
+        <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="~/js/config.js"></script>
         <script src="~/js/app.js"></script>
         <script src="~/js/consts.js"></script>

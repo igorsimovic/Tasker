@@ -1,5 +1,9 @@
 ﻿<h1>{{vm.title}}</h1>
 <div class="container boards-body">
+    <button ng-click="vm.showStuff=true">Test</button>
+    <self-closable>
+
+    </self-closable>
     <div ng-repeat="board in vm.boards">
         <a ui-sref="board({id: board.id})"> <div ng-if="board.starred">***</div> {{board.boardName}}</a>
     </div>
@@ -9,7 +13,8 @@
         </div>
         <div class="col-md-12 boards-container">
             <ul dnd-list="vm.starred"
-                dnd-inserted="vm.toggleStarredStatus(event, index, item,external, type)"
+                dnd-horizontal-list="true"
+                dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)"
                 class="list-inline">
                 <li ng-repeat="board in vm.starred"
                     dnd-draggable="board"
@@ -38,7 +43,8 @@
         <div class="col-md-12 boards-container">
             <div class="row">
                 <ul dnd-list="vm.boards" class="list-inline board-list"
-                    dnd-inserted="vm.toggleStarredStatus(event, index, item,external, type)">
+                    dnd-horizontal-list="true"
+                    dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)">
                     <li ng-repeat="board in vm.boards"
                         dnd-draggable="board"
                         dnd-effect-allowed="move"
@@ -53,53 +59,53 @@
                             </div>
                         </div>
                     </li>
-                </ul>
-            </div>
-            <div class="row">
-                <div class="board-box text-center col-md-2 creation-box">
-                    <div class="board-item row">
-                        <div class="pull-left">
-                            <a ng-if="!vm.creationMode" ng-click="vm.toggleCreationMode()">Add Board</a>
-                            <div ng-if="vm.creationMode" class="creation-item">
-                                <div>
-                                    <div class="creation-item-header">
-                                        <div class="col-md-9 text-center">
-                                            <p>Create New Board</p>
-                                        </div>
-                                        <div class="col-md-2 pull-right">
-                                            <a ng-click="vm.toggleCreationMode()">X</a>
-                                        </div>
-                                    </div>
-                                    <div class="creation-item-body" ng-blur="vm.toggleCreationMode()">
-                                        <div class="form-group">
-                                            <label class="pull-left" style="color:black;">Title</label>
-                                            <input type="text" ng-model="vm.newBoard.boardName" class="form-control">
-                                        </div>
-                                        <!--<div class="form-group">
-                                            <label class="pull-left" style="color:black;">Title</label>
-                                            <div>
-                                                <ui-select ng-model="selected.value">
-                                                    <ui-select-match>
-                                                        <span ng-bind="$select.selected.name"></span>
-                                                    </ui-select-match>
-                                                    <ui-select-choices repeat="item in (vm.boards | filter: $select.search) track by item.id">
-                                                        <span ng-bind="item.boardName"></span>
-                                                    </ui-select-choices>
-                                                </ui-select>
-                                            </div>
-                                        </div>-->
-                                        <div class="form-group">
-                                            <input class="form-control" style="color:black;" colorpicker="rgba" type="text" ng-model="vm.newBoard.color" />
-                                        </div>
+                    <li>
+                        <div class="board-box text-center col-md-2 creation-box">
+                            <div class="board-item row">
+                                <div class="pull-left" click-off="vm.creationMode=false;">
+                                    <a ng-if="!vm.creationMode" ng-click="vm.creationMode= true;"><div>Add Board</div></a>
+                                    <div id="creation-item" ng-show="vm.creationMode" class="creation-item">
                                         <div>
-                                            <button class="btn-primary" ng-click="vm.createBoard()">Create Board</button>
+                                            <div class="creation-item-header">
+                                                <div class="col-md-9 text-center">
+                                                    <p>Create New Board</p>
+                                                </div>
+                                                <div class="col-md-2 pull-right">
+                                                    <a ng-click="vm.toggleCreationMode()">X</a>
+                                                </div>
+                                            </div>
+                                            <div class="creation-item-body">
+                                                <div class="form-group">
+                                                    <label class="pull-left" style="color:black;">Title</label>
+                                                    <input type="text" ng-model="vm.newBoard.boardName" class="form-control">
+                                                </div>
+                                                <!--<div class="form-group">
+                                                    <label class="pull-left" style="color:black;">Title</label>
+                                                    <div>
+                                                        <ui-select ng-model="selected.value">
+                                                            <ui-select-match>
+                                                                <span ng-bind="$select.selected.name"></span>
+                                                            </ui-select-match>
+                                                            <ui-select-choices repeat="item in (vm.boards | filter: $select.search) track by item.id">
+                                                                <span ng-bind="item.boardName"></span>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>-->
+                                                <div class="form-group">
+                                                    <input class="form-control" style="color:black;" colorpicker="rgba" type="text" ng-model="vm.newBoard.color" />
+                                                </div>
+                                                <div>
+                                                    <button class="btn-primary" ng-click="vm.createBoard()">Create Board</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
