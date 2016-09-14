@@ -6,23 +6,19 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Entities
 {
-    public class ListDTO
+    public class CardDTO
     {
-
         public string Id { get; set; }
         public string Name { get; set; }
         public int Order { get; set; }
-        public string Description{ get; set; }
-        public IEnumerable<CardDTO> Cards { get; set; }
+        public string Description { get; set; }
 
-        public ListDTO(string id, string name, int order, string description)
+        public CardDTO(string id, string name, int order, string description)
         {
             this.Id = id;
             this.Name = name;
             this.Order = order;
             this.Description = description;
-            this.Cards = new List<CardDTO>();
         }
-
     }
 }

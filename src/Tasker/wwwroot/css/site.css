@@ -51,3 +51,10 @@ textarea {
 .drag-selected {
     color:red;
 }
+
+.tasker-list{
+    width: 200px;
+    display: inline-block;
+    border: 1px solid rgb(231, 234, 236);
+    margin-right: 10px;
+}

@@ -28,8 +28,21 @@ namespace DataLayer.Repositories
         public BoardDTO GetById(string id)
         {
             BoardModel board = db_.GetBoardById(id);
-            IEnumerable<ListDTO> lists = db_.GetListByBoardId(id)
-               .Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description));
+            IEnumerable<ListDTO> lists = new List<ListDTO>();
+
+            var tempLists = db_.GetListByBoardId(id);
+            if (tempLists != null) {
+                lists = tempLists.Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description)).ToList();
+                foreach (var list in lists)
+                {
+                    var tempCards = db_.GetCardsByListId(list.Id);
+                    if (tempCards != null)
+                    {
+                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description));
+                    }
+                }
+            }
+            
 
             return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, lists);
         }

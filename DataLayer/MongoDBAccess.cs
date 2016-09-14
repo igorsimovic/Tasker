@@ -38,14 +38,37 @@ namespace DataLayer
             return result;
         }
 
+        public ListModel GetListById(string id)
+        {
+            var filter = Builders<ListModel>.Filter.Eq("_id", new ObjectId(id));
+            var result = db_.GetCollection<ListModel>("Lists").Find(filter).FirstOrDefault();
+
+            return result;
+        }
+
+
         public IEnumerable<ListModel> GetListByBoardId(string boardId)
         {
             var board = this.GetBoardById(boardId);
+            if (board.Lists != null)
+            {
+                var filter = Builders<ListModel>.Filter.In("_id", board.Lists);
+                var result = db_.GetCollection<ListModel>("Lists").Find(filter).ToEnumerable<ListModel>();
+                return result;
+            }
+            return null;
+        }
+        public IEnumerable<CardModel> GetCardsByListId(string id)
+        {
+            var list = this.GetListById(id);
 
-            var filter = Builders<ListModel>.Filter.In("_id", board.Lists);
-            var result = db_.GetCollection<ListModel>("Lists").Find(filter).ToEnumerable<ListModel>();
-
-            return result;
+            if (list.Cards != null)
+            {
+                var filter = Builders<CardModel>.Filter.In("_id", list.Cards);
+                var result = db_.GetCollection<CardModel>("Cards").Find(filter).ToEnumerable<CardModel>();
+                return result;
+            }
+            return null;
         }
 
     }

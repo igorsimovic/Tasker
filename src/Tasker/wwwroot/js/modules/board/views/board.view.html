@@ -1,5 +1,14 @@
 ﻿<h1>Welcome to: {{vm.board.boardName}}</h1>
 
-<ul>
-    <li ng-repeat="list in vm.board.lists">{{list.name}}</li>
-</ul>
+
+<div ng-repeat="list in vm.board.lists | orderBy: 'order'" class="ibox float-e-margins tasker-list">
+    <div class="ibox-title">
+        <h5>{{list.name}}</h5>
+    </div>
+    <div class="ibox-content ">
+        <ul>
+            <li ng-repeat="card in list.cards">{{card.name}}</li>
+        </ul>
+    </div>
+</div>
+
