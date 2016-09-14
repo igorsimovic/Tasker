@@ -12,5 +12,7 @@ namespace DomainModel.Repositories
         IEnumerable<BoardDTO> GetAll();
 
         BoardDTO GetById(string id);
+        void update(BoardDTO model);
+        BoardDTO CreateBoard(BoardDTO board);
     }
 }

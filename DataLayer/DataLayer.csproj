@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataModel\MongoData\BoardModel.cs" />
+    <Compile Include="DataModel\MongoData\CardModel.cs" />
     <Compile Include="DataModel\MongoData\ListModel.cs" />
     <Compile Include="MongoDBAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

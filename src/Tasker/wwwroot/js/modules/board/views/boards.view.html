@@ -1,40 +1,114 @@
 ﻿<h1>{{vm.title}}</h1>
-<div class="container">
+<div class="container boards-body">
+    <button ng-click="vm.showStuff=true">Test</button>
+    <self-closable>
+
+    </self-closable>
     <div ng-repeat="board in vm.boards">
         <a ui-sref="board({id: board.id})"> <div ng-if="board.starred">***</div> {{board.boardName}}</a>
     </div>
     <div class="row">
-        <h1>Starred</h1>
-        <div class="col-md-4">
-            <ul dnd-list="vm.starred" class="list-inline">
+        <div class="board-group-heading">
+            <h1><i class="fa fa-star-o fa-2x"></i> Stared Boards</h1>
+        </div>
+        <div class="col-md-12 boards-container">
+            <ul dnd-list="vm.starred"
+                dnd-horizontal-list="true"
+                dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)"
+                class="list-inline">
                 <li ng-repeat="board in vm.starred"
                     dnd-draggable="board"
                     dnd-effect-allowed="move"
                     dnd-selected="vm.selectedBoard = board"
                     ng-class="{'drag-selected': vm.selectedBoard === board}"
                     dnd-moved="vm.starred.splice($index,1)">
-                    {{board.boardName}}
-                </li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="row">
-        <h1>Personal boards</h1>
-        <div class="col-md-4">
-            <ul dnd-list="vm.boards" class="list-inline">
-                <li ng-repeat="board in vm.boards"
-                    dnd-draggable="board"
-                    dnd-effect-allowed="move"
-                    dnd-selected="vm.selectedBoard = board"
-                    ng-class="{'drag-selected':vm.selectedBoard === board}"
-                    dnd-moved="vm.boards.splice($index,1)">
-                    {{board.boardName}}
+                    <div class="board-box text-center" ng-style="{'background-color':board.color}">
+                        <div class="board-item row">
+                            <div class="col-md-6">
+                                {{board.boardName}}
+                            </div>
+                            <div class="col-md-offset-3 col-md-1">
+                                <i style="color:yellow; font-size:30px;" class="fa fa-star-o"></i>
+                            </div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
     </div>
     <div class="row">
-      {{vm.selectedBoard}}
+        <div class="board-group-heading">
+            <h1><i class="fa fa-user fa-2x" aria-hidden="true"></i>Personal boards</h1>
+        </div>
+        <div class="col-md-12 boards-container">
+            <div class="row">
+                <ul dnd-list="vm.boards" class="list-inline board-list"
+                    dnd-horizontal-list="true"
+                    dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)">
+                    <li ng-repeat="board in vm.boards"
+                        dnd-draggable="board"
+                        dnd-effect-allowed="move"
+                        dnd-selected="vm.selectedBoard = board"
+                        ng-class="{'drag-selected':vm.selectedBoard === board}"
+                        dnd-moved="vm.boards.splice($index,1)">
+                        <div class="board-box text-center" ng-style="{'background-color':board.color}">
+                            <div class="board-item row">
+                                <div class="col-md-6">
+                                    {{board.boardName}}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="board-box text-center col-md-2 creation-box">
+                            <div class="board-item row">
+                                <div class="pull-left" click-off="vm.creationMode=false;">
+                                    <a ng-if="!vm.creationMode" ng-click="vm.creationMode= true;"><div>Add Board</div></a>
+                                    <div id="creation-item" ng-show="vm.creationMode" class="creation-item">
+                                        <div>
+                                            <div class="creation-item-header">
+                                                <div class="col-md-9 text-center">
+                                                    <p>Create New Board</p>
+                                                </div>
+                                                <div class="col-md-2 pull-right">
+                                                    <a ng-click="vm.toggleCreationMode()">X</a>
+                                                </div>
+                                            </div>
+                                            <div class="creation-item-body">
+                                                <div class="form-group">
+                                                    <label class="pull-left" style="color:black;">Title</label>
+                                                    <input type="text" ng-model="vm.newBoard.boardName" class="form-control">
+                                                </div>
+                                                <!--<div class="form-group">
+                                                    <label class="pull-left" style="color:black;">Title</label>
+                                                    <div>
+                                                        <ui-select ng-model="selected.value">
+                                                            <ui-select-match>
+                                                                <span ng-bind="$select.selected.name"></span>
+                                                            </ui-select-match>
+                                                            <ui-select-choices repeat="item in (vm.boards | filter: $select.search) track by item.id">
+                                                                <span ng-bind="item.boardName"></span>
+                                                            </ui-select-choices>
+                                                        </ui-select>
+                                                    </div>
+                                                </div>-->
+                                                <div class="form-group">
+                                                    <input class="form-control" style="color:black;" colorpicker="rgba" type="text" ng-model="vm.newBoard.color" />
+                                                </div>
+                                                <div>
+                                                    <button class="btn-primary" ng-click="vm.createBoard()">Create Board</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row">
     </div>
 </div>
