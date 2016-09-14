@@ -25,31 +25,131 @@ textarea {
 
 /* buttons and links extension to use brackets: [ click me ] */
 .btn-bracketed::before {
-    display:inline-block;
+    display: inline-block;
     content: "[";
     padding-right: 0.5em;
 }
+
 .btn-bracketed::after {
-    display:inline-block;
+    display: inline-block;
     content: "]";
     padding-left: 0.5em;
 }
 
 /* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"]
-{
+.carousel-inner .item img[src$=".svg"] {
     width: 100%;
 }
 
 /* Hide/rearrange for smaller screens */
 @media screen and (max-width: 767px) {
-  /* Hide captions */
-  .carousel-caption {
-    display: none
-  }
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
 }
+
 .drag-selected {
-    color:red;
+    color: red;
+}
+
+.boards-body {
+    height: 100%;
+    /*background-color:rgba(224,224,209,0.5)*/
+}
+
+.boards-container {
+    min-height: 80px;
+}
+
+.board-list {
+    min-height: 80px;
+}
+
+
+.board-box {
+    border-style: solid;
+    border-width: 1px;
+    min-width: 270px;
+    min-height: 120px !important;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.board-item {
+    color: white;
+    font-size: 17px;
+}
+
+.creation-box {
+    background-color: #D6DADC;
+}
+
+.creation-item {
+    color: black;
+    height: 350px;
+    width: 300px;
+    background-color: #F3F3F4;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    position: absolute;
+    box-shadow: 2px 2px 2px 2px #888888;
+}
+
+.creation-item-header {
+    min-height: 30px;
+    color: black;
+    border-bottom: solid;
+    border-width: thin;
+}
+
+.header-popup-item {
+    color: black;
+    height: auto;
+    width: 300px;
+    font-weight: 900;
+    top: 100%;
+    left: 84%;
+    background-color: #F3F3F4;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    position: absolute;
+    box-shadow: 2px 2px 2px 2px #888888;
+}
+
+.nav-tabs > li {
+    float: none !important;
+    display: inline-block !important;
+    right: 10% !important;
+}
+
+.nav-tabs {
+    text-align: center;
+}
+
+.user-picture-item {
+    width: 50px;
+    height: 50px;
+    background-color: yellow;
+}
+
+.user-settings-href > a {
+    text-decoration: underline;
+    font-size: 20px;
+}
+.href-popup-item {
+    color: black;
+    height: auto;
+    width: 300px;
+    font-weight: 900;
+    background-color: #F3F3F4;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    position: absolute;
+    box-shadow: 2px 2px 2px 2px #888888;
 }
 
 .tasker-list{

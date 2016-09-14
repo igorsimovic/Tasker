@@ -2,7 +2,7 @@
     app: {
         route: 'js',
         componentsRoute: 'js/modules',
-        sharedRoutes: 'js/shared',
+        sharedRoutes: 'js/modules/shared',
         serviceBase:'api/v1/'
 
     }
