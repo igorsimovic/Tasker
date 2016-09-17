@@ -1,6 +1,22 @@
-﻿@{
+﻿@model Tasker.Models.TaskerModels.UserModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
+
 <div ui-view class="row">
 </div>
+<script type="text/javascript">
+    var USER = {
+        fullName: @Html.Raw(Json.Serialize(Model.FullName)),
+        userName:  @Html.Raw(Json.Serialize(Model.UserName)),
+        initials: @Html.Raw(Json.Serialize(Model.Initials)),
+        bio:  @Html.Raw(Json.Serialize(Model.Bio)),
+        id:  @Html.Raw(Json.Serialize(Model.ID)),
+        picture: @Html.Raw(Json.Serialize(Model.Picture)),
+        boards:@Html.Raw(Json.Serialize(Model.Boards)),
+        newPassword: null,
+        oldPassword: null,
+        repeatPassword: null,
+    }
+</script>

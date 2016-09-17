@@ -21,7 +21,7 @@ namespace DataLayer.Repositories
 
         public BoardDTO CreateBoard(BoardDTO board)
         {
-          var result =   db_.CreateBoard(board);
+            var result = db_.CreateBoard(board);
             if (result != null)
             {
                 return result;
@@ -35,7 +35,13 @@ namespace DataLayer.Repositories
         public IEnumerable<BoardDTO> GetAll()
         {
             return db_.GetAllBoards()
-                 .Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color));
+                 .Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo));
+        }
+
+        public List<BoardDTO> GetBoardsByUserID(string userID)
+        {
+            var boardsModel = db_.getBoardsByUser(userID).ToList();
+            return boardsModel.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo)).ToList();
         }
 
         public BoardDTO GetById(string id)
@@ -44,7 +50,8 @@ namespace DataLayer.Repositories
             IEnumerable<ListDTO> lists = new List<ListDTO>();
 
             var tempLists = db_.GetListByBoardId(id);
-            if (tempLists != null) {
+            if (tempLists != null)
+            {
                 lists = tempLists.Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description)).ToList();
                 foreach (var list in lists)
                 {
@@ -55,7 +62,7 @@ namespace DataLayer.Repositories
                     }
                 }
             }
-            
+
 
             return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, lists);
         }

@@ -57,13 +57,15 @@ namespace Tasker
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddMvc( config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                     .RequireAuthenticatedUser()
-                     .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            });
+            services.AddMvc( 
+            //    config =>
+            //{
+            //    var policy = new AuthorizationPolicyBuilder()
+            //         .RequireAuthenticatedUser()
+            //         .Build();
+            //    config.Filters.Add(new AuthorizeFilter(policy));
+            //}
+            );
 
 
             // Use policy auth.
@@ -77,6 +79,7 @@ namespace Tasker
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddSingleton<IBoardRepository, BoardRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<MongoDBAccess, MongoDBAccess>();
 
             // Get options from app settings

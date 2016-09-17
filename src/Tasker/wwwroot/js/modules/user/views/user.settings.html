@@ -1,52 +1,55 @@
-﻿<div>
+﻿<div class="tab-content">
     <div class="row">
         <h3>Accoutn details</h3>
         <div class="col-md-4" style="width:auto" ;>
             <div click-off="vm.closeSections();">
-                <div class="user-settings-href">
+                <div class="user-settings-href ">
+
                     <a ng-click="vm.showSection('bio');">Change Name, Initial or Bio</a>
-                    <div ng-if="vm.sections['bio']" class="href-popup-item">
-                        <div>
-                            <ng-form name="vm.bioForm">
-                                <div class="form-group col-xs-4 col-md-10">
-                                    <label class="control-label">Full name</label>
-                                    <input type="text" name="fullName" ng-minlength="'6'" ng-model="vm.bio.fullName" placeholder="{{vm.bio.fullName}} " required>
-                                    <p ng-if="vm.bioForm.fullName.$invalid" style="color:red;">Full name must be longer than 6 chars</p>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="form-group col-xs-4 col-md-10">
-                                    <label class="control-label">Full name</label>
-                                    <input type="text" name="userName" ng-model="vm.bio.userName" ng-minlength="'6'" placeholder="{{vm.bio.userName}}" required>
-                                    <p ng-if="vm.bioForm.userName.$invalid" style="color:red;">User name must be longer than 6 chars</p>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="form-group col-xs-4 col-md-10">
-                                    <label class="control-label">Bio</label>
-                                    <input type="text" name="initials" ng-minlength="'2'" ng-model="vm.bio.initials" placeholder="{{vm.bio.initials}}" required>
-                                    <p ng-if="vm.bioForm.initials.$invalid" style="color:red;">Initials must be longer than 2 chars</p>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="form-group col-xs-4 col-md-10">
-                                    <label class="control-label">Full name</label>
-                                    <textarea ng-model="vm.bio.FullName" placeholder="{{vm.bio.bio}}"> </textarea>
-                                </div>
-                                <div class="clearfix"></div>
-                                <div class="popup-button-section">
-                                    <button type="button" class="btn btn-default" ng-disabled="vm.bioForm.$invalid" ng-click="vm.saveUser()">Save</button>
-                                </div>
-                            </ng-form>
+                    <div>
+                        <div ng-if="vm.sections['bio']" class="href-popup-item panel panel-info">
+                            <div class="panel-heading"> Account details</div>
+                            <div class="panel-body">
+                                <ng-form name="vm.bioForm">
+                                    <div class="form-group col-xs-4 col-md-10">
+                                        <label class="control-label">Full name</label>
+                                        <input type="text" name="fullName" ng-minlength="'6'" ng-model="vm.bio.fullName" placeholder="{{vm.bio.fullName}} " required>
+                                        <p ng-if="vm.bioForm.fullName.$invalid" style="color:red;">Full name must be longer than 6 chars</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-xs-4 col-md-10">
+                                        <label class="control-label">Full name</label>
+                                        <input type="text" name="userName" ng-model="vm.bio.userName" ng-minlength="'6'" placeholder="{{vm.bio.userName}}" required>
+                                        <p ng-if="vm.bioForm.userName.$invalid" style="color:red;">User name must be longer than 6 chars</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-xs-4 col-md-10">
+                                        <label class="control-label">Initials</label>
+                                        <input type="text" name="initials" ng-minlength="'2'" ng-model="vm.bio.initials" placeholder="{{vm.bio.initials}}" required>
+                                        <p ng-if="vm.bioForm.initials.$invalid" style="color:red;">Initials must be longer than 2 chars</p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="form-group col-xs-4 col-md-10">
+                                        <label class="control-label">Bio</label>
+                                        <input type="text" name="bio" ng-model="vm.bio.bio" placeholder="{{vm.bio.bio}}" />
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="popup-button-section">
+                                        <button type="button" class="btn btn-default" ng-disabled="vm.bioForm.$invalid" ng-click="vm.saveUser()">Save</button>
+                                    </div>
+                                </ng-form>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div classs="clearfix"></div>
                 <div class="user-settings-href">
                     <a ng-click="vm.showSection('avatar');">Change Avatar</a>
-                    <div ng-if="vm.sections['avatar']" class="href-popup-item">
-                        <div>
-                            <div class="text-center">
-                                <p style="color:gray">Change avatar</p>
-                            </div>
-                            <hr />
+                    <div ng-if="vm.sections['avatar']" class="href-popup-item panel panel-info">
+                        <div class="text-center panel-heading">
+                            Change avatar
+                        </div>
+                        <div class="panel-body">
                             <div ng-if="vm.bio.picture">
                                 <div class="user-picture-item col-md-3">
                                 </div>
@@ -73,12 +76,11 @@
                 <div classs="clearfix"></div>
                 <div class="user-settings-href">
                     <a ng-click="vm.showSection('password');">Change password</a>
-                    <div ng-if="vm.sections['password']" class="href-popup-item">
-                        <div>
-                            <div class="text-center">
-                                <p style="color:gray">Change Password</p>
-                            </div>
-                            vmsss {{vm.passwordForm.$submitted}}
+                    <div ng-if="vm.sections['password']" class="href-popup-item panel panel-info">
+                        <div class="text-center panel-heading">
+                            Change Password
+                        </div>
+                        <div class="panel-body">
                             <ng-form name="vm.passwordForm">
                                 <div class="form-group col-xs-4 col-md-10">
                                     <label class="control-label">Old password</label>
@@ -101,6 +103,7 @@
                                     <button class="btn btn-info" ng-click="vm.passwordForm.$submitted = true;vm.changePassword();">Change password</button>
                                 </div>
                             </ng-form>
+
                         </div>
                     </div>
                 </div>

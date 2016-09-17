@@ -5,9 +5,9 @@
         .module('user')
         .controller('userController', userController);
 
-    userController.$inject = ['$stateParams', '$state', '$scope'];
+    userController.$inject = ['$stateParams', '$state', '$scope' ,'userService'];
 
-    function userController($stateParams, $state, $scope) {
+    function userController($stateParams, $state, $scope , userService) {
         var vm = this;
         vm.title = 'board';
         vm.changeTab = changeTab;
@@ -18,17 +18,7 @@
         ];
         $scope.sharedData = {};
         $scope.sharedData.selectTab = changeTab;
-        $scope.sharedData.bio = {
-            fullName: 'Mrdjan Stajic',
-            userName: 'mstajic10',
-            initials: 'MS',
-            bio: 'Svetski megacar',
-            id: 22411,
-            picture: null,
-            newPassword: null,
-            oldPassword: null,
-            repeatPassword: null,
-        }
+        $scope.sharedData.bio = userService.getUser();
         function changeTab(tabName) {
             vm.tabs.forEach(function (tab) {
                 if (tab.name !== tabName) {

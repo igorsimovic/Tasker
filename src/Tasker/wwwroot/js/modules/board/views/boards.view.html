@@ -1,21 +1,14 @@
 ﻿<h1>{{vm.title}}</h1>
 <div class="container boards-body">
-    <button ng-click="vm.showStuff=true">Test</button>
-    <self-closable>
-
-    </self-closable>
-    <div ng-repeat="board in vm.boards">
-        <a ui-sref="board({id: board.id})"> <div ng-if="board.starred">***</div> {{board.boardName}}</a>
-    </div>
     <div class="row">
         <div class="board-group-heading">
-            <h1><i class="fa fa-star-o fa-2x"></i> Stared Boards</h1>
+            <h1><i style="color:yellow;" class="fa fa-star fa-1x"></i> Stared Boards</h1>
         </div>
-        <div class="col-md-12 boards-container">
+        <div class="col-md-12">
             <ul dnd-list="vm.starred"
                 dnd-horizontal-list="true"
                 dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)"
-                class="list-inline">
+                class="list-inline boards-container">
                 <li ng-repeat="board in vm.starred"
                     dnd-draggable="board"
                     dnd-effect-allowed="move"
@@ -25,7 +18,9 @@
                     <div class="board-box text-center" ng-style="{'background-color':board.color}">
                         <div class="board-item row">
                             <div class="col-md-6">
-                                {{board.boardName}}
+                                <a ui-sref="board({id: board.id})">
+                                    {{board.boardName}}
+                                </a>
                             </div>
                             <div class="col-md-offset-3 col-md-1">
                                 <i style="color:yellow; font-size:30px;" class="fa fa-star-o"></i>
@@ -38,7 +33,7 @@
     </div>
     <div class="row">
         <div class="board-group-heading">
-            <h1><i class="fa fa-user fa-2x" aria-hidden="true"></i>Personal boards</h1>
+            <h1><i class="fa fa-user fa-1x" aria-hidden="true"></i>Personal boards</h1>
         </div>
         <div class="col-md-12 boards-container">
             <div class="row">
@@ -54,7 +49,7 @@
                         <div class="board-box text-center" ng-style="{'background-color':board.color}">
                             <div class="board-item row">
                                 <div class="col-md-6">
-                                    {{board.boardName}}
+                                    <a ui-sref="board({id: board.id})">{{board.boardName}}</a>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +57,7 @@
                     <li>
                         <div class="board-box text-center col-md-2 creation-box">
                             <div class="board-item row">
-                                <div class="pull-left" click-off="vm.creationMode=false;">
+                                <div class="pull-left">
                                     <a ng-if="!vm.creationMode" ng-click="vm.creationMode= true;"><div>Add Board</div></a>
                                     <div id="creation-item" ng-show="vm.creationMode" class="creation-item">
                                         <div>
