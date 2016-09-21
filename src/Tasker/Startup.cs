@@ -59,10 +59,10 @@ namespace Tasker
             
             services.AddMvc( config =>
             {
-                var policy = new AuthorizationPolicyBuilder()
-                     .RequireAuthenticatedUser()
-                     .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
+                //var policy = new AuthorizationPolicyBuilder()
+                //     .RequireAuthenticatedUser()
+                //     .Build();
+                //config.Filters.Add(new AuthorizeFilter(policy));
             });
 
 

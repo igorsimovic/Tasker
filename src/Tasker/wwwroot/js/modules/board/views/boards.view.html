@@ -25,7 +25,7 @@
                     <div class="board-box text-center" ng-style="{'background-color':board.color}">
                         <div class="board-item row">
                             <div class="col-md-6">
-                                {{board.boardName}}
+                                <a ui-sref="board({id: board.id})">{{board.boardName}}</a>
                             </div>
                             <div class="col-md-offset-3 col-md-1">
                                 <i style="color:yellow; font-size:30px;" class="fa fa-star-o"></i>
@@ -54,8 +54,8 @@
                         <div class="board-box text-center" ng-style="{'background-color':board.color}">
                             <div class="board-item row">
                                 <div class="col-md-6">
-                                    {{board.boardName}}
-                                </div>
+                                    <a ui-sref="board({id: board.id})">{{board.boardName}}</a>
+</div>
                             </div>
                         </div>
                     </li>

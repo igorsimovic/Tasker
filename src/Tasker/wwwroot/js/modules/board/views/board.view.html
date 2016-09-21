@@ -1,14 +1,39 @@
 ﻿<h1>Welcome to: {{vm.board.boardName}}</h1>
 
-
-<div ng-repeat="list in vm.board.lists | orderBy: 'order'" class="ibox float-e-margins tasker-list">
-    <div class="ibox-title">
-        <h5>{{list.name}}</h5>
+<div class="lists-wrapper">
+    <div dnd-list="vm.board.lists"
+         class="list-inline list-list"
+         dnd-horizontal-list="true">
+        <div ng-repeat="list in vm.board.lists | orderBy: 'order'" dnd-draggable="list"
+             dnd-effect-allowed="move"
+             dnd-selected="vm.selectedList = list"
+             ng-class="{'drag-selected':vm.selectedList === list}"
+             dnd-moved="vm.board.lists.splice($index,1)"
+             class="ibox float-e-margins tasker-list">
+            <div class="ibox-title">
+                <!--<a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>-->
+                <h5 editable-text="list.name" buttons="no" blur="submit">{{list.name}}</h5>
+            </div>
+            <div class="ibox-content ">
+                <ul>
+                    <li ng-repeat="card in list.cards">{{card.name}}</li>
+                </ul>
+            </div>
+        </div>
     </div>
-    <div class="ibox-content ">
-        <ul>
-            <li ng-repeat="card in list.cards">{{card.name}}</li>
-        </ul>
+    <div class="list-inline list-list">
+        <div class="ibox float-e-margins tasker-list tasker-new-list">
+            <a ng-click="vm.addList()"
+               ng-class="{focus: hover}"
+               ng-mouseenter="hover = true"
+               ng-mouseleave="hover = false">
+                <div class="ibox-title">
+                    <h5>
+                        Add New List...
+                    </h5>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 

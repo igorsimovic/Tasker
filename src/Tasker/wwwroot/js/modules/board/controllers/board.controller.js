@@ -10,6 +10,7 @@
     function boardController($stateParams, boardService) {
         var vm = this;
         vm.title = 'board';
+        vm.addList = addList;
 
         var id = $stateParams.id || null;
 
@@ -26,6 +27,14 @@
             } else {
                 console.error('Board id not provided');
             }
+        }
+
+        function addList() {
+            vm.board.lists.push({
+                name: "List " + (vm.board.lists.length + 1),
+                order: 0,
+                cards: []
+            });
         }
     }
 })();

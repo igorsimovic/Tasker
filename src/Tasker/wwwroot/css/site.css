@@ -139,6 +139,7 @@ textarea {
     text-decoration: underline;
     font-size: 20px;
 }
+
 .href-popup-item {
     color: black;
     height: auto;
@@ -152,9 +153,27 @@ textarea {
     box-shadow: 2px 2px 2px 2px #888888;
 }
 
-.tasker-list{
+.tasker-list {
     width: 200px;
     display: inline-block;
     border: 1px solid rgb(231, 234, 236);
-    margin-right: 10px;
+    margin-right: 15px;
+    min-height: 100px;
+}
+
+.tasker-new-list {
+    min-height: 50px;
+}
+
+.focus {
+    background-color: dimgray !important;
+}
+
+.lists-wrapper {
+    margin-top: 50px;
+    margin-left: 50px;
+}
+
+.list-list{
+    display:inline;
 }

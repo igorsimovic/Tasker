@@ -10,6 +10,7 @@ var ApplicationConfiguration = (function () {
         'ui.select',
         'colorpicker.module',
         'ui.bootstrap',
+        'xeditable'
     ];
 
     // Add a new vertical module
