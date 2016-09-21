@@ -55,10 +55,12 @@
     <Compile Include="DataModel\MongoData\BoardModel.cs" />
     <Compile Include="DataModel\MongoData\CardModel.cs" />
     <Compile Include="DataModel\MongoData\ListModel.cs" />
+    <Compile Include="DataModel\MongoData\UserModel.cs" />
     <Compile Include="MongoDBAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ListRepository.cs" />
     <Compile Include="Repositories\BoardRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainModel\DomainModel.csproj">

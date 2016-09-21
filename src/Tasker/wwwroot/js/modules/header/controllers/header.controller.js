@@ -5,9 +5,9 @@
         .module('header')
         .controller('headerController', headerController);
 
-    headerController.$inject = ['$location'];
+    headerController.$inject = ['$location', 'headerService'];
 
-    function headerController($location) {
+    function headerController($location, headerService) {
         var vm = this;
         vm.title = 'header';
         vm.sections = {
@@ -15,6 +15,7 @@
             add: false,
             info: false,
         };
+        vm.user = headerService.getUser();
         vm.showSection = showSection;
         vm.closeSections = closeSections;
         activate();

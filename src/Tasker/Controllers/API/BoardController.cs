@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DomainModel.Repositories;
 using DomainModel.Entities;
-using Microsoft.AspNetCore.Authorization;
 using System.Net.Http;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -24,10 +23,9 @@ namespace Tasker.Controllers.API
 
         // GET: api/boards
         [HttpGet("")]
-        [Authorize(Policy = "TaskerUser")]
-        public string Get()
+        public IEnumerable<BoardDTO> Get()
         {
-            return "pera";
+            return board_repo_.GetAll().OrderBy(b=>b.OrderNo);
         }
 
         // GET api/boards/57cf0a9636fc06fa4628c3c5
@@ -36,17 +34,23 @@ namespace Tasker.Controllers.API
         {
             return board_repo_.GetById(id);
         }
+        [HttpGet]
+        [Route("userID/{id}")]
+        public List<BoardDTO> GetByUserID(string id)
+        {
+            return board_repo_.GetBoardsByUserID(id);
+        }
 
         // POST api/values
         [HttpPost("")]
-       
+
         public BoardDTO Post([FromBody] BoardDTO board)
         {
             try
             {
-                var result =  board_repo_.CreateBoard(board);
+                var result = board_repo_.CreateBoard(board);
                 return result;
-                
+
             }
             catch (Exception ex)
             {

@@ -17,17 +17,22 @@ namespace DomainModel.Entities
 
         public string Color { get; set; }
 
+        public int OrderNo { get; set; }
+
+        public int OriginalIndex { get; set; }
+
         public BoardDTO()
         {
 
         }
 
-        public BoardDTO(string id, string boardName, bool Starred, string color)
+        public BoardDTO(string id, string boardName, bool Starred, string color, int orderNo)
         {
             this.Id = id;
             this.BoardName = boardName;
             this.Starred = Starred;
             this.Color = color;
+            this.OrderNo = orderNo;
         }
 
         public BoardDTO(string id, string boardName, bool stared, IEnumerable<ListDTO> lists)

@@ -59,7 +59,7 @@ textarea {
 }
 
 .boards-container {
-    min-height: 80px;
+    min-height: 80px !important;
 }
 
 .board-list {

@@ -5,9 +5,9 @@
         .module('board')
         .controller('boardsController', boardsController);
 
-    boardsController.$inject = ['boardService', '$scope', '$document'];
+    boardsController.$inject = ['boardService', '$scope', 'userService'];
 
-    function boardsController(boardService, $scope, $document) {
+    function boardsController(boardService, $scope, userService) {
         var vm = this;
         vm.title = 'This is the board page';
         vm.starred = [];
@@ -20,7 +20,6 @@
         activate();
         vm.creationMode = false;
 
-
         function toggleCreationMode() {
             vm.creationMode = !vm.creationMode;
         }
@@ -29,6 +28,7 @@
             boardService.createBoard(vm.newBoard).then(function (response) {
                 vm.boards.push(response.data);
                 vm.creationMode = false;
+                refreshBoards();
             }, function (err) {
                 console.log(err);
             }).finally(function () {
@@ -48,18 +48,12 @@
             }
             //console.log('originals', originalStarred, ' ', originalBoards);
             item.starred = !item.starred;
+            item.orderNo = index;
+            item.originalIndex = originalIndex;
             boardService.updateBoard(item).then(function () {
-                if (originalStarredStatus) {
-                    vm.starred.splice(originalIndex, 1);
-                    vm.boards.push(item);
-                } else {
-                    vm.boards.splice(originalIndex, 1);
-                    vm.starred.push(item);
-                }
+                refreshBoards();
             }, function (err) {
-                item.starred = !item.starred;
-                vm.starred = angular.copy(originalStarred);
-                vm.originalBoards = angular.copy(originalBoards);
+                rollBack(originalStarred, originalBoards);
             }).finally(function () {
                 originalStarred = null;
                 originalBoards = null;
@@ -68,17 +62,40 @@
             });
         }
 
+        function rollBack(originalStarred, originalBoards) {
+            originalStarred.forEach(function (item, index) {
+                for (var prop in item) {
+                    if (item.hasOwnProperty(prop)) {
+                        vm.starred[i][prop] = item[prop];
+                    }
+                }
+            });
+            originalBoards.forEach(function (item, index) {
+                for (var prop in item) {
+                    if (item.hasOwnProperty(prop)) {
+                        vm.boards[i][prop] = item[prop];
+                    }
+                }
+            });
+        }
+
         function activate() {
-            boardService.getAll().then(function (response) {
-                //vm.boards = response.data;
-                vm.starred = response.data.filter(function (board) {
-                    return board.starred === true;
+            vm.starred = userService.getUser().boards.filter(function (item) {
+                return item.starred;
+            });
+            vm.boards = userService.getUser().boards.filter(function (item) {
+                return !item.starred;
+            });
+        }
+
+        function refreshBoards() {
+            boardService.refreshBoards(userService.getUser().id).then(function (response) {
+                vm.starred = response.data.filter(function (item) {
+                    return item.starred;
                 });
-                vm.boards = response.data.filter(function (board) {
-                    return board.starred === false;
+                vm.boards = response.data.filter(function (item) {
+                    return !item.starred;
                 });
-            }, function (err) {
-                console.error(err);
             });
         }
     }

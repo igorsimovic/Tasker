@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DataModel.MongoData
 {
-   public class BoardModel
+    public class BoardModel
     {
         public ObjectId Id { get; set; }
         [BsonElement("BoardName")]
@@ -17,10 +17,13 @@ namespace DataLayer.DataModel.MongoData
         public string BoardStuff { get; set; }
 
         [BsonElement("Lists")]
-        public IEnumerable<ObjectId> Lists{ get; set; }
+        public IEnumerable<ObjectId> Lists { get; set; }
         [BsonElement("Starred")]
         public bool Starred { get; set; }
         [BsonElement("Color")]
         public string Color { get; set; }
+
+        [BsonElement("OrderNo")]
+        public int OrderNo { get; set; }
     }
 }

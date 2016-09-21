@@ -14,5 +14,7 @@ namespace DomainModel.Repositories
         BoardDTO GetById(string id);
         void update(BoardDTO model);
         BoardDTO CreateBoard(BoardDTO board);
+
+        List<BoardDTO> GetBoardsByUserID(string userID);
     }
 }
