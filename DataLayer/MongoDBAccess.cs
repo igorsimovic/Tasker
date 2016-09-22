@@ -254,7 +254,23 @@ namespace DataLayer
             return null;
         }
 
+        public UserModel GetUserByCredentials(string username, string password)
+        {
+            var filter = Builders<UserModel>.Filter.Eq("userName", username);
+            var userResult = db_.GetCollection<UserModel>("User").Find<UserModel>(filter).FirstOrDefault();
+            
+            if(userResult == null)
+            {
+                return null;
+            }
 
+            if(userResult.NewPassword != password)
+            {
+                return null;
+            }
+
+            return userResult;
+        }
 
     }
 

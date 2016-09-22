@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using DomainModel.Repositories;
 using DomainModel.Entities;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -23,6 +24,7 @@ namespace Tasker.Controllers.API
 
         // GET: api/boards
         [HttpGet("")]
+        [Authorize(Policy = "TaskerUser")]
         public IEnumerable<BoardDTO> Get()
         {
             return board_repo_.GetAll().OrderBy(b=>b.OrderNo);
@@ -30,12 +32,14 @@ namespace Tasker.Controllers.API
 
         // GET api/boards/57cf0a9636fc06fa4628c3c5
         [HttpGet("{id}")]
+        [Authorize(Policy = "TaskerUser")]
         public BoardDTO Get(string id)
         {
             return board_repo_.GetById(id);
         }
         [HttpGet]
         [Route("userID/{id}")]
+        [Authorize(Policy = "TaskerUser")]
         public List<BoardDTO> GetByUserID(string id)
         {
             return board_repo_.GetBoardsByUserID(id);
@@ -43,7 +47,7 @@ namespace Tasker.Controllers.API
 
         // POST api/values
         [HttpPost("")]
-
+        [Authorize(Policy = "TaskerUser")]
         public BoardDTO Post([FromBody] BoardDTO board)
         {
             try
@@ -61,6 +65,7 @@ namespace Tasker.Controllers.API
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [Authorize(Policy = "TaskerUser")]
         public void Put(int id, [FromBody]BoardDTO board)
         {
             try
@@ -76,6 +81,7 @@ namespace Tasker.Controllers.API
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [Authorize(Policy = "TaskerUser")]
         public void Delete(int id)
         {
         }

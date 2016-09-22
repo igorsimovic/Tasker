@@ -16,7 +16,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$locatio
 
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpProvider',
   function ($httpProvider) {
-      //$httpProvider.interceptors.push('AcceptLanguageHeaderInjector');
+      $httpProvider.interceptors.push('AuthInterceptorService');
       //$httpProvider.interceptors.push('HttpErrorResponseInterceptor');
   }
 ]);
@@ -36,7 +36,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpPro
 //  }
 //]);
 
-// Redirect to home view when route not found
+ //Redirect to home view when route not found
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRouterProvider',
   function ($urlRouterProvider) {
       $urlRouterProvider.otherwise('/boards');
@@ -48,3 +48,35 @@ angular.element(document).ready(function () {
     // Init the app
     angular.bootstrap(document.body, [ApplicationConfiguration.applicationModuleName], { strictDi: true });
 });
+
+angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInterceptorService', ['$q', '$location', function ($q, $location) {
+
+    var authInterceptorServiceFactory = {};
+
+    var _request = function (config) {
+
+        config.headers = config.headers || {};
+
+        var authDataString = localStorage.getItem('authData');
+        var authData = JSON.parse(authDataString);
+
+        if (authData) {
+            config.headers.Authorization = 'Bearer ' + authData.token;
+        }
+
+        return config;
+    };
+
+    var _responseError = function (rejection) {
+
+        if (rejection.status === 401) {
+            $location.path('/login');
+        }
+        return $q.reject(rejection);
+    };
+
+    authInterceptorServiceFactory.request = _request;
+    authInterceptorServiceFactory.responseError = _responseError;
+
+    return authInterceptorServiceFactory;
+}]);

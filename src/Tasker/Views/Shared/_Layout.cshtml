@@ -38,11 +38,11 @@
                     <div class="navbar-collapse collapse" click-off="vm.closeSections();" id="navbar">
                         <ul class="nav navbar-nav">
                             <li class="active">
-                                <a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>
+                                @*<a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>*@
                             </li>
 
                         </ul>
-                        <ul class="nav navbar-top-links navbar-right">
+                        <ul class="nav navbar-top-links navbar-right" ng-show="vm.authData.isAuth">
                             <li>
                                 <a ng-click="vm.showSection('add')">
                                     <i class="fa fa-plus" aria-hidden="true"></i>
@@ -50,7 +50,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="nav navbar-top-links navbar-right">
+                        <ul class="nav navbar-top-links navbar-right" ng-show="vm.authData.isAuth">
                             <li>
                                 <a ng-click="vm.showSection('info')">
                                     <i class="fa fa-info" aria-hidden="true"></i>
@@ -58,10 +58,10 @@
                                 </a>
                             </li>
                         </ul>
-                        <ul class="nav navbar-top-links navbar-right">
+                        <ul class="nav navbar-top-links navbar-right" ng-show="vm.authData.isAuth">
                             <li>
                                 <a ng-click="vm.showSection('user')">
-                                    <i class="fa fa-user-md" aria-hidden="true"></i> UserName
+                                    <i class="fa fa-user-md" aria-hidden="true"></i> {{vm.authData.userName}}
 
                                 </a>
                             </li>
@@ -82,7 +82,7 @@
                                     <li>Change language</li>
                                 </ul>
                                 <ul style="list-style:none" class="sidebar-list">
-                                    <li>Log out</li>
+                                    <li ng-click="vm.logOut()">Log out</li>
                                 </ul>
 
 

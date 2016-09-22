@@ -5,9 +5,9 @@
         .module('header')
         .controller('headerController', headerController);
 
-    headerController.$inject = ['$location', 'headerService'];
+    headerController.$inject = ['$location', 'headerService', 'accountService'];
 
-    function headerController($location, headerService) {
+    function headerController($location, headerService, accountService) {
         var vm = this;
         vm.title = 'header';
         vm.sections = {
@@ -15,9 +15,17 @@
             add: false,
             info: false,
         };
-        vm.user = headerService.getUser();
+
+        //accountService.getUser().then(function (response) {
+        //    vm.user = response.data;
+        //});
+
+        vm.authData = accountService.authData;
+
         vm.showSection = showSection;
         vm.closeSections = closeSections;
+        vm.logOut = logOut;
+
         activate();
         function showSection(name) {
             for (var prop in vm.sections) {
@@ -40,5 +48,9 @@
 
 
         function activate() { }
+
+        function logOut() {
+            accountService.logout();
+        }
     }
 })();

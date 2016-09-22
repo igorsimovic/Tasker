@@ -8,10 +8,10 @@
     headerService.$inject = ['$http'];
 
     function headerService($http) {
-        var _user = USER;
+        //var _user = USER;
 
         this.getUser = function () {
-            return _user;
+            //return _user;
         }
     }
 })();

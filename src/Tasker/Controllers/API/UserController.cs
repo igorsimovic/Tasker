@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using DomainModel.Entities;
 using DomainModel.Repositories;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tasker.Controllers.API
 {
@@ -23,6 +24,7 @@ namespace Tasker.Controllers.API
 
         // GET: api/User
         [HttpGet]
+        [Authorize(Policy = "TaskerUser")]
         public IEnumerable<string> Get()
         {
             return new string[] { "value1", "value2" };
@@ -30,6 +32,7 @@ namespace Tasker.Controllers.API
 
         // GET: api/User/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "TaskerUser")]
         public UserDTO Get(string id)
         {
             return repo_.getUser(id);
@@ -37,6 +40,7 @@ namespace Tasker.Controllers.API
         
         // POST: api/User
         [HttpPost]
+        [Authorize(Policy = "TaskerUser")]
         public void Post([FromBody]string value)
         {
         }
@@ -44,6 +48,7 @@ namespace Tasker.Controllers.API
         // PUT: api/User/5
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Policy = "TaskerUser")]
         public HttpResponseMessage Put(string id, [FromBody]UserDTO model)
         {
             try
