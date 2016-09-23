@@ -272,6 +272,19 @@ namespace DataLayer
             return userResult;
         }
 
+        public UserModel CreateUser(UserModel user)
+        {
+            try
+            {
+                db_.GetCollection<UserModel>("User").InsertOne(user);
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 
 }

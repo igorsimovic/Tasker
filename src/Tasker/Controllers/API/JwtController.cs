@@ -86,7 +86,7 @@ namespace Tasker.Controllers.API
         public async Task<IActionResult> Register([FromBody] ApplicationUser user)
         {
             //Ovde kreirati korisnika u bazi
-            
+            repo_.CreateUser(new UserDTO { FullName = user.FullName, UserName = user.UserName, NewPassword = user.Password, Bio = user.Bio });
 
             return new OkObjectResult(new { });
         }

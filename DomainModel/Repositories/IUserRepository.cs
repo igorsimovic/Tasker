@@ -12,5 +12,6 @@ namespace DomainModel.Repositories
         UserDTO getUser(string v);
         void updateUser(UserDTO model);
         UserDTO getUserByCredentials(string username, string password);
+        UserDTO CreateUser(UserDTO user);
     }
 }

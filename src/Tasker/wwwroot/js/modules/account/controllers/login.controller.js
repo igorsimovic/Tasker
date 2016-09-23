@@ -14,9 +14,14 @@
             Password : ""
         }
 
+        $scope.message = '';
+
         $scope.login = function () {
             accountService.login($scope.user).then(function (response) {
                 $location.path('/boards');
+            }, function (err) {
+                debugger;
+                $scope.message = err;
             });
         }
     }
