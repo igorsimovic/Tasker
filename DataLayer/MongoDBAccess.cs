@@ -297,9 +297,39 @@ namespace DataLayer
             return null;
         }
 
+        public UserModel GetUserByCredentials(string username, string password)
+        {
+            var filter = Builders<UserModel>.Filter.Eq("userName", username);
+            var userResult = db_.GetCollection<UserModel>("User").Find<UserModel>(filter).FirstOrDefault();
+            
+            if(userResult == null)
+            {
+                return null;
+            }
         #endregion
 
 
+            if(userResult.NewPassword != password)
+            {
+                return null;
+            }
+
+            return userResult;
+        }
+
+        public UserModel CreateUser(UserModel user)
+        {
+            try
+            {
+                db_.GetCollection<UserModel>("User").InsertOne(user);
+
+                return user;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 
 }

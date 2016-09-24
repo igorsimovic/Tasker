@@ -5,9 +5,9 @@
         .module('board')
         .controller('boardsController', boardsController);
 
-    boardsController.$inject = ['boardService', '$scope', 'userService'];
+    boardsController.$inject = ['boardService', '$scope', 'userService', 'accountService'];
 
-    function boardsController(boardService, $scope, userService) {
+    function boardsController(boardService, $scope, userService, accountService) {
         var vm = this;
         vm.title = 'This is the board page';
         vm.starred = [];
@@ -80,16 +80,18 @@
         }
 
         function activate() {
-            vm.starred = userService.getUser().boards.filter(function (item) {
-                return item.starred;
-            });
-            vm.boards = userService.getUser().boards.filter(function (item) {
-                return !item.starred;
+            boardService.refreshBoards(accountService.authData.userId).then(function (response) {
+                vm.starred = response.data.filter(function (item) {
+                    return item.starred;
+                });
+                vm.boards = response.data.filter(function (item) {
+                    return !item.starred;
+                });
             });
         }
 
         function refreshBoards() {
-            boardService.refreshBoards(userService.getUser().id).then(function (response) {
+            boardService.refreshBoards(accountService.authData.userId).then(function (response) {
                 vm.starred = response.data.filter(function (item) {
                     return item.starred;
                 });

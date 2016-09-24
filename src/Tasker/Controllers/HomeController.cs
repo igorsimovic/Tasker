@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using DataLayer;
 using DomainModel.Repositories;
-using Tasker.Models.TaskerModels;
+using Tasker.Models;
+using DomainModel.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tasker.Controllers
 {
@@ -18,23 +20,23 @@ namespace Tasker.Controllers
             user_repo_ = repo;
         }
 
-
+        [AllowAnonymous]
         public IActionResult Index()
         {
             try
             {
-                var user = user_repo_.getUser("57dbfcadcc2963cd7fea8798");
-                var userModel = new UserModel
-                {
-                    ID = user.Id,
-                    FullName = user.FullName,
-                    Bio = user.Bio,
-                    Boards = user.Boards,
-                    Initials = user.Initials,
-                    Picture = user.Picture,
-                    UserName = user.UserName
-                };
-                return View(userModel);
+                //UserDTO user = user_repo_.getUser("57dbfcadcc2963cd7fea8798");
+                //ApplicationUser userModel = new ApplicationUser
+                //{
+                //    ID = user.Id,
+                //    FullName = user.FullName,
+                //    Bio = user.Bio,
+                //    Boards = user.Boards,
+                //    Initials = user.Initials,
+                //    Picture = user.Picture,
+                //    UserName = user.UserName
+                //};
+                return View();
 
 
             }

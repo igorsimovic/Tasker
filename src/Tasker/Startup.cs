@@ -57,14 +57,14 @@ namespace Tasker
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             
-            services.AddMvc( 
-            //    config =>
-            //{
-            //    var policy = new AuthorizationPolicyBuilder()
-            //         .RequireAuthenticatedUser()
-            //         .Build();
-            //    config.Filters.Add(new AuthorizeFilter(policy));
-            //}
+            services.AddMvc(
+                config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                     .RequireAuthenticatedUser()
+                     .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            }
             );
 
 

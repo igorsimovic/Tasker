@@ -5,15 +5,17 @@
         .module('user')
         .service('userService', userService);
 
-	userService.$inject = ['$http' ,'headerService'];
+	userService.$inject = ['$http'];
 
-	function userService($http, headerService) {
+	function userService($http) {
 
 		this.save = saveUser;
 		this.getUser = getUser;
-		function getUser(forceReload) {
-		    return headerService.getUser(forceReload);
+
+		function getUser(id) {
+            return $http.get('/api/v1/User/' + id);
 		}
+
 		function saveUser(user) {
 			return $http.put('/api/v1/user/' + user.id, user);
 		}

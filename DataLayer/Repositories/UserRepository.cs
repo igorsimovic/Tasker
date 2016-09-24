@@ -48,5 +48,25 @@ namespace DataLayer.Repositories
                 throw ex;
             }
         }
+
+        public UserDTO getUserByCredentials(string username, string password)
+        {
+            var userResult = db.GetUserByCredentials(username, password);
+
+            if (userResult == null)
+            {
+                return null;
+            }
+
+            var result = new UserDTO(userResult.Id.ToString(), userResult.FullName, userResult.UserName, userResult.Initials, userResult.Bio, userResult.Picture);
+            return result;
+        }
+
+        public UserDTO CreateUser(UserDTO user)
+        {
+            db.CreateUser(new UserModel { UserName = user.UserName, NewPassword = user.NewPassword, Bio = user.Bio, FullName = user.FullName });
+
+            return user;
+        }
     }
 }
