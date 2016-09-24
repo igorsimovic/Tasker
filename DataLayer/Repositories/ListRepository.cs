@@ -19,12 +19,37 @@ namespace DataLayer.Repositories
             db_ = db;
         }
 
+        public ListDTO CreateList(ListDTO list)
+        {
+            var result = db_.CreateList(list);
+            if (result != null)
+            {
+                return result;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+
+        public bool DeleteList(string id)
+        {
+            db_.DeleteList(id);
+            return true;
+        }
+
         public IEnumerable<ListDTO> GetListsByBoardId(string boardId)
         {
             var result = db_.GetListByBoardId(boardId)
                 .Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description));
 
             return result;
+        }
+
+        public ListDTO UpdateList(ListDTO list)
+        {
+            throw new NotImplementedException();
         }
     }
 }

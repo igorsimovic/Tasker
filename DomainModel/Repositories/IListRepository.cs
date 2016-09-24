@@ -10,5 +10,11 @@ namespace DomainModel.Repositories
     public interface IListRepository
     {
         IEnumerable<ListDTO> GetListsByBoardId(string boardId);
+
+        ListDTO CreateList(ListDTO list);
+
+        ListDTO UpdateList(ListDTO list);
+
+        bool DeleteList(string id);
     }
 }

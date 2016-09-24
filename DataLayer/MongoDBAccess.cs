@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DomainModel.Entities;
 using System.Reflection;
+using System.Collections;
 
 namespace DataLayer
 {
@@ -22,6 +23,7 @@ namespace DataLayer
             this.mongoClient_ = new MongoClient("mongodb://localhost:27017");
             this.db_ = mongoClient_.GetDatabase("TaskerDB");
         }
+
 
         public UserModel getUserByID(string userId)
         {
@@ -57,7 +59,7 @@ namespace DataLayer
 
         //    return bsonDic.ToBsonDocument();
         //}
-        
+
 
         //TODO: Make this globaly accesible(he)
         private IDictionary<string, string> makeDictionaryFromModel(Object v)
@@ -70,7 +72,7 @@ namespace DataLayer
                 if (prop.Name != "Id")
                 {
                     var objectValue = prop.GetValue(v, null);
-                    if (objectValue!=null)
+                    if (objectValue != null)
                     {
                         var first = prop.Name.ElementAt(0).ToString();
                         first = first.ToLower();
@@ -88,9 +90,9 @@ namespace DataLayer
             try
             {
                 var dictionary = makeDictionaryFromModel(userModel);
-                var bsonDocument = new BsonDocument("$set",dictionary.ToBsonDocument());
-                var update = new BsonDocumentUpdateDefinition<UserModel>(bsonDocument) ;
-                db_.GetCollection<UserModel>("User").UpdateOne(filter,update);
+                var bsonDocument = new BsonDocument("$set", dictionary.ToBsonDocument());
+                var update = new BsonDocumentUpdateDefinition<UserModel>(bsonDocument);
+                db_.GetCollection<UserModel>("User").UpdateOne(filter, update);
 
             }
             catch (Exception ex)
@@ -99,6 +101,8 @@ namespace DataLayer
                 throw new Exception("User update fail" + ex.Message);
             }
         }
+
+        #region BOARDS
 
         public List<BoardModel> getBoardsByUser(string userID)
         {
@@ -128,7 +132,9 @@ namespace DataLayer
                     Color = board.Color,
                     BoardName = board.BoardName,
                     OrderNo = board.OrderNo,
+                    Lists = new List<ObjectId>()
                 };
+
                 db_.GetCollection<BoardModel>("Boards").InsertOne(boardModel);
                 string userID = "57dbfcadcc2963cd7fea8798";//TMP hardcoded here will be read from req.
                 ObjectId userObjectID = new ObjectId(userID);
@@ -151,6 +157,7 @@ namespace DataLayer
                 throw ex;
             }
         }
+
 
         public IEnumerable<BoardModel> GetAllBoards()
         {
@@ -203,9 +210,6 @@ namespace DataLayer
                     var a = collection.UpdateOne(currentFilter, update);
                 }
 
-
-
-
                 //var prevValue = initialIndex;
                 //var resultUpdate = db_.GetCollection<BoardModel>("Boards")
                 //    .UpdateMany(Builders<BoardModel>.Filter.Gte("OrderNo", initialIndex)
@@ -215,12 +219,13 @@ namespace DataLayer
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
 
         }
 
+        #endregion
+        #region LISTS
         public ListModel GetListById(string id)
         {
             var filter = Builders<ListModel>.Filter.Eq("_id", new ObjectId(id));
@@ -228,7 +233,6 @@ namespace DataLayer
 
             return result;
         }
-
 
         public IEnumerable<ListModel> GetListByBoardId(string boardId)
         {
@@ -241,6 +245,45 @@ namespace DataLayer
             }
             return null;
         }
+
+        public ListDTO CreateList(ListDTO list)
+        {
+            try
+            {
+                var listModel = new ListModel
+                {
+                    Name = list.Name,
+                    Order = list.Order,
+                    Description = list.Description,
+                    Cards = new List<ObjectId>()
+                };
+
+                db_.GetCollection<ListModel>("Lists").InsertOne(listModel);
+                ObjectId boardObjectId = new ObjectId(list.BoardId);
+
+                var filter = Builders<BoardModel>.Filter.Eq(b => b.Id, boardObjectId);
+                var update = Builders<BoardModel>.Update.Push(b => b.Lists, listModel.Id);
+
+                db_.GetCollection<BoardModel>("Boards").UpdateOne(filter, update);
+
+                list.Id = listModel.Id.ToString();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        internal void DeleteList(string id)
+        {
+            db_.GetCollection<ListModel>("Lists").DeleteOne<ListModel>(l => l.Id == ObjectId.Parse(id));
+
+        }
+        #endregion
+
+        #region CARDS
+
         public IEnumerable<CardModel> GetCardsByListId(string id)
         {
             var list = this.GetListById(id);
@@ -254,6 +297,7 @@ namespace DataLayer
             return null;
         }
 
+        #endregion
 
 
     }

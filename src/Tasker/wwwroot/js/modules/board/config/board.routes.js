@@ -9,8 +9,8 @@ angular.module('board').config(['$stateProvider', '$urlRouterProvider',
             controllerAs: 'vm'
         }).state('board', {
             url: '/boards/:id',
-            templateUrl: GLOBAL_SETTINGS.app.componentsRoute + '/board/views/board.view.html',
-            controller: 'boardController',
+            templateUrl: GLOBAL_SETTINGS.app.componentsRoute + '/board/views/lists.view.html',
+            controller: 'listsController',
             controllerAs: 'vm'
         })
     }]);

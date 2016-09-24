@@ -153,7 +153,22 @@ textarea {
     box-shadow: 2px 2px 2px 2px #888888;
 }
 
+.lists-wrapper {
+    margin-top: 50px;
+    margin-left: 50px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    height: 100%;
+    width: 90%;
+    padding: 0 15px;
+}
+
 .tasker-list {
+    display: inline;
+    white-space: nowrap;
+}
+
+.list-item {
     width: 200px;
     display: inline-block;
     border: 1px solid rgb(231, 234, 236);
@@ -161,19 +176,37 @@ textarea {
     min-height: 100px;
 }
 
-.tasker-new-list {
+.new-list-item {
     min-height: 50px;
+    margin-top: 70px !important;
+}
+
+.list-settings {
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .focus {
     background-color: dimgray !important;
 }
 
-.lists-wrapper {
-    margin-top: 50px;
-    margin-left: 50px;
+
+.cards {
+    list-style-type: none;
+    padding: 0;
 }
 
-.list-list{
-    display:inline;
+.card-item {
+    border-radius: 5px;
+    background-color: rgba(26, 179, 148, 0.77);
+    padding: 10px 10px 10px 0;
+    margin-bottom: 10px;
+}
+
+.new-card-item {
+    cursor: pointer;
+}
+
+.card-item > a {
+    color: white !important;
 }

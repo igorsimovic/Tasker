@@ -80,6 +80,7 @@ namespace Tasker
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddSingleton<IBoardRepository, BoardRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddTransient<IListRepository, ListRepository>();
             services.AddSingleton<MongoDBAccess, MongoDBAccess>();
 
             // Get options from app settings

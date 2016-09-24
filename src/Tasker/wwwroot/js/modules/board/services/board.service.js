@@ -13,6 +13,7 @@
         this.updateBoard = updateBoard;
         this.createBoard = createBoard;
         this.refreshBoards = refreshBoards;
+
         function getAll() {
             return $http.get('/api/v1/boards');
         }
@@ -26,7 +27,6 @@
         }
 
         function updateBoard(board) {
-            console.log('ja sam board', board);
             return $http.put('/api/v1/boards/' + board.id, board);
         }
 

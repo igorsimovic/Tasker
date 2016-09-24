@@ -14,6 +14,7 @@ namespace DomainModel.Entities
         public int Order { get; set; }
         public string Description{ get; set; }
         public IEnumerable<CardDTO> Cards { get; set; }
+        public string BoardId { get; set; }
 
         public ListDTO(string id, string name, int order, string description)
         {

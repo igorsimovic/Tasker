@@ -11,7 +11,7 @@ using System.Net.Http;
 
 namespace Tasker.Controllers.API
 {
-    [Route("api/v1/boards")]
+    [Route("api/v1/boards", Name ="Boards")]
     public class BoardController : Controller
     {
         private readonly IBoardRepository board_repo_;
@@ -29,7 +29,7 @@ namespace Tasker.Controllers.API
         }
 
         // GET api/boards/57cf0a9636fc06fa4628c3c5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetById")]
         public BoardDTO Get(string id)
         {
             return board_repo_.GetById(id);
