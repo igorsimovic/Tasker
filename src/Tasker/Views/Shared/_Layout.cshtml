@@ -29,91 +29,93 @@
     <div id="wrapper">
         <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom white-bg">
-                <nav class="navbar navbar-static-top" role="navigation" ng-controller="headerController as vm">
-                    <div class="navbar-header">
-                        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                            <i class="fa fa-reorder"></i>
-                        </button>
-                        <a href="#" class="navbar-brand">Tasker</a>
-                    </div>
-                    <div class="navbar-collapse collapse" click-off="vm.closeSections();" id="navbar">
-                        <ul class="nav navbar-nav">
-                            <li class="active">
-                                @*<a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>*@
-                            </li>
-
-                        </ul>
-                        <ul class="nav navbar-top-links navbar-right" ng-show="vm.authData.isAuth">
-                            <li>
-                                <a ng-click="vm.showSection('add')">
-                                    <i class="fa fa-plus" aria-hidden="true"></i>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-top-links navbar-right" ng-show="vm.authData.isAuth">
-                            <li>
-                                <a ng-click="vm.showSection('info')">
-                                    <i class="fa fa-info" aria-hidden="true"></i>
-
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="nav navbar-top-links navbar-right" ng-show="vm.authData.isAuth">
-                            <li>
-                                <a ng-click="vm.showSection('user')">
-                                    <i class="fa fa-user-md" aria-hidden="true"></i> {{vm.authData.userName}}
-
-                                </a>
-                            </li>
-                        </ul>
-                        <div ng-if="vm.sections['user']" class="tab-pane header-popup-item">
-                            <div class="sidebar-container">
-                                <div class="text-center">
-                                    <p class="sidebar-title" style="color:gray">{{vm.user.fullName}}</p>
-                                </div>
-                                <ul style="list-style:none" class="sidebar-list">
-                                    <li><a ui-sref="user.profile"> Profile </a></li>
-                                    <li><a ui-sref="user.cards"> Card </a></li>
-                                    <li><a ui-sref="user.settings"> Settings </a></li>
-                                </ul>
-                                <ul style="list-style:none" class="sidebar-list">
-                                    <li>Help</li>
-                                    <li>Shortcut</li>
-                                    <li>Change language</li>
-                                </ul>
-                                <ul style="list-style:none" class="sidebar-list">
-                                    <li ng-click="vm.logOut()">Log out</li>
-                                </ul>
-
-
-                            </div>
+                <nav  class="navbar navbar-static-top" role="navigation" ng-controller="headerController as vm">
+                     <div ng-if="vm.user.user_id">
+                        <div class="navbar-header">
+                            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                                <i class="fa fa-reorder"></i>
+                            </button>
+                            <a href="#" class="navbar-brand">Tasker</a>
                         </div>
-                        <div ng-if="vm.sections['info']" class="tab-pane header-popup-item">
-                            <div class="sidebar-container">
-                                <div class="text-center">
-                                    <p class="sidebar-title" style="color:gray">Info</p>
-                                </div>
-                                <ul class="sidebar-list">
-                                    <li>
-                                        this is info item
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div ng-if="vm.sections['add']" class="tab-pane header-popup-item">
-                            <div class="sidebar-container">
-                                <div class="text-center">
-                                    <p class="sidebar-title" style="color:gray">Add</p>
-                                </div>
-                                <ul class="sidebar-list">
-                                    <li>
-                                        Add section
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <div class="navbar-collapse collapse" click-off="vm.closeSections();" id="navbar">
+                            <ul class="nav navbar-nav">
+                                <li class="active">
+                                    @*<a aria-expanded="false" role="button" href="layouts.html"> Back to main Layout page</a>*@
+                                </li>
 
+                            </ul>
+                            <ul class="nav navbar-top-links navbar-right">
+                                <li>
+                                    <a ng-click="vm.showSection('add')">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-top-links navbar-right">
+                                <li>
+                                    <a ng-click="vm.showSection('info')">
+                                        <i class="fa fa-info" aria-hidden="true"></i>
+
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-top-links navbar-right">
+                                <li>
+                                    <a ng-click="vm.showSection('user')">
+                                        <i class="fa fa-user-md" aria-hidden="true"></i> {{vm.authData.userName}}
+
+                                    </a>
+                                </li>
+                            </ul>
+                            <div ng-if="vm.sections['user']" class="tab-pane header-popup-item">
+                                <div class="sidebar-container">
+                                    <div class="text-center">
+                                        <p class="sidebar-title" style="color:gray">{{vm.user.fullName}}</p>
+                                    </div>
+                                    <ul style="list-style:none" class="sidebar-list">
+                                        <li><a ui-sref="user.profile"> Profile </a></li>
+                                        <li><a ui-sref="user.cards"> Card </a></li>
+                                        <li><a ui-sref="user.settings"> Settings </a></li>
+                                    </ul>
+                                    <ul style="list-style:none" class="sidebar-list">
+                                        <li>Help</li>
+                                        <li>Shortcut</li>
+                                        <li>Change language</li>
+                                    </ul>
+                                    <ul style="list-style:none" class="sidebar-list">
+                                        <li ng-click="vm.logOut()">Log out</li>
+                                    </ul>
+
+
+                                </div>
+                            </div>
+                            <div ng-if="vm.sections['info']" class="tab-pane header-popup-item">
+                                <div class="sidebar-container">
+                                    <div class="text-center">
+                                        <p class="sidebar-title" style="color:gray">Info</p>
+                                    </div>
+                                    <ul class="sidebar-list">
+                                        <li>
+                                            this is info item
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div ng-if="vm.sections['add']" class="tab-pane header-popup-item">
+                                <div class="sidebar-container">
+                                    <div class="text-center">
+                                        <p class="sidebar-title" style="color:gray">Add</p>
+                                    </div>
+                                    <ul class="sidebar-list">
+                                        <li>
+                                            Add section
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </nav>
 

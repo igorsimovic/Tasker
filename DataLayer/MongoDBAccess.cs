@@ -132,23 +132,20 @@ namespace DataLayer
                     Color = board.Color,
                     BoardName = board.BoardName,
                     OrderNo = board.OrderNo,
-                    Lists = new List<ObjectId>()
+                    Lists = new List<ObjectId>(),
+                    UserCreatedBy = new ObjectId(board.UserCreatedBy)
                 };
 
                 db_.GetCollection<BoardModel>("Boards").InsertOne(boardModel);
-                string userID = "57dbfcadcc2963cd7fea8798";//TMP hardcoded here will be read from req.
-                ObjectId userObjectID = new ObjectId(userID);
-                var filter = Builders<UserModel>.Filter.Eq(u => u.Id, userObjectID);
+                
+
+                var filter = Builders<UserModel>.Filter.Eq(u => u.Id, boardModel.UserCreatedBy);
                 var update = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
+
                 db_.GetCollection<UserModel>("User").UpdateOne(filter, update);
-                return new BoardDTO
-                {
-                    Id = boardModel.Id.ToString(),
-                    BoardName = boardModel.BoardName,
-                    Color = boardModel.Color,
-                    OrderNo = boardModel.OrderNo,
-                };
-                //add user id = boardId relation here
+                board.Id = boardModel.Id.ToString();
+
+                return board;
 
             }
             catch (Exception ex)
@@ -159,10 +156,10 @@ namespace DataLayer
         }
 
 
-        public IEnumerable<BoardModel> GetAllBoards()
+        public IEnumerable<BoardModel> GetAllBoards(string userId)
         {
-            var filter = new BsonDocument();
-            var result = db_.GetCollection<BoardModel>("Boards").Find(filter).ToEnumerable<BoardModel>();
+            var objectUserId = new ObjectId(userId);
+            var result = db_.GetCollection<BoardModel>("Boards").Find<BoardModel>(b => b.UserCreatedBy == objectUserId).ToEnumerable<BoardModel>();
 
             return result;
         }

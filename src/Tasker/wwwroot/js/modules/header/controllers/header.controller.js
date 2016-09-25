@@ -5,9 +5,10 @@
         .module('header')
         .controller('headerController', headerController);
 
-    headerController.$inject = ['$location', 'headerService', 'accountService'];
+    headerController.$inject = ['$scope', 'headerService', 'accountService', 'userService'];
 
-    function headerController($location, headerService, accountService) {
+    function headerController($scope, headerService, accountService, userService) {
+
         var vm = this;
         vm.title = 'header';
         vm.sections = {
@@ -16,11 +17,15 @@
             info: false,
         };
 
-        //accountService.getUser().then(function (response) {
-        //    vm.user = response.data;
-        //});
+        $scope.$on('loginCtrl:login', function (e, user) {
+                vm.user = user;
+        });
 
-        vm.authData = accountService.authData;
+        if (vm.user) {
+            userService.getUser(vm.user.userId).then(function (response) {
+                vm.user = response.data;
+            });
+        }
 
         vm.showSection = showSection;
         vm.closeSections = closeSections;

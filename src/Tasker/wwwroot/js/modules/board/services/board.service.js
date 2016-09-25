@@ -31,7 +31,7 @@
         }
 
         function refreshBoards(userID) {
-            return $http.get('api/v1/boards/userID/' + userID);
+            return $http.get('api/v1/boards/userId/' + userID);
         }
 
     }

@@ -25,5 +25,7 @@ namespace DataLayer.DataModel.MongoData
 
         [BsonElement("OrderNo")]
         public int OrderNo { get; set; }
+        [BsonElement("UserCreatedBy")]
+        public ObjectId UserCreatedBy { get; set; }
     }
 }

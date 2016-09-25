@@ -32,17 +32,17 @@ namespace DataLayer.Repositories
             }
         }
 
-        public IEnumerable<BoardDTO> GetAll()
+        public IEnumerable<BoardDTO> GetAll(string userId)
         {
-            return db_.GetAllBoards()
-                 .Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo));
-        }
-
-        public List<BoardDTO> GetBoardsByUserID(string userID)
-        {
-            var boardsModel = db_.getBoardsByUser(userID).ToList();
+            var boardsModel = db_.getBoardsByUser(userId).ToList();
             return boardsModel.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo)).ToList();
         }
+
+        //public List<BoardDTO> GetBoardsByUserID(string userID)
+        //{
+        //    var boardsModel = db_.getBoardsByUser(userID).ToList();
+        //    return boardsModel.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo)).ToList();
+        //}
 
         public BoardDTO GetById(string id)
         {

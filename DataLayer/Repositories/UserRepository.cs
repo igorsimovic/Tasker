@@ -21,9 +21,6 @@ namespace DataLayer.Repositories
         {
             var userResult = db.getUserByID(userId);
             var result = new UserDTO(userResult.Id.ToString(), userResult.FullName, userResult.UserName, userResult.Initials, userResult.Bio, userResult.Picture);
-            var boards = db.getBoardsByUser(userResult.Id.ToString());
-            IEnumerable<BoardDTO> boardList = boards.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo));
-            result.Boards = boardList.ToList();
             return result;
         }
 
