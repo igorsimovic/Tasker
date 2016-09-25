@@ -70,6 +70,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInte
     var _responseError = function (rejection) {
 
         if (rejection.status === 401) {
+            localStorage.removeItem('authData');
             $location.path('/login');
         }
         return $q.reject(rejection);

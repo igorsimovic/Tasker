@@ -21,6 +21,8 @@ namespace DomainModel.Entities
 
         public int OriginalIndex { get; set; }
 
+        public string UserCreatedBy { get; set; }
+
         public BoardDTO()
         {
 
@@ -33,6 +35,7 @@ namespace DomainModel.Entities
             this.Starred = Starred;
             this.Color = color;
             this.OrderNo = orderNo;
+            
         }
 
         public BoardDTO(string id, string boardName, bool stared, IEnumerable<ListDTO> lists)
