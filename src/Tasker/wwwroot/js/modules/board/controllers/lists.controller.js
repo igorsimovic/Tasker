@@ -9,11 +9,14 @@
 
     function listsController($stateParams, listService) {
         var vm = this;
+        //
         vm.title = 'Lists';
         vm.addList = addList;
         vm.listSettings = listSettings;
-        vm.reorderList = reorderList;
+        vm.reorderLists = reorderLists;
+        //
         vm.addCard = addCard;
+        vm.reorderCards = reorderCards;
         vm.openCard = openCard;
 
         var boardId = $stateParams.id || null;
@@ -31,10 +34,12 @@
             }
         })();
 
+
+        //LIST Funcitons
         function addList() {
             var newList = {
                 name: "List " + (vm.board.lists.length + 1),
-                order: (vm.board.lists.length + 1),
+                order: (vm.board.lists.length),
                 cards: [],
                 boardId: boardId
             };
@@ -46,7 +51,7 @@
         }
 
         function listSettings(list) {
-            //
+            //TODO: settings should be here not just delete
             deleteList(list);
         }
 
@@ -60,17 +65,36 @@
             });
         }
 
-        function reorderList(event, index, item, external, type) {
-            debugger
-            console.log('Arguments: ', arguments);
+        //dnd-drop
+        function reorderLists() {
+            var newOrder = [];
+            vm.board.lists.forEach(function (listItem, index) {
+                listItem.order = index;
+                newOrder.push({ listId: listItem.id, listName: listItem.name, newIndex: index });
+            });
+            listService.updateOrder(newOrder).then(function (res) {
+                console.log('indexes updated: ', res);
+            }, function (err) {
+                console.error('Indexes not updated: ', err);
+            });
+            console.log('Update server with those values: ', newOrder);
         }
 
+
+
+        //CARD Functions
         function addCard(list) {
             var newCard = {
                 order: list.cards.length + 1,
-                name: 'Card - ' + list.cards.length + 1
+                name: 'Card - ' + (list.cards.length + 1),
+                listId: list.id
             }
             list.cards.push(newCard);
+        }
+
+        function reorderCards(event, index, item, external, type) {
+            console.log('reorder cards: ', arguments);
+            return item;
         }
 
         function openCard(card) {

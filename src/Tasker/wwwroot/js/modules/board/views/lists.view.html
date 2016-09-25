@@ -1,21 +1,23 @@
 ﻿Welcome to: <h1 editable-text="vm.board.boardName" buttons="no" blur="submit">{{vm.board.boardName}}</h1>
 
 <div class="lists-wrapper">
-    <div dnd-list="vm.board.lists"
-         class="tasker-list"
-         dnd-horizontal-list="true">
-        <div ng-repeat="list in vm.board.lists | orderBy: 'order'"
-             dnd-draggable="list"
-             dnd-moved="vm.board.lists.splice($index,1)"
-             dnd-effect-allowed="move"
-             dnd-selected="vm.selectedList = list"
-             ng-class="{'drag-selected':vm.selectedList === list}"
-             class="ibox float-e-margins list-item">
+    <ul dnd-list="vm.board.lists"
+        class="tasker-list"
+        dnd-horizontal-list="true"
+        dnd-allowed-types="['listType']">
+        <li ng-repeat="list in vm.board.lists"
+            dnd-type="'listType'"
+            dnd-draggable="list"
+            dnd-moved="vm.board.lists.splice($index,1); vm.reorderLists();"
+            dnd-effect-allowed="move"
+            dnd-selected="vm.selectedList = list"
+            ng-class="{'drag-selected':vm.selectedList === list}"
+            class="ibox float-e-margins list-item">
             <div class="ibox-title">
                 <!--<a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>-->
                 <div class="row">
                     <div class="col-xs-10">
-                        <h5 editable-text="list.name" buttons="no" blur="submit">{{list.name}} - {{list.order}}</h5>
+                        <h5 editable-text="list.name" buttons="no" blur="submit">{{list.name}}</h5>
                     </div>
                     <div class="col-xs-2">
                         <i ng-click="vm.listSettings(list);" class="fa fa-tasks list-settings"></i>
@@ -23,8 +25,12 @@
                 </div>
             </div>
             <div class="ibox-content">
-                <ul dnd-list="list.cards" class="cards">
+                <ul dnd-list="list.cards"
+                    dnd-allowed-types="['cardType']"
+                    dnd-drop="vm.reorderCards(event, index, item, external, type, 'cardType')"
+                    class="cards">
                     <li ng-repeat="card in list.cards"
+                        dnd-type="'cardType'"
                         dnd-draggable="card"
                         dnd-moved="list.cards.splice($index, 1)"
                         dnd-effect-allowed="move"
@@ -41,8 +47,9 @@
                     Add New Card...
                 </span>
             </div>
-        </div>
-        <div class="ibox float-e-margins new-list-item list-item">
+        </li>
+        <li class="ibox float-e-margins new-list-item list-item"
+            dnd-type="'newListType'">
             <div class="ibox-title">
                 <div class="row">
                     <div class="col-xs-10">
@@ -57,7 +64,8 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </li>
+    </ul>
+    {{vm.board.lists}}
 </div>
 

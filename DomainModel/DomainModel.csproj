@@ -43,6 +43,7 @@
     <Compile Include="Entities\CardDTO.cs" />
     <Compile Include="Entities\ListDTO.cs" />
     <Compile Include="Entities\BoardDTO.cs" />
+    <Compile Include="Entities\UpdateListOrderModel.cs" />
     <Compile Include="Entities\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IListRepository.cs" />

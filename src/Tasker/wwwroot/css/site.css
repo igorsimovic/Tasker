@@ -174,11 +174,12 @@ textarea {
     border: 1px solid rgb(231, 234, 236);
     margin-right: 15px;
     min-height: 100px;
+    vertical-align: top;
 }
 
 .new-list-item {
     min-height: 50px;
-    margin-top: 70px !important;
+    vertical-align: top;
 }
 
 .list-settings {
@@ -210,3 +211,81 @@ textarea {
 .card-item > a {
     color: white !important;
 }
+
+/* *************************************TEST DND**************************************** */
+
+
+/***************************** Required styles *****************************/
+
+/**
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+ul[dnd-list],
+ul[dnd-list] > li {
+    position: relative;
+}
+
+/***************************** Dropzone Styling *****************************/
+
+/**
+ * The dnd-list should always have a min-height,
+ * otherwise you can't drop to it once it's empty
+ */
+.lists-wrapper ul[dnd-list] {
+    min-height: 42px;
+    margin: 0px;
+    padding-left: 0px;
+}
+
+/**
+ * The dnd-lists's child elements currently MUST have
+ * position: relative. Otherwise we can not determine
+ * whether the mouse pointer is in the upper or lower
+ * half of the element we are dragging over. In other
+ * browsers we can use event.offsetY for this.
+ */
+/*.dropzone li {
+    display: block;
+}*/
+
+/**
+ * Reduce opacity of elements during the drag operation. This allows the user
+ * to see where he is dropping his element, even if the element is huge. The
+ * .dndDragging class is automatically set during the drag operation.
+ */
+.lists-wrapper .dndDragging {
+    opacity: 0.7;
+}
+
+/**
+ * The dndDraggingSource class will be applied to the source element of a drag
+ * operation. It makes sense to hide it to give the user the feeling that he's
+ * actually moving it. Note that the source element has also .dndDragging class.
+ */
+.lists-wrapper .dndDraggingSource {
+    display: none;
+}
+
+/**
+ * An element with .dndPlaceholder class will be added as child of the dnd-list
+ * while the user is dragging over it.
+ */
+.tasker-list > .dndPlaceholder {
+    background-color: #ddd !important;
+    min-height: 100px;
+    width: 200px;
+    margin-right: 15px;
+    display: inline-block;
+    position: relative;
+}
+
+.cards > .dndPlaceholder {
+    background-color: #ddd !important;
+    display: block;
+    position: relative;
+    margin-bottom: 10px;
+    min-height: 30px;
+    border-radius: 5px;
+}
+

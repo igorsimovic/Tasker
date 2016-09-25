@@ -46,10 +46,19 @@ namespace DataLayer.Repositories
 
             return result;
         }
-
+        public bool UpdateOrder(IEnumerable<UpdateListOrderModel> model)
+        {
+            foreach (var item in model)
+            {
+                db_.UpdateListField<int>(item.ListId, "Order", item.NewIndex);
+            }
+            return true;
+        }
         public ListDTO UpdateList(ListDTO list)
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

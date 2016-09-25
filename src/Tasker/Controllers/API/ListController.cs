@@ -22,12 +22,12 @@ namespace Tasker.Controllers.API
         }
 
         // PUT api/lists/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]BoardDTO board)
+        [HttpPut("order")]
+        public void Put(int id, [FromBody]IEnumerable<UpdateListOrderModel> model)
         {
             try
             {
-                //board_repo_.update(board);
+                list_repo_.UpdateOrder(model);
             }
             catch (Exception ex)
             {

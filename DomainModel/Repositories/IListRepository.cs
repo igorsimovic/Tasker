@@ -16,5 +16,6 @@ namespace DomainModel.Repositories
         ListDTO UpdateList(ListDTO list);
 
         bool DeleteList(string id);
+        bool UpdateOrder(IEnumerable<UpdateListOrderModel> model);
     }
 }

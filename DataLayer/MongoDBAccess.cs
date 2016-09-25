@@ -275,6 +275,18 @@ namespace DataLayer
             }
         }
 
+        internal void UpdateListField<T>(string id, string fieldName, T fieldValue)
+        {
+
+            var filter = Builders<ListModel>.Filter.Eq("_id", new ObjectId(id));
+            var collection = db_.GetCollection<ListModel>("Lists");
+
+            var update = Builders<ListModel>.Update
+                .Set(fieldName, fieldValue);
+
+            var result = collection.UpdateOne(filter, update);
+        }
+
         internal void DeleteList(string id)
         {
             db_.GetCollection<ListModel>("Lists").DeleteOne<ListModel>(l => l.Id == ObjectId.Parse(id));
@@ -296,6 +308,7 @@ namespace DataLayer
             }
             return null;
         }
+        #endregion
 
         public UserModel GetUserByCredentials(string username, string password)
         {
@@ -306,7 +319,6 @@ namespace DataLayer
             {
                 return null;
             }
-        #endregion
 
 
             if(userResult.NewPassword != password)

@@ -11,6 +11,7 @@
         this.getByBoardId = getByBoardId;
         this.createList = createList;
         this.removeList = removeList;
+        this.updateOrder = updateOrder;
 
         function getByBoardId(id) {
             return $http.get('/api/v1/boards/' + id);
@@ -22,7 +23,10 @@
 
         function removeList(id) {
             return $http.delete('api/v1/lists/' + id);
+        }
 
+        function updateOrder(newOrderArr) {
+            return $http.put('api/v1/lists/order', newOrderArr);
         }
 
     }
