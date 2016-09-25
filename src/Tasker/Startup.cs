@@ -81,6 +81,8 @@ namespace Tasker
             services.AddSingleton<IBoardRepository, BoardRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddTransient<IListRepository, ListRepository>();
+            services.AddTransient<ICardRepository, CardRepository>();
+
             services.AddSingleton<MongoDBAccess, MongoDBAccess>();
 
             // Get options from app settings

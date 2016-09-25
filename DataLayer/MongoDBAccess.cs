@@ -297,6 +297,41 @@ namespace DataLayer
             return null;
         }
 
+        public CardDTO CreateCard(CardDTO card)
+        {
+            try
+            {
+                var cardModel = new CardModel
+                {
+                    Name = card.Name,
+                    Order = card.Order,
+                    Description = card.Description,
+                    Labels = new List<ObjectId>()
+                };
+
+                db_.GetCollection<CardModel>("Cards").InsertOne(cardModel);
+                ObjectId listObjectId = new ObjectId(card.ListId);
+
+                var filter = Builders<ListModel>.Filter.Eq(l => l.Id, listObjectId);
+                var update = Builders<ListModel>.Update.Push(l => l.Cards, cardModel.Id);
+
+                db_.GetCollection<ListModel>("Lists").UpdateOne(filter, update);
+
+                card.Id = cardModel.Id.ToString();
+                return card;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        internal void DeleteCard(string id)
+        {
+            db_.GetCollection<CardModel>("Cards").DeleteOne<CardModel>(c => c.Id == ObjectId.Parse(id));
+
+        }
+        #endregion
+
         public UserModel GetUserByCredentials(string username, string password)
         {
             var filter = Builders<UserModel>.Filter.Eq("userName", username);
@@ -306,8 +341,6 @@ namespace DataLayer
             {
                 return null;
             }
-        #endregion
-
 
             if(userResult.NewPassword != password)
             {

@@ -5,9 +5,9 @@
         .module('board')
         .controller('listsController', listsController);
 
-    listsController.$inject = ['$stateParams', 'listsService'];
+    listsController.$inject = ['$stateParams', 'listsService', '$uibModal', 'cardsService'];
 
-    function listsController($stateParams, listService) {
+    function listsController($stateParams, listService, $uibModal, cardsService) {
         var vm = this;
         vm.title = 'Lists';
         vm.addList = addList;
@@ -68,13 +68,27 @@
         function addCard(list) {
             var newCard = {
                 order: list.cards.length + 1,
-                name: 'Card - ' + list.cards.length + 1
+                name: 'Card - ' + list.cards.length + 1,
+                listId: list.id
             }
-            list.cards.push(newCard);
+
+            cardsService.createCard(newCard).then(function (res) {
+                list.cards.push(newCard);
+            }, function (err) {
+                console.log('Error creating card: ', err);
+            });
         }
 
         function openCard(card) {
-            console.log('Open Card: ', card);
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'js/modules/board/views/card.modal.html',
+                controller: 'cardController',
+                size: 'lg',
+                resolve: {
+                    card: function () { return card; }
+                }
+            });
         }
 
     }

@@ -8,20 +8,14 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DataModel.MongoData
 {
-    public class CardModel
+    class LabelModel
     {
         public ObjectId Id { get; set; }
 
         [BsonElement("Name")]
         public string Name { get; set; }
 
-        [BsonElement("Order")]
-        public int Order { get; set; }
-
-        [BsonElement("Description")]
-        public string Description { get; set; }
-
-        [BsonElement("Labels")]
-        public IEnumerable<ObjectId> Labels { get; set; }
+        [BsonElement("Color")]
+        public string Color { get; set; }
     }
 }
