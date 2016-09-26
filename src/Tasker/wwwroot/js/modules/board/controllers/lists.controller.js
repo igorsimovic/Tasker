@@ -5,13 +5,18 @@
         .module('board')
         .controller('listsController', listsController);
 
-    listsController.$inject = ['$stateParams', 'boardService', 'listsService', 'cardsService'];
+    listsController.$inject = ['$stateParams', 'boardService', 'listsService', 'cardsService', 'userService'];
 
-    function listsController($stateParams, boardService, listService, cardsService) {
+    function listsController($stateParams, boardService, listService, cardsService, userService) {
         var vm = this;
 
+
         //
+        vm.searchableUsers = [];
+        vm.collaborators = [];
         vm.title = 'Lists';
+        vm.configBoxShown = false;
+        vm.userId = userService.getAplicationUser().id;
         vm.changeBoardName = changeBoardName;
         vm.addList = addList;
         vm.listSettings = listSettings;
@@ -22,8 +27,10 @@
         vm.reorderCards = reorderCards;
         vm.openCard = openCard;
         vm.insertCard = insertCard;
-
+        vm.toggleConfigBox = toggleConfigBox;
+        vm.inviteEvent = inviteEvent;
         var boardId = $stateParams.id || null;
+        //
 
         (function activate() {
             if (boardId) {
@@ -33,10 +40,42 @@
                 }, function (err) {
                     console.error(err);
                 });
+
+                listService.getUserList().then(function (response) {
+                    response.data = response.data.filter(function (item) {
+                        return item.id !== vm.userId;
+                    });
+                    vm.searchableUsers = response.data;
+                }, function (err) {
+                    console.log(err);
+                });
+                listService.getBoardCollaborators(boardId).then(function (response) {
+                    vm.collaborators = response.data;
+                }, function (err) {
+                });
+
             } else {
                 console.error('Board id not provided');
             }
         })();
+        //CLOG Functions
+        function toggleConfigBox() {
+            vm.configBoxShown = !vm.configBoxShown;
+        }
+        function inviteEvent() {
+            if (vm.collaborators.firstOrDefault('id', vm.userToInvite.id) != null) {
+                console.log('invite event distrojd');
+                return;
+            }
+            console.log('invite event started');
+            listService.inviteToBoard(boardId, vm.userToInvite.id).then(function () {
+                vm.collaborators.push(vm.userToInvite);
+            }, function (err) {
+                console.log(err);
+            }).finally(function () {
+                vm.userToInvite = null;
+            });
+        }
 
         //BOARD Functions
         function changeBoardName(name) {

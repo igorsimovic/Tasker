@@ -7,14 +7,16 @@
         <div class="col-md-12">
             <ul dnd-list="vm.starred"
                 dnd-horizontal-list="true"
-                dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)"
+                dnd-drop="vm.toggleStarredStatus(event, index, item,external, type, 'starred')"
+                dnd-inserted="vm.starredInserted(event, index, item,external, type)"
                 class="list-inline boards-container">
                 <li ng-repeat="board in vm.starred"
                     dnd-draggable="board"
                     dnd-effect-allowed="move"
                     dnd-selected="vm.selectedBoard = board"
                     ng-class="{'drag-selected': vm.selectedBoard === board}"
-                    dnd-moved="vm.starred.splice($index,1)">
+                    dnd-moved="vm.starredMoved($index, board)">
+                    <!--vm.starred.splice($index,1)-->
                     <div class="board-box text-center" ng-style="{'background-color':board.color}">
                         <div class="board-item row">
                             <div class="col-md-6">
@@ -39,13 +41,15 @@
             <div class="row">
                 <ul dnd-list="vm.boards" class="list-inline board-list"
                     dnd-horizontal-list="true"
-                    dnd-drop="vm.toggleStarredStatus(event, index, item,external, type)">
+                    dnd-drop="vm.toggleStarredStatus(event, index, item,external, type , 'boards')"
+                    dnd-inserted="vm.boardsInserted(event, index, item,external, type)">
                     <li ng-repeat="board in vm.boards"
                         dnd-draggable="board"
                         dnd-effect-allowed="move"
                         dnd-selected="vm.selectedBoard = board"
                         ng-class="{'drag-selected':vm.selectedBoard === board}"
-                        dnd-moved="vm.boards.splice($index,1)">
+                        dnd-moved="vm.boardMoved($index, board)">
+                        <!--vm.boards.splice($index,1)-->
                         <div class="board-box text-center" ng-style="{'background-color':board.color}">
                             <div class="board-item row">
                                 <div class="col-md-6">

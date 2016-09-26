@@ -19,10 +19,14 @@ namespace DomainModel.Entities
         public string RepeatPassword { get; set; }
         public List<BoardDTO> Boards { get; set; }
 
+        public string Email { get; set; }
+
         public UserDTO()
         {
 
         }
+
+        
 
         public UserDTO(string id, string fn, string un, string initials, string bio, string pic)
         {

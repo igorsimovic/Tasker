@@ -67,7 +67,7 @@ namespace Tasker.Controllers.API
 
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            UserDTO u = repo_.getUserByCredentials(user.UserName, user.Password);
+            UserDTO u = repo_.GetUserByCredentials(user.UserName, user.Password);
 
             // Serialize and return the response
             var response = new
@@ -121,7 +121,7 @@ namespace Tasker.Controllers.API
         private Task<ClaimsIdentity> GetClaimsIdentity(ApplicationUser user)
         {
 
-            UserDTO u = repo_.getUserByCredentials(user.UserName, user.Password);
+            UserDTO u = repo_.GetUserByCredentials(user.UserName, user.Password);
             
             if (u != null)
             {

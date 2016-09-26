@@ -7,10 +7,11 @@ var ApplicationConfiguration = (function () {
     var applicationModuleVendorDependencies = [
         'ui.router',
         'dndLists',
+        'ngSanitize',
         'ui.select',
         'colorpicker.module',
         'ui.bootstrap',
-        'xeditable'
+        'xeditable',
     ];
 
     // Add a new vertical module

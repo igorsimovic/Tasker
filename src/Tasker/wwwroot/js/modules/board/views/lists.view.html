@@ -1,11 +1,21 @@
 ﻿<div class="row" style="margin: 0 !important"
      ng-style="{'background-color': vm.board.color}">
-    <h1 editable-text="vm.board.boardName" 
+    <div class="col-md-3">
+        <div ng-if="vm.board.userCreatedBy === vm.userId">
+            <h1 editable-text="vm.board.boardName"
                 buttons="no"
                 blur="submit"
                 e-ng-change="vm.changeBoardName($data)"
                 e-reqired="true"
-                style="color:white">Welcome to :{{vm.board.boardName}}</h1>
+                style="color:white">
+                Welcome to :{{vm.board.boardName}}
+
+            </h1>
+        </div>
+        <div ng-if="vm.board.userCreatedBy !== vm.userId">
+            <h1> Welcome to :{{vm.board.boardName}}</h1>
+        </div>
+    </div>
 </div>
 <div class="lists-wrapper">
     <ul dnd-list="vm.board.lists"
@@ -23,45 +33,46 @@
             <div class="ibox-title" ng-style="{'background-color': vm.board.color}" style="color:white !important">
                 <!--<a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>-->
                 <div class="row">
+                    <div c
                     <div class="col-xs-10">
-                        <h5 editable-text="list.name" 
-                            buttons="no" 
+                        <h5 editable-text="list.name"
+                            buttons="no"
                             blur="submit"
                             e-ng-change="vm.changeListName(list.id, $data)"
                             e-reqired="true"
                             style="color:white !important">
-                        {{list.name}}
+                            {{list.name}}
                         </h5>
                     </div>
                     <div class="col-xs-2">
                         <i ng-click="vm.listSettings(list);" class="fa fa-tasks list-settings"></i>
                     </div>
                 </div>
-            </div>
-            <div class="ibox-content">
-                <ul dnd-list="list.cards"
-                    dnd-allowed-types="['cardType']"
-                    dnd-inserted="vm.insertCard(index, event, item, list)"
-                    class="cards">
-                    <li ng-repeat="card in list.cards"
-                        dnd-type="'cardType'"
-                        dnd-draggable="card"
-                        dnd-moved="list.cards.splice($index, 1); vm.reorderCards(list)"
-                        dnd-effect-allowed="move"
-                        dnd-selected="list.selectedCard = item"
-                        class="card-item"
-                        ng-style="{'background-color': vm.board.color}">
-                        <a href="" ng-click="vm.openCard(card)">{{card.name}}</a>
-                    </li>
+                </div>
+                <div class="ibox-content">
+                    <ul dnd-list="list.cards"
+                        dnd-allowed-types="['cardType']"
+                        dnd-inserted="vm.insertCard(index, event, item, list)"
+                        class="cards">
+                        <li ng-repeat="card in list.cards"
+                            dnd-type="'cardType'"
+                            dnd-draggable="card"
+                            dnd-moved="list.cards.splice($index, 1); vm.reorderCards(list)"
+                            dnd-effect-allowed="move"
+                            dnd-selected="list.selectedCard = item"
+                            class="card-item"
+                            ng-style="{'background-color': vm.board.color}">
+                            <a href="" ng-click="vm.openCard(card)">{{card.name}}</a>
+                        </li>
 
-                </ul>
-            </div>
-            <div class="ibox-footer">
-                <span ng-click="vm.addCard(list)"
-                      class="new-card-item">
-                    Add New Card...
-                </span>
-            </div>
+                    </ul>
+                </div>
+                <div class="ibox-footer">
+                    <span ng-click="vm.addCard(list)"
+                          class="new-card-item">
+                        Add New Card...
+                    </span>
+                </div>
         </li>
         <li class="ibox float-e-margins new-list-item list-item"
             dnd-type="'newListType'">
@@ -83,4 +94,57 @@
     </ul>
     {{vm.board.lists}}
 </div>
-
+<div class="theme-config pull-right">
+    <div class="theme-config-box" ng-class="{'show' : vm.configBoxShown , '' : !vm.configBoxShown}">
+        <div class="spin-icon">
+            <i class="fa fa-cogs fa-spin" ng-click="vm.toggleConfigBox()"></i>
+        </div>
+        <div class="skin-setttings" ng-class="{'skin-settings-margin' : !vm.configBoxShown}">
+            <div class="title">Boards configuration</div>
+            <div class="setings-item">
+                <div class="settings-item-subitem">
+                    <ul style="list-style:none;">
+                        <li style="display:inline" ng-repeat="collaborator in vm.collaborators">
+                            <button title="{{collaborator.fullName}}" ng-disabled="true">{{collaborator.initials}}</button>
+                        </li>
+                    </ul>
+                </div>
+                <div class="settings-item-subitem">
+                    <button ng-click="vm.inviteBoxOpen = !vm.inviteBoxOpen;">Invite a member</button>
+                    <div ng-if="vm.inviteBoxOpen">
+                        <h4>Members:</h4>
+                        <ui-select ng-model="vm.userToInvite"
+                                   style="min-width: 300px; z-index:900000000;"
+                                   title="Add a member..."
+                                   append-to-body="true"
+                                   on-select="vm.inviteEvent()">
+                            <ui-select-match placeholder="Search a user by user">{{$select.selected.fullName}}</ui-select-match>
+                            <ui-select-choices repeat="user in vm.searchableUsers | propsFilter: {fullName: $select.search}">
+                                <div ng-bind-html="user.fullName | highlight: $select.search"></div>
+                                <small>
+                                    email: {{user.email}}
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="settings-item-sublist">
+                    <ul style="list-style:none">
+                        <li>
+                            log1
+                        </li>
+                        <li>
+                            log2
+                        </li>
+                        <li>
+                            log3
+                        </li>
+                        <li>
+                            log4
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

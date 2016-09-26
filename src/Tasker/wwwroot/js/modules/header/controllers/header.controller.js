@@ -18,15 +18,19 @@
         };
 
         $scope.$on('loginCtrl:login', function (e, user) {
-                vm.user = user;
-        });
-
-        if (vm.user) {
-            userService.getUser(vm.user.userId).then(function (response) {
-                vm.user = response.data;
+            console.log('this is the user', user);
+            vm.user = user;
+            userService.getUser(vm.user.user_id).then(function (response) {
+                //vm.user = response.data;
+                //console.log('user response', vm.user);
+                vm.user.bio = response.data.bio;
+                vm.user.fullName = response.data.fullName;
+                vm.user.id = response.data.id;
+                vm.user.initials = response.data.initials;
+                vm.user.userName = response.data.userName;
+                userService.setApplicationUser(vm.user);
             });
-        }
-
+        });
         vm.showSection = showSection;
         vm.closeSections = closeSections;
         vm.logOut = logOut;

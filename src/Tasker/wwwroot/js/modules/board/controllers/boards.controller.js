@@ -14,6 +14,10 @@
         vm.boards = [];
         vm.selectedBoard = {};
         vm.toggleStarredStatus = toggleStarredStatus;
+        vm.starredInserted = starredInserted;
+        vm.boardsInserted = boardsInserted;
+        vm.starredMoved = starredMoved;
+        vm.boardMoved = boardMoved;
         vm.toggleCreationMode = toggleCreationMode;
         vm.createBoard = createBoard;
         vm.newBoard = {};
@@ -26,8 +30,9 @@
 
         function createBoard() {
             vm.newBoard.userCreatedBy = accountService.getUser().userId;
+            vm.newBoard.orderNo = vm.boards.length;
             boardService.createBoard(vm.newBoard).then(function (response) {
-                vm.boards.push(response.data);
+                //vm.boards.push(response.data);
                 vm.creationMode = false;
                 refreshBoards();
             }, function (err) {
@@ -37,20 +42,40 @@
             });
         }
 
-        function toggleStarredStatus(event, index, item, external, type) {
+        function starredMoved(index, item) {
+            console.log('starred moved', arguments);
+        }
 
+        function boardMoved(index, item) {
+            console.log('boards moved', arguments);
+        }
+
+        function boardsInserted(a, b, c, d) {
+            console.log('boards inserted', arguments);
+        }
+
+        function starredInserted(event, index, item, external, type) {
+            console.log('starred inserted', arguments);
+        }
+
+        function toggleStarredStatus(event, index, item, external, type, list) {
+            console.log('dnd drop', list);
+            var originalStarredStatus = item.starred;
+            if (originalStarredStatus) { // for now we are disabling reorder of the boards in both lists;
+                if (list === 'starred')
+                    return false;
+            } else {
+                if (list === 'boards')
+                    return false;
+            }
             var originalStarred = angular.copy(vm.starred); //this is bad. should use drad-end or smth like this.
             var originalBoards = angular.copy(vm.boards);
-            var originalStarredStatus = item.starred;
-           
-
             var originalIndex = -1;
             if (originalStarredStatus) {
                 originalIndex = originalStarred.indexOfObj(item.id);
             } else {
                 originalIndex = originalBoards.indexOfObj(item.id);
             }
-            //console.log('originals', originalStarred, ' ', originalBoards);
             item.starred = !item.starred;
             item.orderNo = index;
             item.originalIndex = originalIndex;
@@ -64,6 +89,7 @@
                 originalStarredStatus = null;
                 originalIndex = -1;
             });
+            return item;
         }
 
         function rollBack(originalStarred, originalBoards) {

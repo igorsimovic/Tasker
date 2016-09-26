@@ -24,7 +24,7 @@ namespace DataLayer.Repositories
             return result;
         }
 
-        public void updateUser(UserDTO model)
+        public void UpdateUser(UserDTO model)
         {
             var userModel = new UserModel
             {
@@ -46,7 +46,7 @@ namespace DataLayer.Repositories
             }
         }
 
-        public UserDTO getUserByCredentials(string username, string password)
+        public UserDTO GetUserByCredentials(string username, string password)
         {
             var userResult = db.GetUserByCredentials(username, password);
 
@@ -64,6 +64,32 @@ namespace DataLayer.Repositories
             db.CreateUser(new UserModel { UserName = user.UserName, NewPassword = user.NewPassword, Bio = user.Bio, FullName = user.FullName });
 
             return user;
+        }
+
+        public void ChangePassword(UserDTO model)
+        {
+            try
+            {
+                db.ChangePassword(model);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            try
+            {
+                return db.GetAllUsers();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -20,6 +20,7 @@
             accountService.login($scope.user).then(function (response) {
                 accountService.setUser(response);
                 $rootScope.$broadcast('loginCtrl:login', response);
+
                 $location.path('/boards');
             }, function (err) {
                 $scope.message = err;

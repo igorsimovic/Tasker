@@ -38,6 +38,19 @@ namespace DataLayer.Repositories
             return boardsModel.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo)).ToList();
         }
 
+        public IEnumerable<UserDTO> GetBoardCollaborators(string boardId)
+        {
+            try
+            {
+                return db_.GetBoardCollaborators(boardId);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         //public List<BoardDTO> GetBoardsByUserID(string userID)
         //{
         //    var boardsModel = db_.getBoardsByUser(userID).ToList();
@@ -64,7 +77,21 @@ namespace DataLayer.Repositories
             }
 
 
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, board.Color, lists);
+            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, board.Color, board.UserCreatedBy.ToString(), lists);
+        }
+
+        public void InviteUser(string id, string user)
+        {
+            try
+            {
+                db_.InviteUserToBoard(id, user);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
         }
 
         public void update(BoardDTO model)

@@ -13,6 +13,21 @@
         this.removeList = removeList;
         this.updateOrder = updateOrder;
         this.updateName = updateName;
+        this.inviteToBoard = inviteToBoard;
+        this.getUserList = getUserList;
+        this.getBoardCollaborators = getBoardCollaborators;
+
+        function getBoardCollaborators(boardId) {
+            return $http.get('/api/v1/boards/' + boardId + '/collaborators');
+        }
+
+        function inviteToBoard(boardId, userId) {
+            return $http.put('/api/v1/boards/' + boardId + '/invite/' + userId);
+        }
+
+        function getUserList() {
+            return $http.get('/api/v1/user/forSearch');
+        }
 
         function getByBoardId(id) {
             return $http.get('/api/v1/boards/' + id);
