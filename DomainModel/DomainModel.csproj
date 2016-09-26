@@ -45,7 +45,8 @@
     <Compile Include="Entities\LabelDTO.cs" />
     <Compile Include="Entities\ListDTO.cs" />
     <Compile Include="Entities\BoardDTO.cs" />
-    <Compile Include="Entities\UpdateListOrderModel.cs" />
+    <Compile Include="Entities\MoveModel.cs" />
+    <Compile Include="Entities\UpdateOrderModel.cs" />
     <Compile Include="Entities\UpdateBoardModelName.cs" />
     <Compile Include="Entities\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

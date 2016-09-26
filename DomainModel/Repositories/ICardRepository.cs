@@ -19,5 +19,9 @@ namespace DomainModel.Repositories
         bool DeleteCard(string id);
 
         bool InsertComment(string cardId, string userId, string text);
+
+        bool UpdateOrder(IEnumerable<UpdateOrderModel> model);
+
+        bool MoveCard(string id, MoveModel model);
     }
 }

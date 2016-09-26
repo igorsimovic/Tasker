@@ -17,7 +17,7 @@ namespace DomainModel.Repositories
 
         bool DeleteList(string id);
 
-        bool UpdateOrder(IEnumerable<UpdateListOrderModel> model);
+        bool UpdateOrder(IEnumerable<UpdateOrderModel> model);
         bool UpdateName(string id, UpdateNameModel model);
     }
 }

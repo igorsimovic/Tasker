@@ -14,6 +14,8 @@
         this.updateCardName = updateCardName;
         this.updateCardDescription = updateCardDescription;
         this.insertComment = insertComment;
+        this.updateOrder = updateOrder;
+        this.moveCard = moveCard;
 
         function getByListId(id) {
             return $http.get('/api/v1/lists/' + id);
@@ -39,5 +41,13 @@
         function insertComment(id, userId, text) {
             return $http.put('api/v1/cards/' + id + '/comments', { UserId: userId, Text: text});
         };
+
+        function updateOrder(newOrderArr) {
+            return $http.put('api/v1/cards/order', newOrderArr);
+        }
+
+        function moveCard(id, oldListId, newListId) {
+            return $http.put('api/v1/cards/' + id + '/move', { destinationId: oldListId, targetId: newListId });
+        }
     }
 })();

@@ -41,7 +41,7 @@ namespace DataLayer.Repositories
         public IEnumerable<CardDTO> GetCardsByListId(string listId)
         {
             var result = db_.GetCardsByListId(listId)
-                            .Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description));
+                            .Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description, listId));
             return result;
         }
 
@@ -58,6 +58,23 @@ namespace DataLayer.Repositories
         public bool InsertComment(string cardId, string userId, string text)
         {
             return db_.InsertComment(cardId, userId, text);
+        }
+
+        public bool UpdateOrder(IEnumerable<UpdateOrderModel> model)
+        {
+            foreach (var item in model)
+            {
+                db_.UpdateField<int, CardModel>(item.Id, "Order", item.NewIndex, "Cards");
+            }
+            return true;
+        }
+
+        public bool MoveCard(string id, MoveModel model)
+        {
+            db_.RemoveCardFromList(id, model.DestinationId);
+            db_.InsertCardIntoList(id, model.TargetId);
+
+            return true;
         }
     }
 }

@@ -71,7 +71,7 @@ namespace DataLayer.Repositories
                     var tempCards = db_.GetCardsByListId(list.Id);
                     if (tempCards != null)
                     {
-                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description)).OrderBy(c => c.Order);
+                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description, list.Id)).OrderBy(c => c.Order);
                     }
                 }
             }

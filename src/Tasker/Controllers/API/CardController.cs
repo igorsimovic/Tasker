@@ -22,22 +22,6 @@ namespace Tasker.Controllers.API
             card_repo_ = card_repo;
         }
 
-        // PUT api/cards/5
-        //[HttpPut("{id}")]
-        //public ActionResult Put(int id, [FromBody]CardDTO card)
-        //{
-        //    try
-        //    {
-        //        card_repo_.UpdateCard(card);
-        //        return this.Ok(card);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw ex;
-        //    }
-        //}
-
 
         // POST api/cards
         [HttpPost("")]
@@ -100,6 +84,40 @@ namespace Tasker.Controllers.API
             }
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+
+
+        // PUT api/lists/5
+        [HttpPut("order")]
+        public ActionResult Put([FromBody]IEnumerable<UpdateOrderModel> model)
+        {
+            try
+            {
+                var result = card_repo_.UpdateOrder(model);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        [HttpPut("{id}/move")]
+        public ActionResult Put(string id, [FromBody]MoveModel model)
+        {
+            try
+            {
+                var result = card_repo_.MoveCard(id, model);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+
                 throw ex;
             }
         }

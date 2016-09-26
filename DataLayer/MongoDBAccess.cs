@@ -64,6 +64,28 @@ namespace DataLayer
             return result;
         }
 
+        internal void InsertCardIntoList(string cardId, string listId)
+        {
+            var listObjectId = new ObjectId(listId);
+            var cardObjectId = new ObjectId(cardId);
+
+            var filter = Builders<ListModel>.Filter.Eq(l => l.Id, listObjectId);
+            var update = Builders<ListModel>.Update.Push(l => l.Cards, cardObjectId);
+
+            db_.GetCollection<ListModel>("Lists").UpdateOne(filter, update);
+        }
+
+        internal void RemoveCardFromList(string cardId, string listId)
+        {
+            var listObjectId = new ObjectId(listId);
+            var cardObjectId = new ObjectId(cardId);
+
+            var filter = Builders<ListModel>.Filter.Eq(l => l.Id, listObjectId);
+            var update = Builders<ListModel>.Update.Pull(l => l.Cards, cardObjectId);
+
+            db_.GetCollection<ListModel>("Lists").UpdateOne(filter, update);
+        }
+
         internal void ChangePassword(UserDTO model)
         {
             var filter = Builders<UserModel>.Filter.Eq("_id", new ObjectId(model.Id));
