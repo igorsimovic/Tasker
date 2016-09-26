@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Entities
 {
-    public class LabelDTO
+    public class CommentDTO
     {
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Color { get; set; }
+        public string Id;
+        public string Content;
     }
 }

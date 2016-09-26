@@ -13,7 +13,7 @@ namespace DomainModel.Repositories
 
         CardDTO CreateCard(CardDTO card);
 
-        CardDTO UpdateCard(CardDTO card);
+        void UpdateCard(CardDTO card);
 
         bool DeleteCard(string id);
     }

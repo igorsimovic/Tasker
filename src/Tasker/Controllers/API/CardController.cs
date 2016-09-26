@@ -24,11 +24,12 @@ namespace Tasker.Controllers.API
 
         // PUT api/cards/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]CardDTO card)
+        public ActionResult Put(int id, [FromBody]CardDTO card)
         {
             try
             {
-                //card_repo_.update(card);
+                card_repo_.UpdateCard(card);
+                return this.Ok(card);
             }
             catch (Exception ex)
             {

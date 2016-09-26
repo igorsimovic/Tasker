@@ -45,9 +45,9 @@ namespace DataLayer.Repositories
             return result;
         }
 
-        public CardDTO UpdateCard(CardDTO card)
+        public void UpdateCard(CardDTO card)
         {
-            throw new NotImplementedException();
+            db_.UpdateCard(card);
         }
     }
 }

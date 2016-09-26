@@ -306,7 +306,8 @@ namespace DataLayer
                     Name = card.Name,
                     Order = card.Order,
                     Description = card.Description,
-                    Labels = new List<ObjectId>()
+                    Labels = new List<ObjectId>(),
+                    Comments = new List<Object>()
                 };
 
                 db_.GetCollection<CardModel>("Cards").InsertOne(cardModel);
@@ -328,6 +329,23 @@ namespace DataLayer
         internal void DeleteCard(string id)
         {
             db_.GetCollection<CardModel>("Cards").DeleteOne<CardModel>(c => c.Id == ObjectId.Parse(id));
+
+        }
+
+        public void UpdateCard(CardDTO model)
+        {
+            var filter = Builders<CardModel>.Filter.Eq("_id", model.Id);
+            try
+            {
+                var dictionary = makeDictionaryFromModel(model);
+                var bsonDocument = new BsonDocument("$set", dictionary.ToBsonDocument());
+                var update = new BsonDocumentUpdateDefinition<CardModel>(bsonDocument);
+                var result = db_.GetCollection<CardModel>("Cards").UpdateOne(filter, update);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Card update fail" + ex.Message);
+            }
 
         }
         #endregion

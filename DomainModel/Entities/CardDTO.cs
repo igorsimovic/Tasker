@@ -13,7 +13,8 @@ namespace DomainModel.Entities
         public int Order { get; set; }
         public string Description { get; set; }
         public string ListId { get; set; }
-        //public IEnumerable<LabelDTO> Labels { get; set; }
+        public IEnumerable<LabelDTO> Labels { get; set; }
+        public IEnumerable<CommentDTO> Comments { get; set; }
 
         public CardDTO(string id, string name, int order, string description)
         {
@@ -21,7 +22,8 @@ namespace DomainModel.Entities
             this.Name = name;
             this.Order = order;
             this.Description = description;
-            //this.Labels = new List<LabelDTO>();
+            this.Labels = new List<LabelDTO>();
+            this.Comments = new List<CommentDTO>();
         }
     }
 }

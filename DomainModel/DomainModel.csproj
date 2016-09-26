@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\CardDTO.cs" />
+    <Compile Include="Entities\CommentDTO.cs" />
     <Compile Include="Entities\LabelDTO.cs" />
     <Compile Include="Entities\ListDTO.cs" />
     <Compile Include="Entities\BoardDTO.cs" />
