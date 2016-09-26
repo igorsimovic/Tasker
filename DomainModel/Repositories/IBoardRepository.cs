@@ -16,6 +16,8 @@ namespace DomainModel.Repositories
         BoardDTO CreateBoard(BoardDTO board);
 
         void UpdateName(string id, UpdateNameModel model);
+        void InviteUser(string id, string user);
+        IEnumerable<UserDTO> GetBoardCollaborators(string boardId);
 
         //List<BoardDTO> GetBoardsByUserID(string userID);
     }

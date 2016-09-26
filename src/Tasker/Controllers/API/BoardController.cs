@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Tasker.Controllers.API
 {
-    [Route("api/v1/boards", Name ="Boards")]
+    [Route("api/v1/boards", Name = "Boards")]
     public class BoardController : Controller
     {
         private readonly IBoardRepository board_repo_;
@@ -38,7 +38,22 @@ namespace Tasker.Controllers.API
         {
             return board_repo_.GetById(id);
         }
-        
+
+        [HttpGet("{id}/collaborators")]
+        [Authorize(Policy = "TaskerUser")]
+        public IEnumerable<UserDTO> GetBoardCollaborators(string id)
+        {
+            try
+            {
+                return board_repo_.GetBoardCollaborators(id);
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         // POST api/values
         [HttpPost("")]
         [Authorize(Policy = "TaskerUser")]
@@ -48,12 +63,29 @@ namespace Tasker.Controllers.API
             {
                 var result = board_repo_.CreateBoard(board);
 
-                return this.CreatedAtRoute("GetById", new { id = result.Id}, result);
+                return this.CreatedAtRoute("GetById", new { id = result.Id }, result);
             }
             catch (Exception ex)
             {
 
                 throw ex;
+            }
+        }
+
+        [HttpPut("{id}/invite/{user}")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult InviteToBoard(string id, string user)
+        {
+            try
+            {
+                board_repo_.InviteUser(id, user);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+
+                return this.BadRequest();
             }
         }
 

@@ -30,6 +30,8 @@ namespace DataLayer.DataModel.MongoData
         public string RepeatPassword { get; set; }
         [BsonElement("boards")]
         public List<ObjectId> Boards { get; set; }
+        [BsonElement("email")]
+        public string Email { get; set; }
 
     }
 }

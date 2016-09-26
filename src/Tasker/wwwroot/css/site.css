@@ -375,3 +375,19 @@ ul[dnd-list] > li {
     font-style: italic;
     cursor: pointer;
 }
+.theme-config {
+    position: absolute;
+    top: 20px !important;
+    right: -55px !important;
+    overflow: hidden;
+}
+
+.skin-setttings {
+    width: 370px !important;
+    margin-left: 40px;
+    background: #f3f3f4;
+}
+
+.skin-settings-margin {
+    margin-right: -150px;
+}

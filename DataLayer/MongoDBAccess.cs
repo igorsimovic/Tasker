@@ -43,6 +43,79 @@ namespace DataLayer
             //return result;
         }
 
+        internal IEnumerable<UserDTO> GetBoardCollaborators(string boardId)
+        {
+            var result = new List<UserDTO>();
+            var userCollection = db_.GetCollection<UserModel>("User").Find(_ => true).ToList();
+            foreach (var user in userCollection)
+            {
+                if (user.Boards.Contains(new ObjectId(boardId)))
+                {
+                    result.Add(new UserDTO
+                    {
+                        Id = user.Id.ToString(),
+                        Initials = user.Initials,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                    });
+                }
+
+            }
+            return result;
+        }
+
+        internal void ChangePassword(UserDTO model)
+        {
+            var filter = Builders<UserModel>.Filter.Eq("_id", new ObjectId(model.Id));
+            var usercollection = db_.GetCollection<UserModel>("User");
+            var user = usercollection.Find(filter).FirstOrDefault();
+            if (user != null)
+            {
+                if (user.NewPassword != model.OldPassword)
+                {
+                    throw new Exception("Old password is incorect");
+                }
+                else
+                {
+                    var update = Builders<UserModel>.Update.Set(u => u.NewPassword, model.NewPassword);
+                    usercollection.UpdateOne(filter, update);
+                }
+            }
+            else
+            {
+                throw new Exception("User not found");
+            }
+        }
+
+        internal void InviteUserToBoard(string id, string user)
+        {
+            try
+            {
+                var userCollection = db_.GetCollection<UserModel>("User");
+                var filter = Builders<UserModel>.Filter.Eq("_id", new ObjectId(user));
+                var update = Builders<UserModel>.Update.Push(u => u.Boards, new ObjectId(id));
+                userCollection.UpdateOne(filter, update);
+
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Invite to board failed");
+            }
+        }
+
+        internal IEnumerable<UserDTO> GetAllUsers()
+        {
+            var result = db_.GetCollection<UserModel>("User").Find(_ => true).ToList().Select(u => new UserDTO
+            {
+                FullName = u.FullName,
+                Email = u.Email,
+                Id = u.Id.ToString()
+            });
+            return result.AsEnumerable();
+        }
+
         //private BsonDocument createUpdateQuery(BsonDocument doc)
         //{
         //    var elementsEnum = doc.GetEnumerator();
@@ -137,7 +210,7 @@ namespace DataLayer
                 };
 
                 db_.GetCollection<BoardModel>("Boards").InsertOne(boardModel);
-                
+
 
                 var filter = Builders<UserModel>.Filter.Eq(u => u.Id, boardModel.UserCreatedBy);
                 var update = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
@@ -471,14 +544,14 @@ namespace DataLayer
         {
             var filter = Builders<UserModel>.Filter.Eq("userName", username);
             var userResult = db_.GetCollection<UserModel>("User").Find<UserModel>(filter).FirstOrDefault();
-            
-            if(userResult == null)
+
+            if (userResult == null)
             {
                 return null;
             }
 
 
-            if(userResult.NewPassword != password)
+            if (userResult.NewPassword != password)
             {
                 return null;
             }

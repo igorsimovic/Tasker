@@ -10,8 +10,11 @@ namespace DomainModel.Repositories
     public interface IUserRepository
     {
         UserDTO getUser(string v);
-        void updateUser(UserDTO model);
-        UserDTO getUserByCredentials(string username, string password);
+        void UpdateUser(UserDTO model);
+        UserDTO GetUserByCredentials(string username, string password);
         UserDTO CreateUser(UserDTO user);
+        void ChangePassword(UserDTO model);
+
+        IEnumerable<UserDTO> GetUsers();
     }
 }

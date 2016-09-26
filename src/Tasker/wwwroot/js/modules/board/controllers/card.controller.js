@@ -5,9 +5,9 @@
         .module('board')
         .controller('cardController', cardController);
 
-    cardController.$inject = ['$scope', '$uibModal', '$uibModalInstance', 'cardsService', 'card'];
+    cardController.$inject = ['$scope', '$uibModal', '$uibModalInstance', 'cardsService', 'card', 'userService'];
 
-    function cardController($scope, $uibModal, $uibModalInstance, cardsService, card) {
+    function cardController($scope, $uibModal, $uibModalInstance, cardsService, card, userService) {
         $scope.card = card;
         $scope.showLabels = false;
         $scope.showChecklist = false;
@@ -18,10 +18,13 @@
         };
 
         $scope.saveComment = function () {
+            var user = userService.getAplicationUser();
+
             if (!$scope.card.comments)
                 $scope.card.comments = [];
-            cardsService.insertComment($scope.card.id, 'jelka', $scope.comment).then(function (response) {
+            cardsService.insertComment($scope.card.id, user.id, $scope.comment).then(function (response) {
                 $scope.card.comments.push($scope.comment);
+                $scope.comment = null;
             }, function (error) {
                 console.log('Error with comments');
             });

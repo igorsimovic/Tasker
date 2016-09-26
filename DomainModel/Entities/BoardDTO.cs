@@ -35,16 +35,17 @@ namespace DomainModel.Entities
             this.Starred = Starred;
             this.Color = color;
             this.OrderNo = orderNo;
-            
+
         }
 
-        public BoardDTO(string id, string boardName, bool stared, string color, IEnumerable<ListDTO> lists)
+        public BoardDTO(string id, string boardName, bool stared, string color, string userCreatedBy ,IEnumerable<ListDTO> lists)
         {
             this.Id = id;
             this.BoardName = boardName;
             this.Starred = stared;
             this.Color = color;
             this.Lists = lists;
+            this.UserCreatedBy = userCreatedBy;
         }
 
     }

@@ -1,23 +1,37 @@
 ﻿(function () {
-	'use strict';
+    'use strict';
 
-	angular
+    angular
         .module('user')
         .service('userService', userService);
 
-	userService.$inject = ['$http'];
+    userService.$inject = ['$http'];
 
-	function userService($http) {
+    function userService($http) {
 
-		this.save = saveUser;
-		this.getUser = getUser;
+        this.save = saveUser;
+        this.getUser = getUser;
+        this.setApplicationUser = setApplicationUser;
+        this.changePassword = changePassword;
+        var user = {};
 
-		function getUser(id) {
+        this.getAplicationUser = function () {
+            return user;
+        }
+
+        function changePassword(passwordData) {
+            return $http.put('/api/v1/user/' + passwordData.userId + '/changePassword', passwordData);
+        }
+
+        function setApplicationUser(input) {
+            user = input;
+        }
+        function getUser(id) {
             return $http.get('/api/v1/User/' + id);
-		}
+        }
 
-		function saveUser(user) {
-			return $http.put('/api/v1/user/' + user.id, user);
-		}
-	}
+        function saveUser(user) {
+            return $http.put('/api/v1/user/' + user.id, user);
+        }
+    }
 })();
