@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Entities
 {
-    public class CommentDTO
+    public class UpdateListOrderModel
     {
-        public string Id;
-        public string UserId;
-        public string Text;
+        public string ListId { get; set; }
+        public int NewIndex { get; set; }
     }
 }

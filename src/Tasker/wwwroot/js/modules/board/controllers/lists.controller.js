@@ -5,16 +5,23 @@
         .module('board')
         .controller('listsController', listsController);
 
-    listsController.$inject = ['$stateParams', 'listsService', '$uibModal', 'cardsService'];
+    listsController.$inject = ['$stateParams', 'boardService', 'listsService', 'cardsService', '$uibModal'];
 
-    function listsController($stateParams, listService, $uibModal, cardsService) {
+    function listsController($stateParams, boardService, listService, cardsService, $uibModal) {
         var vm = this;
+
+        //
         vm.title = 'Lists';
+        vm.changeBoardName = changeBoardName;
         vm.addList = addList;
         vm.listSettings = listSettings;
-        vm.reorderList = reorderList;
+        vm.reorderLists = reorderLists;
+        vm.changeListName = changeListName;
+        //
         vm.addCard = addCard;
+        vm.reorderCards = reorderCards;
         vm.openCard = openCard;
+        vm.insertCard = insertCard;
 
         var boardId = $stateParams.id || null;
 
@@ -31,10 +38,20 @@
             }
         })();
 
+        //BOARD Functions
+        function changeBoardName(name) {
+            boardService.updateName(boardId, name).then(function (res) {
+
+            }, function (err) {
+                console.error('Error changing board name: ', err);
+            });
+        }
+
+        //LIST Funcitons
         function addList() {
             var newList = {
                 name: "List " + (vm.board.lists.length + 1),
-                order: (vm.board.lists.length + 1),
+                order: (vm.board.lists.length),
                 cards: [],
                 boardId: boardId
             };
@@ -46,7 +63,7 @@
         }
 
         function listSettings(list) {
-            //
+            //TODO: settings should be here not just delete
             deleteList(list);
         }
 
@@ -60,15 +77,37 @@
             });
         }
 
-        function reorderList(event, index, item, external, type) {
-            debugger
-            console.log('Arguments: ', arguments);
+        //dnd-moved
+        function reorderLists() {
+            var newOrder = [];
+            vm.board.lists.forEach(function (listItem, index) {
+                if (listItem.order !== index) {
+                    listItem.order = index;
+                    newOrder.push({ listId: listItem.id, listName: listItem.name, newIndex: index });
+                }
+            });
+            if (newOrder.length > 0) {
+                listService.updateOrder(newOrder).then(function (res) {
+                    console.log('List indexes updated successfully: ', res);
+                }, function (err) {
+                    console.error('List indexes update error: ', err);
+                });
+            }
         }
 
+        function changeListName(id, name) {
+            listService.updateName(id, name).then(function (res) {
+
+            }, function (err) {
+                console.error('Error changing list name: ', err);
+            });
+        }
+
+        //CARD Functions
         function addCard(list) {
             var newCard = {
                 order: list.cards.length + 1,
-                name: 'Card - ' + list.cards.length + 1,
+                name: 'Card - ' + (list.cards.length + 1),
                 listId: list.id
             }
 
@@ -79,12 +118,34 @@
             });
         }
 
+        //dnd-moved - reorder in same list
+        function reorderCards(list) {
+            var newOrder = [];
+            list.cards.forEach(function (cardItem, index) {
+                if (cardItem.order !== index) {
+                    cardItem.order = index;
+                    newOrder.push({ cardId: cardItem.id, cardName: cardItem.name, newIndex: index });
+                }
+            });
+            console.log('Update cards with this: ', newOrder);
+            if (newOrder.length > 0) {
+                card
+            }
+        }
+
+        //dnd-inserted - move from one list to another
+        function insertCard(index, event, card, list) {
+            if (list.id !== card.listId) {
+                console.log('INSERTED: ', arguments);
+            }
+        }
+
         function openCard(card) {
             $uibModal.open({
                 animation: true,
                 templateUrl: 'js/modules/board/views/card.modal.html',
                 controller: 'cardController',
-                size: 'lg',
+                size: 'md',
                 resolve: {
                     card: function () { return card; }
                 }

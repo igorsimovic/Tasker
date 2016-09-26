@@ -6,43 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using DomainModel.Repositories;
 using DomainModel.Entities;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Tasker.Controllers.API
 {
-    [Route("api/v1/lists")]
-    public class ListController : Controller
+    [Route("api/v1/labels")]
+    public class LabelController : Controller
     {
-        private readonly IListRepository list_repo_;
+        private readonly ILabelRepository label_repo_;
 
-        public ListController(IListRepository list_repo)
+        public LabelController(ILabelRepository label_repo)
         {
-            list_repo_ = list_repo;
+            label_repo_ = label_repo;
         }
 
-        // PUT api/lists/5
-        [HttpPut("order")]
-        public void Put([FromBody]IEnumerable<UpdateListOrderModel> model)
+        // PUT api/labels/5
+        [HttpPut("{id}")]
+        public ActionResult Put(int id, [FromBody]LabelDTO label)
         {
             try
             {
-                list_repo_.UpdateOrder(model);
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-        }
-
-        // PUT api/values/5
-        [HttpPut("{id}/name")]
-        public void Put(string id, [FromBody]UpdateNameModel model)
-        {
-            try
-            {
-                list_repo_.UpdateName(id, model);
+                label_repo_.UpdateLabel(label);
+                return this.Ok(label);
             }
             catch (Exception ex)
             {
@@ -50,13 +37,14 @@ namespace Tasker.Controllers.API
             }
         }
 
-        // POST api/lists
+
+        // POST api/labels
         [HttpPost("")]
-        public ActionResult Post([FromBody] ListDTO list)
+        public ActionResult Post([FromBody] LabelDTO label)
         {
             try
             {
-                var result = list_repo_.CreateList(list);
+                var result = label_repo_.CreateLabel(label);
 
                 return this.Ok(result);
             }
@@ -66,13 +54,13 @@ namespace Tasker.Controllers.API
             }
         }
       
-        // DELETE api/values/5
+        // DELETE api/labels/5
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)
         {
             try
             {
-                var result = list_repo_.DeleteList(id);
+                var result = label_repo_.DeleteLabel(id);
 
                 return this.Ok();
             }

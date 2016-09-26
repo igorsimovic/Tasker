@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Entities
 {
-    public class CommentDTO
+    public class UpdateNameModel
     {
-        public string Id;
-        public string UserId;
-        public string Text;
+        public string Name { get; set; }
     }
 }

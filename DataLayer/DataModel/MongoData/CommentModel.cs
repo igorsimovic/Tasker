@@ -8,14 +8,13 @@ using System.Threading.Tasks;
 
 namespace DataLayer.DataModel.MongoData
 {
-    public class LabelModel
+    public class CommentModel
     {
         public ObjectId Id { get; set; }
+        public ObjectId UserId { get; set; }
 
-        [BsonElement("Title")]
-        public string Title { get; set; }
-
-        [BsonElement("Color")]
-        public string Color { get; set; }
+        [BsonElement("Text")]
+        public string Text { get; set; }
+       
     }
 }

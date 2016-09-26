@@ -11,7 +11,9 @@
         this.getByListId = getByListId;
         this.createCard = createCard;
         this.removeCard = removeCard;
-        this.updateCard = updateCard;
+        this.updateCardName = updateCardName;
+        this.updateCardDescription = updateCardDescription;
+        this.insertComment = insertComment;
 
         function getByListId(id) {
             return $http.get('/api/v1/lists/' + id);
@@ -26,9 +28,16 @@
 
         };
 
-        function updateCard(card) {
-            return $http.put('api/v1/cards/' + card.id, card);
+        function updateCardName(id, name) {
+            return $http.put('api/v1/cards/' + id + '/name', { name: name });
         };
 
+        function updateCardDescription(id, description) {
+            return $http.put('api/v1/cards/' + id + '/description', { description: description });
+        };
+
+        function insertComment(id, userId, text) {
+            return $http.put('api/v1/cards/' + id + '/comments', { UserId: userId, Text: text});
+        };
     }
 })();

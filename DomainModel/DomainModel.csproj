@@ -45,8 +45,11 @@
     <Compile Include="Entities\LabelDTO.cs" />
     <Compile Include="Entities\ListDTO.cs" />
     <Compile Include="Entities\BoardDTO.cs" />
+    <Compile Include="Entities\UpdateListOrderModel.cs" />
+    <Compile Include="Entities\UpdateBoardModelName.cs" />
     <Compile Include="Entities\UserDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ILabelRepository.cs" />
     <Compile Include="Repositories\ICardRepository.cs" />
     <Compile Include="Repositories\IListRepository.cs" />
     <Compile Include="Repositories\IBoardRepository.cs" />

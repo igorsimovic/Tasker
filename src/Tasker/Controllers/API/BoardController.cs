@@ -23,38 +23,32 @@ namespace Tasker.Controllers.API
         }
 
         // GET: api/boards
-        [HttpGet("")]
+        [Route("userID/{userId}")]
         [Authorize(Policy = "TaskerUser")]
-        public IEnumerable<BoardDTO> Get()
+        public ActionResult Get(string userId)
         {
-            return board_repo_.GetAll().OrderBy(b=>b.OrderNo);
+            var result = board_repo_.GetAll(userId).OrderBy(b => b.OrderNo);
+            return this.Ok(result);
         }
 
         // GET api/boards/57cf0a9636fc06fa4628c3c5
         [HttpGet("{id}", Name = "GetById")]
         [Authorize(Policy = "TaskerUser")]
-        public BoardDTO Get(string id)
+        public BoardDTO GetById(string id)
         {
             return board_repo_.GetById(id);
         }
-        [HttpGet]
-        [Route("userID/{id}")]
-        [Authorize(Policy = "TaskerUser")]
-        public List<BoardDTO> GetByUserID(string id)
-        {
-            return board_repo_.GetBoardsByUserID(id);
-        }
-
+        
         // POST api/values
         [HttpPost("")]
         [Authorize(Policy = "TaskerUser")]
-        public BoardDTO Post([FromBody] BoardDTO board)
+        public ActionResult Post([FromBody] BoardDTO board)
         {
             try
             {
                 var result = board_repo_.CreateBoard(board);
-                return result;
 
+                return this.CreatedAtRoute("GetById", new { id = result.Id}, result);
             }
             catch (Exception ex)
             {
@@ -75,6 +69,20 @@ namespace Tasker.Controllers.API
             catch (Exception ex)
             {
 
+                throw ex;
+            }
+        }
+        // PUT api/values/5
+        [HttpPut("{id}/name")]
+        [Authorize(Policy = "TaskerUser")]
+        public void Put(string id, [FromBody]UpdateNameModel model)
+        {
+            try
+            {
+                board_repo_.UpdateName(id, model);
+            }
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }

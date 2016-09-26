@@ -25,6 +25,7 @@
         }
 
         function createBoard() {
+            vm.newBoard.userCreatedBy = accountService.getUser().userId;
             boardService.createBoard(vm.newBoard).then(function (response) {
                 vm.boards.push(response.data);
                 vm.creationMode = false;
@@ -37,9 +38,12 @@
         }
 
         function toggleStarredStatus(event, index, item, external, type) {
+
             var originalStarred = angular.copy(vm.starred); //this is bad. should use drad-end or smth like this.
             var originalBoards = angular.copy(vm.boards);
             var originalStarredStatus = item.starred;
+           
+
             var originalIndex = -1;
             if (originalStarredStatus) {
                 originalIndex = originalStarred.indexOfObj(item.id);
@@ -80,18 +84,11 @@
         }
 
         function activate() {
-            boardService.refreshBoards(accountService.authData.userId).then(function (response) {
-                vm.starred = response.data.filter(function (item) {
-                    return item.starred;
-                });
-                vm.boards = response.data.filter(function (item) {
-                    return !item.starred;
-                });
-            });
+            refreshBoards();//inital board get
         }
 
         function refreshBoards() {
-            boardService.refreshBoards(accountService.authData.userId).then(function (response) {
+            boardService.refreshBoards(accountService.getUser().userId).then(function (response) {
                 vm.starred = response.data.filter(function (item) {
                     return item.starred;
                 });

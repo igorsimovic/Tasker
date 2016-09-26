@@ -25,6 +25,6 @@ namespace DataLayer.DataModel.MongoData
         public IEnumerable<ObjectId> Labels { get; set; }
 
         [BsonElement("Comments")]
-        public IEnumerable<Object> Comments { get; set; }
+        public IEnumerable<CommentModel> Comments { get; set; }
     }
 }

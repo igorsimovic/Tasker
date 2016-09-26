@@ -45,9 +45,19 @@ namespace DataLayer.Repositories
             return result;
         }
 
-        public void UpdateCard(CardDTO card)
+        public void UpdateCardName(string id, string name)
         {
-            db_.UpdateCard(card);
+            db_.UpdateField<string, CardModel>(id, "Name", name, "Cards");
+        }
+
+        public void UpdateCardDescription(string id, string description)
+        {
+            db_.UpdateField<string, CardModel>(id, "Description", description, "Cards");
+        }
+
+        public bool InsertComment(string cardId, string userId, string text)
+        {
+            return db_.InsertComment(cardId, userId, text);
         }
     }
 }

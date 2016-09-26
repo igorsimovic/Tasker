@@ -9,12 +9,14 @@ namespace DomainModel.Repositories
 {
     public interface IBoardRepository
     {
-        IEnumerable<BoardDTO> GetAll();
+        IEnumerable<BoardDTO> GetAll(string userId);
 
         BoardDTO GetById(string id);
         void update(BoardDTO model);
         BoardDTO CreateBoard(BoardDTO board);
 
-        List<BoardDTO> GetBoardsByUserID(string userID);
+        void UpdateName(string id, UpdateNameModel model);
+
+        //List<BoardDTO> GetBoardsByUserID(string userID);
     }
 }

@@ -23,20 +23,20 @@ namespace Tasker.Controllers.API
         }
 
         // PUT api/cards/5
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody]CardDTO card)
-        {
-            try
-            {
-                card_repo_.UpdateCard(card);
-                return this.Ok(card);
-            }
-            catch (Exception ex)
-            {
+        //[HttpPut("{id}")]
+        //public ActionResult Put(int id, [FromBody]CardDTO card)
+        //{
+        //    try
+        //    {
+        //        card_repo_.UpdateCard(card);
+        //        return this.Ok(card);
+        //    }
+        //    catch (Exception ex)
+        //    {
 
-                throw ex;
-            }
-        }
+        //        throw ex;
+        //    }
+        //}
 
 
         // POST api/cards
@@ -55,7 +55,55 @@ namespace Tasker.Controllers.API
                 throw ex;
             }
         }
-      
+
+        [HttpPut("{id}/name")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult PutName(string id, [FromBody] CardDTO card)
+        {
+            try
+            {
+                card_repo_.UpdateCardName(id, card.Name);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPut("{id}/description")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult PutDescription(string id, [FromBody] CardDTO card)
+        {
+            try
+            {
+                card_repo_.UpdateCardDescription(id, card.Description);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPut("{id}/comments")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult InsertComment(string id, [FromBody] CommentDTO comment)
+        {
+            try
+            {
+                card_repo_.InsertComment(id, comment.UserId, comment.Text);
+
+                return this.Ok();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         // DELETE api/cards/5
         [HttpDelete("{id}")]
         public ActionResult Delete(string id)

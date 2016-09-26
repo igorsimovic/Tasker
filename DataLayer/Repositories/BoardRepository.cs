@@ -32,17 +32,17 @@ namespace DataLayer.Repositories
             }
         }
 
-        public IEnumerable<BoardDTO> GetAll()
+        public IEnumerable<BoardDTO> GetAll(string userId)
         {
-            return db_.GetAllBoards()
-                 .Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo));
-        }
-
-        public List<BoardDTO> GetBoardsByUserID(string userID)
-        {
-            var boardsModel = db_.getBoardsByUser(userID).ToList();
+            var boardsModel = db_.getBoardsByUser(userId).ToList();
             return boardsModel.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo)).ToList();
         }
+
+        //public List<BoardDTO> GetBoardsByUserID(string userID)
+        //{
+        //    var boardsModel = db_.getBoardsByUser(userID).ToList();
+        //    return boardsModel.Select(b => new BoardDTO(b.Id.ToString(), b.BoardName, b.Starred, b.Color, b.OrderNo)).ToList();
+        //}
 
         public BoardDTO GetById(string id)
         {
@@ -52,24 +52,29 @@ namespace DataLayer.Repositories
             var tempLists = db_.GetListByBoardId(id);
             if (tempLists != null)
             {
-                lists = tempLists.Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description)).ToList();
+                lists = tempLists.Select(l => new ListDTO(l.Id.ToString(), l.Name, l.Order, l.Description)).OrderBy(l => l.Order).ToList();
                 foreach (var list in lists)
                 {
                     var tempCards = db_.GetCardsByListId(list.Id);
                     if (tempCards != null)
                     {
-                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description));
+                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description)).OrderBy(c => c.Order);
                     }
                 }
             }
 
 
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, lists);
+            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, board.Color, lists);
         }
 
         public void update(BoardDTO model)
         {
             db_.updateBoard(model);
+        }
+
+        public void UpdateName(string id, UpdateNameModel model)
+        {
+            db_.UpdateBoardField<string>(id, "BoardName", model.Name);
         }
     }
 }

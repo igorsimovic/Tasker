@@ -132,23 +132,20 @@ namespace DataLayer
                     Color = board.Color,
                     BoardName = board.BoardName,
                     OrderNo = board.OrderNo,
-                    Lists = new List<ObjectId>()
+                    Lists = new List<ObjectId>(),
+                    UserCreatedBy = new ObjectId(board.UserCreatedBy)
                 };
 
                 db_.GetCollection<BoardModel>("Boards").InsertOne(boardModel);
-                string userID = "57dbfcadcc2963cd7fea8798";//TMP hardcoded here will be read from req.
-                ObjectId userObjectID = new ObjectId(userID);
-                var filter = Builders<UserModel>.Filter.Eq(u => u.Id, userObjectID);
+                
+
+                var filter = Builders<UserModel>.Filter.Eq(u => u.Id, boardModel.UserCreatedBy);
                 var update = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
+
                 db_.GetCollection<UserModel>("User").UpdateOne(filter, update);
-                return new BoardDTO
-                {
-                    Id = boardModel.Id.ToString(),
-                    BoardName = boardModel.BoardName,
-                    Color = boardModel.Color,
-                    OrderNo = boardModel.OrderNo,
-                };
-                //add user id = boardId relation here
+                board.Id = boardModel.Id.ToString();
+
+                return board;
 
             }
             catch (Exception ex)
@@ -159,10 +156,10 @@ namespace DataLayer
         }
 
 
-        public IEnumerable<BoardModel> GetAllBoards()
+        public IEnumerable<BoardModel> GetAllBoards(string userId)
         {
-            var filter = new BsonDocument();
-            var result = db_.GetCollection<BoardModel>("Boards").Find(filter).ToEnumerable<BoardModel>();
+            var objectUserId = new ObjectId(userId);
+            var result = db_.GetCollection<BoardModel>("Boards").Find<BoardModel>(b => b.UserCreatedBy == objectUserId).ToEnumerable<BoardModel>();
 
             return result;
         }
@@ -224,7 +221,21 @@ namespace DataLayer
 
         }
 
+        internal void UpdateBoardField<T>(string id, string fieldName, T fieldValue)
+        {
+
+            var filter = Builders<BoardModel>.Filter.Eq("_id", new ObjectId(id));
+            var collection = db_.GetCollection<BoardModel>("Boards");
+
+            var update = Builders<BoardModel>.Update
+                .Set(fieldName, fieldValue);
+
+            var result = collection.UpdateOne(filter, update);
+        }
+
+
         #endregion
+
         #region LISTS
         public ListModel GetListById(string id)
         {
@@ -275,6 +286,18 @@ namespace DataLayer
             }
         }
 
+        internal void UpdateListField<T>(string id, string fieldName, T fieldValue)
+        {
+
+            var filter = Builders<ListModel>.Filter.Eq("_id", new ObjectId(id));
+            var collection = db_.GetCollection<ListModel>("Lists");
+
+            var update = Builders<ListModel>.Update
+                .Set(fieldName, fieldValue);
+
+            var result = collection.UpdateOne(filter, update);
+        }
+
         internal void DeleteList(string id)
         {
             db_.GetCollection<ListModel>("Lists").DeleteOne<ListModel>(l => l.Id == ObjectId.Parse(id));
@@ -283,7 +306,6 @@ namespace DataLayer
         #endregion
 
         #region CARDS
-
         public IEnumerable<CardModel> GetCardsByListId(string id)
         {
             var list = this.GetListById(id);
@@ -307,7 +329,7 @@ namespace DataLayer
                     Order = card.Order,
                     Description = card.Description,
                     Labels = new List<ObjectId>(),
-                    Comments = new List<Object>()
+                    Comments = new List<CommentModel>()
                 };
 
                 db_.GetCollection<CardModel>("Cards").InsertOne(cardModel);
@@ -332,24 +354,119 @@ namespace DataLayer
 
         }
 
-        public void UpdateCard(CardDTO model)
+        //public void UpdateCard(CardDTO model)
+        //{
+        //    var filter = Builders<CardModel>.Filter.Eq("_id", model.Id);
+        //    try
+        //    {
+        //        var dictionary = makeDictionaryFromModel(model);
+        //        var bsonDocument = new BsonDocument("$set", dictionary.ToBsonDocument());
+        //        var update = new BsonDocumentUpdateDefinition<CardModel>(bsonDocument);
+        //        var result = db_.GetCollection<CardModel>("Cards").UpdateOne(filter, update);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception("Card update fail" + ex.Message);
+        //    }
+
+        //}
+
+        internal bool InsertComment(string cardId, string userId, string text)
         {
-            var filter = Builders<CardModel>.Filter.Eq("_id", model.Id);
+            var commentModel = new CommentModel
+            {
+                UserId = new ObjectId(userId),
+                Text = text
+            };
+            var cardIdObject = new ObjectId(cardId);
+
+            var filter = Builders<CardModel>.Filter.Eq(c => c.Id, cardIdObject);
+            var update = Builders<CardModel>.Update.Push(l => l.Comments, commentModel);
+
+            db_.GetCollection<CardModel>("Cards").UpdateOne(filter, update);
+
+            return true;
+        }
+        #endregion
+
+
+        internal void UpdateField<T1, T2>(string id, string fieldName, T1 fieldValue, string collectionName)
+        {
+
+            var filter = Builders<T2>.Filter.Eq("_id", new ObjectId(id));
+            var collection = db_.GetCollection<T2>(collectionName);
+
+            var update = Builders<T2>.Update
+                .Set(fieldName, fieldValue);
+
+            var result = collection.UpdateOne(filter, update);
+        }
+
+
+        #region LABELS
+        public IEnumerable<LabelModel> GetLabelsByCardId(string id)
+        {
+            var filter = Builders<CardModel>.Filter.Eq("_id", new ObjectId(id));
+            var card = db_.GetCollection<CardModel>("Cards").Find(filter).FirstOrDefault();
+
+            if (card.Labels != null)
+            {
+                var labelFilter = Builders<LabelModel>.Filter.In("_id", card.Labels);
+                var result = db_.GetCollection<LabelModel>("Labels").Find(labelFilter).ToEnumerable<LabelModel>();
+                return result;
+            }
+            return null;
+        }
+
+        public LabelDTO CreateLabel(LabelDTO label)
+        {
+            try
+            {
+                var labelModel = new LabelModel
+                {
+                    Title = label.Title,
+                    Color = label.Color
+                };
+
+                db_.GetCollection<LabelModel>("Labels").InsertOne(labelModel);
+                ObjectId cardObjectId = new ObjectId(label.CardId);
+
+                var filter = Builders<CardModel>.Filter.Eq(l => l.Id, cardObjectId);
+                var update = Builders<CardModel>.Update.Push(c => c.Labels, labelModel.Id);
+
+                db_.GetCollection<CardModel>("Cards").UpdateOne(filter, update);
+
+                label.Id = labelModel.Id.ToString();
+                return label;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        internal void DeleteLabel(string id)
+        {
+            db_.GetCollection<LabelModel>("Labels").DeleteOne<LabelModel>(c => c.Id == ObjectId.Parse(id));
+
+        }
+
+        public void UpdateLabel(LabelDTO model)
+        {
+            var filter = Builders<LabelModel>.Filter.Eq("_id", model.Id);
             try
             {
                 var dictionary = makeDictionaryFromModel(model);
                 var bsonDocument = new BsonDocument("$set", dictionary.ToBsonDocument());
-                var update = new BsonDocumentUpdateDefinition<CardModel>(bsonDocument);
-                var result = db_.GetCollection<CardModel>("Cards").UpdateOne(filter, update);
+                var update = new BsonDocumentUpdateDefinition<LabelModel>(bsonDocument);
+                var result = db_.GetCollection<LabelModel>("Labels").UpdateOne(filter, update);
             }
             catch (Exception ex)
             {
-                throw new Exception("Card update fail" + ex.Message);
+                throw new Exception("Label update fail" + ex.Message);
             }
 
         }
         #endregion
-
         public UserModel GetUserByCredentials(string username, string password)
         {
             var filter = Builders<UserModel>.Filter.Eq("userName", username);
@@ -359,6 +476,7 @@ namespace DataLayer
             {
                 return null;
             }
+
 
             if(userResult.NewPassword != password)
             {
