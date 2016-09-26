@@ -72,6 +72,20 @@ namespace Tasker.Controllers.API
                 throw ex;
             }
         }
+        // PUT api/values/5
+        [HttpPut("{id}/name")]
+        [Authorize(Policy = "TaskerUser")]
+        public void Put(string id, [FromBody]UpdateNameModel model)
+        {
+            try
+            {
+                board_repo_.UpdateName(id, model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]

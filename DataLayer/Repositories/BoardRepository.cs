@@ -64,12 +64,17 @@ namespace DataLayer.Repositories
             }
 
 
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, lists);
+            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, board.Color, lists);
         }
 
         public void update(BoardDTO model)
         {
             db_.updateBoard(model);
+        }
+
+        public void UpdateName(string id, UpdateNameModel model)
+        {
+            db_.UpdateBoardField<string>(id, "BoardName", model.Name);
         }
     }
 }

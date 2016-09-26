@@ -54,11 +54,17 @@ namespace DataLayer.Repositories
             }
             return true;
         }
+
+        public bool UpdateName(string id, UpdateNameModel model)
+        {
+            db_.UpdateListField<string>(id, "Name", model.Name);
+            return true;
+        }
         public ListDTO UpdateList(ListDTO list)
         {
             throw new NotImplementedException();
         }
 
-        
+       
     }
 }

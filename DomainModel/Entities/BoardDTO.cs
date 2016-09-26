@@ -38,11 +38,12 @@ namespace DomainModel.Entities
             
         }
 
-        public BoardDTO(string id, string boardName, bool stared, IEnumerable<ListDTO> lists)
+        public BoardDTO(string id, string boardName, bool stared, string color, IEnumerable<ListDTO> lists)
         {
             this.Id = id;
             this.BoardName = boardName;
             this.Starred = stared;
+            this.Color = color;
             this.Lists = lists;
         }
 

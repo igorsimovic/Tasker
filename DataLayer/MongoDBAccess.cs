@@ -221,6 +221,19 @@ namespace DataLayer
 
         }
 
+        internal void UpdateBoardField<T>(string id, string fieldName, T fieldValue)
+        {
+
+            var filter = Builders<BoardModel>.Filter.Eq("_id", new ObjectId(id));
+            var collection = db_.GetCollection<BoardModel>("Boards");
+
+            var update = Builders<BoardModel>.Update
+                .Set(fieldName, fieldValue);
+
+            var result = collection.UpdateOne(filter, update);
+        }
+
+
         #endregion
         #region LISTS
         public ListModel GetListById(string id)

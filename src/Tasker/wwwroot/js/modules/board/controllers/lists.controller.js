@@ -5,19 +5,23 @@
         .module('board')
         .controller('listsController', listsController);
 
-    listsController.$inject = ['$stateParams', 'listsService'];
+    listsController.$inject = ['$stateParams', 'boardService', 'listsService', 'cardsService'];
 
-    function listsController($stateParams, listService) {
+    function listsController($stateParams, boardService, listService, cardsService) {
         var vm = this;
+
         //
         vm.title = 'Lists';
+        vm.changeBoardName = changeBoardName;
         vm.addList = addList;
         vm.listSettings = listSettings;
         vm.reorderLists = reorderLists;
+        vm.changeListName = changeListName;
         //
         vm.addCard = addCard;
         vm.reorderCards = reorderCards;
         vm.openCard = openCard;
+        vm.insertCard = insertCard;
 
         var boardId = $stateParams.id || null;
 
@@ -34,6 +38,14 @@
             }
         })();
 
+        //BOARD Functions
+        function changeBoardName(name) {
+            boardService.updateName(boardId, name).then(function (res) {
+
+            }, function (err) {
+                console.error('Error changing board name: ', err);
+            });
+        }
 
         //LIST Funcitons
         function addList() {
@@ -65,22 +77,31 @@
             });
         }
 
-        //dnd-drop
+        //dnd-moved
         function reorderLists() {
             var newOrder = [];
             vm.board.lists.forEach(function (listItem, index) {
-                listItem.order = index;
-                newOrder.push({ listId: listItem.id, listName: listItem.name, newIndex: index });
+                if (listItem.order !== index) {
+                    listItem.order = index;
+                    newOrder.push({ listId: listItem.id, listName: listItem.name, newIndex: index });
+                }
             });
-            listService.updateOrder(newOrder).then(function (res) {
-                console.log('indexes updated: ', res);
-            }, function (err) {
-                console.error('Indexes not updated: ', err);
-            });
-            console.log('Update server with those values: ', newOrder);
+            if (newOrder.length > 0) {
+                listService.updateOrder(newOrder).then(function (res) {
+                    console.log('List indexes updated successfully: ', res);
+                }, function (err) {
+                    console.error('List indexes update error: ', err);
+                });
+            }
         }
 
+        function changeListName(id, name) {
+            listService.updateName(id, name).then(function (res) {
 
+            }, function (err) {
+                console.error('Error changing list name: ', err);
+            });
+        }
 
         //CARD Functions
         function addCard(list) {
@@ -92,9 +113,26 @@
             list.cards.push(newCard);
         }
 
-        function reorderCards(event, index, item, external, type) {
-            console.log('reorder cards: ', arguments);
-            return item;
+        //dnd-moved - reorder in same list
+        function reorderCards(list) {
+            var newOrder = [];
+            list.cards.forEach(function (cardItem, index) {
+                if (cardItem.order !== index) {
+                    cardItem.order = index;
+                    newOrder.push({ cardId: cardItem.id, cardName: cardItem.name, newIndex: index });
+                }
+            });
+            console.log('Update cards with this: ', newOrder);
+            if (newOrder.length > 0) {
+                card
+            }
+        }
+
+        //dnd-inserted - move from one list to another
+        function insertCard(index, event, card, list) {
+            if (list.id !== card.listId) {
+                console.log('INSERTED: ', arguments);
+            }
         }
 
         function openCard(card) {

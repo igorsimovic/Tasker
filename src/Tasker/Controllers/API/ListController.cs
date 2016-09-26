@@ -23,7 +23,7 @@ namespace Tasker.Controllers.API
 
         // PUT api/lists/5
         [HttpPut("order")]
-        public void Put(int id, [FromBody]IEnumerable<UpdateListOrderModel> model)
+        public void Put([FromBody]IEnumerable<UpdateListOrderModel> model)
         {
             try
             {
@@ -36,6 +36,19 @@ namespace Tasker.Controllers.API
             }
         }
 
+        // PUT api/values/5
+        [HttpPut("{id}/name")]
+        public void Put(string id, [FromBody]UpdateNameModel model)
+        {
+            try
+            {
+                list_repo_.UpdateName(id, model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         // POST api/lists
         [HttpPost("")]

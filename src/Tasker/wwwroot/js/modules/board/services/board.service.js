@@ -13,6 +13,7 @@
         this.updateBoard = updateBoard;
         this.createBoard = createBoard;
         this.refreshBoards = refreshBoards;
+        this.updateName = updateName;
 
         function getAll() {
             return $http.get('/api/v1/boards');
@@ -34,5 +35,8 @@
             return $http.get('api/v1/boards/userId/' + userID);
         }
 
+        function updateName(id, newName) {
+            return $http.put('api/v1/boards/' + id + '/name', { name: newName });
+        }
     }
 })();

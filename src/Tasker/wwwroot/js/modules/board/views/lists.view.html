@@ -1,5 +1,12 @@
-﻿Welcome to: <h1 editable-text="vm.board.boardName" buttons="no" blur="submit">{{vm.board.boardName}}</h1>
-
+﻿<div class="row" style="margin: 0 !important"
+     ng-style="{'background-color': vm.board.color}">
+    <h1 editable-text="vm.board.boardName" 
+                buttons="no"
+                blur="submit"
+                e-ng-change="vm.changeBoardName($data)"
+                e-reqired="true"
+                style="color:white">Welcome to :{{vm.board.boardName}}</h1>
+</div>
 <div class="lists-wrapper">
     <ul dnd-list="vm.board.lists"
         class="tasker-list"
@@ -13,11 +20,18 @@
             dnd-selected="vm.selectedList = list"
             ng-class="{'drag-selected':vm.selectedList === list}"
             class="ibox float-e-margins list-item">
-            <div class="ibox-title">
+            <div class="ibox-title" ng-style="{'background-color': vm.board.color}" style="color:white !important">
                 <!--<a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>-->
                 <div class="row">
                     <div class="col-xs-10">
-                        <h5 editable-text="list.name" buttons="no" blur="submit">{{list.name}}</h5>
+                        <h5 editable-text="list.name" 
+                            buttons="no" 
+                            blur="submit"
+                            e-ng-change="vm.changeListName(list.id, $data)"
+                            e-reqired="true"
+                            style="color:white !important">
+                        {{list.name}}
+                        </h5>
                     </div>
                     <div class="col-xs-2">
                         <i ng-click="vm.listSettings(list);" class="fa fa-tasks list-settings"></i>
@@ -27,15 +41,16 @@
             <div class="ibox-content">
                 <ul dnd-list="list.cards"
                     dnd-allowed-types="['cardType']"
-                    dnd-drop="vm.reorderCards(event, index, item, external, type, 'cardType')"
+                    dnd-inserted="vm.insertCard(index, event, item, list)"
                     class="cards">
                     <li ng-repeat="card in list.cards"
                         dnd-type="'cardType'"
                         dnd-draggable="card"
-                        dnd-moved="list.cards.splice($index, 1)"
+                        dnd-moved="list.cards.splice($index, 1); vm.reorderCards(list)"
                         dnd-effect-allowed="move"
                         dnd-selected="list.selectedCard = item"
-                        class="card-item">
+                        class="card-item"
+                        ng-style="{'background-color': vm.board.color}">
                         <a href="" ng-click="vm.openCard(card)">{{card.name}}</a>
                     </li>
 
