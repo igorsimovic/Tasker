@@ -75,6 +75,7 @@ namespace DataLayer.Repositories
                             c.Name, 
                             c.Order,
                             c.Description,
+                            list.Id.ToString(),
                             c.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
                             c.Labels.Select(l => db_.GetLabelById(l)).ToList()))
                             .OrderBy(c => c.Order);

@@ -102,7 +102,7 @@
         }
 
         function listSettings(list) {
-            //TODO: settings should be here not just delete
+            //TODO: more settings should be here not just delete
             deleteList(list);
         }
 
@@ -122,7 +122,7 @@
             vm.board.lists.forEach(function (listItem, index) {
                 if (listItem.order !== index) {
                     listItem.order = index;
-                    newOrder.push({ listId: listItem.id, listName: listItem.name, newIndex: index });
+                    newOrder.push({ id: listItem.id, listName: listItem.name, newIndex: index });
                 }
             });
             if (newOrder.length > 0) {
@@ -151,7 +151,7 @@
             }
 
             cardsService.createCard(newCard).then(function (res) {
-                list.cards.push(newCard);
+                list.cards.push(res.data);
             }, function (err) {
                 console.log('Error creating card: ', err);
             });
@@ -163,19 +163,24 @@
             list.cards.forEach(function (cardItem, index) {
                 if (cardItem.order !== index) {
                     cardItem.order = index;
-                    newOrder.push({ cardId: cardItem.id, cardName: cardItem.name, newIndex: index });
+                    newOrder.push({ id: cardItem.id, cardName: cardItem.name, newIndex: index });
                 }
             });
             console.log('Update cards with this: ', newOrder);
             if (newOrder.length > 0) {
-                card
+                cardsService.updateOrder(newOrder).then(function (res) {
+
+                }, function (err) {
+                    console.error('Error updating cards: ', err);
+                });
             }
         }
 
         //dnd-inserted - move from one list to another
         function insertCard(index, event, card, list) {
             if (list.id !== card.listId) {
-                console.log('INSERTED: ', arguments);
+                //cardId, old list id, new list id
+                cardsService.moveCard(card.id, card.listId, list.id);
             }
         }
 

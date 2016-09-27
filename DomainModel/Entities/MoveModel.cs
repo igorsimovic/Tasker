@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DomainModel.Entities
 {
-    public class UpdateListOrderModel
+    public class MoveModel
     {
-        public string ListId { get; set; }
-        public int NewIndex { get; set; }
+        public string DestinationId { get; set; }
+        public string TargetId { get; set; }
     }
 }

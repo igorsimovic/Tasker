@@ -1,7 +1,7 @@
 ﻿<div class="modal-header">
     <h2 class="font-bold modal-title" editable-text="card.name" e-ng-change="updateName($data)" buttons="no" blur="submit">{{card.name}}</h2>
     <h4 class="card-description" editable-text="card.description" e-ng-change="updateDescription($data)" buttons="no" blur="submit">{{card.description || 'Add description'}}</h4>
-    <ul class="card-label-list" data-ng-if="card.labels.length">
+    <ul class="card-label-list" data-ng-if="card.labels.length" style="margin-top: 10px;">
         <li data-ng-repeat="label in card.labels" class="card-modal-label-item">
             <span class="card-label" ng-style="{'background-color': label.color}">
                 {{label.title}}

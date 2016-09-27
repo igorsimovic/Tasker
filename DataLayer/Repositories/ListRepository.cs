@@ -46,11 +46,11 @@ namespace DataLayer.Repositories
 
             return result;
         }
-        public bool UpdateOrder(IEnumerable<UpdateListOrderModel> model)
+        public bool UpdateOrder(IEnumerable<UpdateOrderModel> model)
         {
             foreach (var item in model)
             {
-                db_.UpdateListField<int>(item.ListId, "Order", item.NewIndex);
+                db_.UpdateListField<int>(item.Id, "Order", item.NewIndex);
             }
             return true;
         }

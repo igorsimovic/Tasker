@@ -20,6 +20,7 @@
         $scope.$on('loginCtrl:login', function (e, user) {
             console.log('this is the user', user);
             vm.user = user;
+            vm.user.userId = user.user_id;
             userService.getUser(vm.user.user_id).then(function (response) {
                 //vm.user = response.data;
                 //console.log('user response', vm.user);
@@ -56,7 +57,21 @@
         }
 
 
-        function activate() { }
+        function activate() {
+            if (!vm.user) {
+                vm.user = accountService.getUser();
+                userService.getUser(vm.user.userId).then(function (response) {
+                    //vm.user = response.data;
+                    //console.log('user response', vm.user);
+                    vm.user.bio = response.data.bio;
+                    vm.user.fullName = response.data.fullName;
+                    vm.user.id = response.data.id;
+                    vm.user.initials = response.data.initials;
+                    vm.user.userName = response.data.userName;
+                    userService.setApplicationUser(vm.user);
+                });
+            }
+        }
 
         function logOut() {
             accountService.logout();

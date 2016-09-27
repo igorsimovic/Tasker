@@ -21,5 +21,9 @@ namespace DomainModel.Repositories
         CommentDTO InsertComment(string cardId, string userId, string text);
         CardDTO InsertLabels(string cardId, List<string> labelIds);
         CardDTO RemoveLabel(string cardId, string labelId);
+
+        bool UpdateOrder(IEnumerable<UpdateOrderModel> model);
+
+        bool MoveCard(string id, MoveModel model);
     }
 }

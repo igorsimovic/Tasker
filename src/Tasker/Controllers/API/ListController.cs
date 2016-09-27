@@ -23,11 +23,13 @@ namespace Tasker.Controllers.API
 
         // PUT api/lists/5
         [HttpPut("order")]
-        public void Put([FromBody]IEnumerable<UpdateListOrderModel> model)
+        public ActionResult Put([FromBody]IEnumerable<UpdateOrderModel> model)
         {
             try
             {
-                list_repo_.UpdateOrder(model);
+                var result = list_repo_.UpdateOrder(model);
+
+                return this.Ok();
             }
             catch (Exception ex)
             {
@@ -38,11 +40,13 @@ namespace Tasker.Controllers.API
 
         // PUT api/values/5
         [HttpPut("{id}/name")]
-        public void Put(string id, [FromBody]UpdateNameModel model)
+        public ActionResult Put(string id, [FromBody]UpdateNameModel model)
         {
             try
             {
                 list_repo_.UpdateName(id, model);
+
+                return this.Ok();
             }
             catch (Exception ex)
             {

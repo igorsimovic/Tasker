@@ -45,6 +45,7 @@ namespace DataLayer.Repositories
                                 c.Name,
                                 c.Order, 
                                 c.Description, 
+                                listId,
                                 c.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
                                 c.Labels.Select(l => db_.GetLabelById(l)).ToList()));
             return result;
@@ -63,6 +64,23 @@ namespace DataLayer.Repositories
         public CommentDTO InsertComment(string cardId, string userId, string text)
         {
             return db_.InsertComment(cardId, userId, text);
+        }
+
+        public bool UpdateOrder(IEnumerable<UpdateOrderModel> model)
+        {
+            foreach (var item in model)
+            {
+                db_.UpdateField<int, CardModel>(item.Id, "Order", item.NewIndex, "Cards");
+            }
+            return true;
+        }
+
+        public bool MoveCard(string id, MoveModel model)
+        {
+            db_.RemoveCardFromList(id, model.DestinationId);
+            db_.InsertCardIntoList(id, model.TargetId);
+
+            return true;
         }
 
         public CardDTO InsertLabels(string cardId, List<string> labelIds)
