@@ -62,7 +62,13 @@
                             dnd-selected="list.selectedCard = item"
                             class="card-item"
                             ng-style="{'background-color': vm.board.color}">
-                            <a href="" ng-click="vm.openCard(card)">{{card.name}}</a>
+                            <ul class="card-label-list" data-ng-if="card.labels.length">
+                                <li data-ng-repeat="label in card.labels" class="card-modal-label-item" title="{{label.title}}">
+                                    <span class="card-label" ng-style="{'background-color': label.color}">
+                                    </span>
+                                </li>
+                            </ul>
+                            <a href="" ng-click="vm.openCard(card, vm.board.allLabels)">{{card.name}}</a>
                         </li>
 
                     </ul>

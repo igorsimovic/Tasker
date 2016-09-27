@@ -94,15 +94,48 @@ namespace Tasker.Controllers.API
         {
             try
             {
-                card_repo_.InsertComment(id, comment.UserId, comment.Text);
+                var result = card_repo_.InsertComment(id, comment.UserId, comment.Text);
 
-                return this.Ok();
+                return this.Ok(result);
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+        [HttpPut("{id}/addLabels")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult InsertLabels(string id, [FromBody] List<string> labels)
+        {
+            try
+            {
+                var result = card_repo_.InsertLabels(id, labels);
+
+                return this.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [HttpPut("{id}/removeLabel")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult RemoveLabel(string id, [FromBody] LabelDTO label)
+        {
+            try
+            {
+                var result = card_repo_.RemoveLabel(id, label.Id);
+
+                return this.Ok(result);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         // DELETE api/cards/5
         [HttpDelete("{id}")]

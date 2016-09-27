@@ -45,9 +45,9 @@ namespace DataLayer.Repositories
             return result;
         }
 
-        public void UpdateLabel(LabelDTO label)
-        {
-            db_.UpdateLabel(label);
-        }
+        //public void UpdateLabel(LabelDTO label)
+        //{
+        //    db_.UpdateLabel(label);
+        //}
     }
 }

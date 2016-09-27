@@ -16,14 +16,14 @@ namespace DomainModel.Entities
         public IEnumerable<LabelDTO> Labels { get; set; }
         public IEnumerable<CommentDTO> Comments { get; set; }
 
-        public CardDTO(string id, string name, int order, string description)
+        public CardDTO(string id, string name, int order, string description, List<CommentDTO> comments, List<LabelDTO> labels)
         {
             this.Id = id;
             this.Name = name;
             this.Order = order;
             this.Description = description;
-            this.Labels = new List<LabelDTO>();
-            this.Comments = new List<CommentDTO>();
+            this.Comments = comments;
+            this.Labels = labels;
         }
     }
 }

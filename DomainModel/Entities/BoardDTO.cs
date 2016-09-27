@@ -22,6 +22,7 @@ namespace DomainModel.Entities
         public int OriginalIndex { get; set; }
 
         public string UserCreatedBy { get; set; }
+        public List<LabelDTO> AllLabels { get; set; }
 
         public BoardDTO()
         {

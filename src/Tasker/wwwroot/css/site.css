@@ -298,7 +298,6 @@ ul[dnd-list] > li {
 
 .card-label-list {
     list-style: none;
-    margin-top: 10px;
     padding-left: 0;
 }
 
@@ -306,7 +305,6 @@ ul[dnd-list] > li {
     border-radius: 3px;
     cursor: pointer;
     margin: 0 0 4px;
-    min-height: 26px;
     padding: 4px 8px;
     position: relative;
     max-width: 100%;
@@ -323,44 +321,9 @@ ul[dnd-list] > li {
     border: none !important;
 }
 
-.card-label-green {
-    background-color: #61BD4F;
-}
-
-.card-label-yellow {
-    background-color: #F2D600;
-}
-
-.card-label-orange {
-    background-color: #FFAB4A;
-}
-
-.card-label-red {
-    background-color: #EB5A46;
-}
-
-.card-label-blue {
-    background-color: #0079BF;
-}
-
-.card-label-pink {
-    background-color: #FF80CE;
-}
-
-.card-label-lime {
-    background-color: #51E898;
-}
-
-.card-label-purple {
-    background-color: #C377E0;
-}
-
-.card-label-sky {
-    background-color: #00C2E0;
-}
-
-.card-label-black {
-    background-color: #4d4d4d;
+.labels-btn {
+    margin-bottom: 5px !important;
+    margin-left: 5px !important;
 }
 
 .card-description {
@@ -371,10 +334,17 @@ ul[dnd-list] > li {
     margin-bottom: 5px !important;
 }
 
-.card-label-new {
-    font-style: italic;
-    cursor: pointer;
+.card-modal-label-item {
+    display: inline-block;
+    margin-right: 5px;
 }
+
+.card-modal-label-item>span>i {
+    float: right;
+    margin-top: 2px;
+    margin-left: 3px;
+}
+
 .theme-config {
     position: absolute;
     top: 20px !important;

@@ -23,19 +23,19 @@ namespace Tasker.Controllers.API
         }
 
         // PUT api/labels/5
-        [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody]LabelDTO label)
-        {
-            try
-            {
-                label_repo_.UpdateLabel(label);
-                return this.Ok(label);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        //[HttpPut("{id}")]
+        //public ActionResult Put(int id, [FromBody]LabelDTO label)
+        //{
+        //    try
+        //    {
+        //        label_repo_.UpdateLabel(label);
+        //        return this.Ok(label);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
 
 
         // POST api/labels

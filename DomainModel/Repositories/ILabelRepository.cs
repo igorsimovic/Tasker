@@ -13,7 +13,7 @@ namespace DomainModel.Repositories
 
         LabelDTO CreateLabel(LabelDTO label);
 
-        void UpdateLabel(LabelDTO label);
+        //void UpdateLabel(LabelDTO label);
 
         bool DeleteLabel(string id);
     }

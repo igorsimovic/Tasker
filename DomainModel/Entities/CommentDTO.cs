@@ -11,5 +11,12 @@ namespace DomainModel.Entities
         public string Id;
         public string UserId;
         public string Text;
+
+        public CommentDTO(string id, string userId, string text)
+        {
+            this.Id = id;
+            this.UserId = userId;
+            this.Text = text;
+        }
     }
 }

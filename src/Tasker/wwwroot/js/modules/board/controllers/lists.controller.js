@@ -63,7 +63,7 @@
             vm.configBoxShown = !vm.configBoxShown;
         }
         function inviteEvent() {
-            if (vm.collaborators.firstOrDefault('id', vm.userToInvite.id) != null) {
+            if (vm.collaborators.firstOrDefault('id', vm.userToInvite.id) !== null) {
                 console.log('invite event distrojd');
                 return;
             }
@@ -179,14 +179,15 @@
             }
         }
 
-        function openCard(card) {
+        function openCard(card, labels) {
             $uibModal.open({
                 animation: true,
                 templateUrl: 'js/modules/board/views/card.modal.html',
                 controller: 'cardController',
                 size: 'md',
                 resolve: {
-                    card: function () { return card; }
+                    card: function () { return card; },
+                    labels: function () { return labels }
                 }
             });
         }

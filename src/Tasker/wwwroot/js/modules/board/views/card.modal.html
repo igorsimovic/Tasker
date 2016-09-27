@@ -1,6 +1,14 @@
 ﻿<div class="modal-header">
     <h2 class="font-bold modal-title" editable-text="card.name" e-ng-change="updateName($data)" buttons="no" blur="submit">{{card.name}}</h2>
     <h4 class="card-description" editable-text="card.description" e-ng-change="updateDescription($data)" buttons="no" blur="submit">{{card.description || 'Add description'}}</h4>
+    <ul class="card-label-list" data-ng-if="card.labels.length">
+        <li data-ng-repeat="label in card.labels" class="card-modal-label-item">
+            <span class="card-label" ng-style="{'background-color': label.color}">
+                {{label.title}}
+                <i class="fa fa-close" data-ng-click="removeLabel(label.id)"></i>
+            </span>
+        </li>
+    </ul>
 </div>
 <div class="modal-body" style="min-height: 200px;">
     <div class="col-md-8">
@@ -21,7 +29,7 @@
                 <i style="margin-right: 5px;" class="fa fa-list"></i>
                 Comments
             </h3>
-            <div data-ng-repeat="comment in card.comments">{{comment}}</div>
+            <div data-ng-repeat="comment in card.comments">{{comment.text}}</div>
         </div>
     </div>
 
@@ -31,47 +39,27 @@
         </h3>
         <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" data-ng-click="toggleShowLabels($event)">Labels</button>
         <ul class="card-label-list" data-ng-show="showLabels">
-            <!--<li data-ng-repeat="label in labels">
-                <a class="btn btn-default btn-xs card-label-edit-button" href="" data-ng-click="updateLabel(label)">
+            <li data-ng-repeat="label in labels">
+                <!--<a class="btn btn-default btn-xs card-label-edit-button" href="" data-ng-click="updateLabel(label)">
                     <i class="fa fa-pencil"></i>
-                </a>
-                <span class="card-label card-label-{{label.color}}">
+                </a>-->
+                <span class="card-label" ng-style="{'background-color': label.color}" ng-click="toggleSelectLabel(label.id)">
                     {{label.title}}
-                </span>
-            </li>-->
-            <li>
-                <a class="btn btn-default btn-xs card-label-edit-button" href="#">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                <span class="card-label card-label-pink">
-                    test
+                    <i class="fa fa-check" ng-if="label.selected" style="float: right;"></i>
                 </span>
             </li>
             <li>
-                <a class="btn btn-default btn-xs card-label-edit-button" href="#">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                <span class="card-label card-label-yellow">
-
-                </span>
-            </li>
-            <li>
-                <a class="btn btn-default btn-xs card-label-edit-button" href="#">
-                    <i class="fa fa-pencil"></i>
-                </a>
-                <span class="card-label card-label-green">
-
-                </span>
-            </li>
-            <li>
-                <span class="card-label-new">
-                    Create a new label
-                </span>
+                <button type="button" class="btn btn-sm btn-default labels-btn pull-right" data-ng-click="cancelLabels()">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-sm btn-primary labels-btn pull-right" data-ng-show="labelsToAdd.length" data-ng-click="insertLabels()">
+                    Save
+                </button>
             </li>
         </ul>
         <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" data-ng-click="toggleShowChecklist($event)">Checklist</button>
         <ul class="card-label-list" data-ng-show="showChecklist">
-            <li>test</li>
+            <li style="font-style: italic;">Comming Soon</li>
         </ul>
     </div>
 </div>

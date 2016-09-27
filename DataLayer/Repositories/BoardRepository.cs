@@ -71,13 +71,22 @@ namespace DataLayer.Repositories
                     var tempCards = db_.GetCardsByListId(list.Id);
                     if (tempCards != null)
                     {
-                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), c.Name, c.Order, c.Description)).OrderBy(c => c.Order);
+                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), 
+                            c.Name, 
+                            c.Order,
+                            c.Description,
+                            c.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
+                            c.Labels.Select(l => db_.GetLabelById(l)).ToList()))
+                            .OrderBy(c => c.Order);
                     }
                 }
             }
 
+            var result = new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, board.Color, board.UserCreatedBy.ToString(), lists);
 
-            return new BoardDTO(board.Id.ToString(), board.BoardName, board.Starred, board.Color, board.UserCreatedBy.ToString(), lists);
+            result.AllLabels = db_.GetLabels();
+
+            return result;
         }
 
         public void InviteUser(string id, string user)

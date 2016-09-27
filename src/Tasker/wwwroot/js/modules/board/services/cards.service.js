@@ -14,6 +14,8 @@
         this.updateCardName = updateCardName;
         this.updateCardDescription = updateCardDescription;
         this.insertComment = insertComment;
+        this.insertLabels = insertLabels;
+        this.removeLabel = removeLabel;
 
         function getByListId(id) {
             return $http.get('/api/v1/lists/' + id);
@@ -38,6 +40,14 @@
 
         function insertComment(id, userId, text) {
             return $http.put('api/v1/cards/' + id + '/comments', { UserId: userId, Text: text});
+        };
+
+        function insertLabels(id, labelIds) {
+            return $http.put('api/v1/cards/' + id + '/addLabels', labelIds);
+        };
+
+        function removeLabel(id, labelId) {
+            return $http.put('api/v1/cards/' + id + '/removeLabel', { Id: labelId });
         };
     }
 })();

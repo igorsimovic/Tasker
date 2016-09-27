@@ -18,6 +18,8 @@ namespace DomainModel.Repositories
 
         bool DeleteCard(string id);
 
-        bool InsertComment(string cardId, string userId, string text);
+        CommentDTO InsertComment(string cardId, string userId, string text);
+        CardDTO InsertLabels(string cardId, List<string> labelIds);
+        CardDTO RemoveLabel(string cardId, string labelId);
     }
 }
