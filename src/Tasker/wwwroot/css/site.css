@@ -345,6 +345,19 @@ ul[dnd-list] > li {
     margin-left: 3px;
 }
 
+.card-comment {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.comment-panel {
+    margin-bottom: 5px !important;
+}
+
+.comment-panel>.panel-body {
+    padding: 10px !important;
+}
+
 .theme-config {
     position: absolute;
     top: 20px !important;

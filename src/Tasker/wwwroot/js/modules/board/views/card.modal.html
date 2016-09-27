@@ -29,7 +29,11 @@
                 <i style="margin-right: 5px;" class="fa fa-list"></i>
                 Comments
             </h3>
-            <div data-ng-repeat="comment in card.comments">{{comment.text}}</div>
+            <div class="panel panel-default comment-panel" data-ng-repeat="comment in card.comments">
+                <div class="panel-body">
+                    <div class="card-comment">{{comment.text}}</div>
+                </div>
+            </div>
         </div>
     </div>
 

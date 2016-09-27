@@ -15,11 +15,14 @@
         $scope.labelsToAdd = [];
 
         $scope.$watch('card.labels', function () {
-            $scope.labels = labels.filter(function (l) {
-                return !($scope.card.labels.filter(function (label) {
-                    return l.id === label.id;
-                })[0]);
-            });
+            if ($scope.card.labels && $scope.card.labels.length)
+                $scope.labels = labels.filter(function (l) {
+                    return !($scope.card.labels.filter(function (label) {
+                        return l.id === label.id;
+                    })[0]);
+                });
+            else
+                $scope.labels = labels;
         });
 
         $scope.deleteCard = function (id) {
