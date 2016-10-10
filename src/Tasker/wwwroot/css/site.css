@@ -199,8 +199,9 @@ select {
 .card-item {
     border-radius: 5px;
     background-color: rgba(26, 179, 148, 0.77);
-    padding: 10px 10px 10px 0;
+    padding: 10px 10px 10px 5px;
     margin-bottom: 10px;
+    white-space:normal;
 }
 
 .new-card-item {

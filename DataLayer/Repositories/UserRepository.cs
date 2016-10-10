@@ -61,7 +61,7 @@ namespace DataLayer.Repositories
 
         public UserDTO CreateUser(UserDTO user)
         {
-            db.CreateUser(new UserModel { UserName = user.UserName, NewPassword = user.NewPassword, Bio = user.Bio, FullName = user.FullName });
+            db.CreateUser(new UserModel { UserName = user.UserName, NewPassword = user.NewPassword, Bio = user.Bio, FullName = user.FullName, Boards = new List<MongoDB.Bson.ObjectId>() });
 
             return user;
         }

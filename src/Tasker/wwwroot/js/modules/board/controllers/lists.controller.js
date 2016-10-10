@@ -63,7 +63,7 @@
             vm.configBoxShown = !vm.configBoxShown;
         }
         function inviteEvent() {
-            if (vm.collaborators.firstOrDefault('id', vm.userToInvite.id) !== null) {
+            if (vm.collaborators.firstOrDefault('id', vm.userToInvite.id)) {
                 console.log('invite event distrojd');
                 return;
             }

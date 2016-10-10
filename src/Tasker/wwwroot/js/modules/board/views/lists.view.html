@@ -1,6 +1,6 @@
 ﻿<div class="row" style="margin: 0 !important"
      ng-style="{'background-color': vm.board.color}">
-    <div class="col-md-3">
+    <div class="col-md-10">
         <div ng-if="vm.board.userCreatedBy === vm.userId">
             <h1 editable-text="vm.board.boardName"
                 buttons="no"
@@ -13,7 +13,7 @@
             </h1>
         </div>
         <div ng-if="vm.board.userCreatedBy !== vm.userId">
-            <h1> Welcome to :{{vm.board.boardName}}</h1>
+            <h1 style="color:white"> Welcome to: {{vm.board.boardName}}</h1>
         </div>
     </div>
 </div>
@@ -28,9 +28,8 @@
             dnd-moved="vm.board.lists.splice($index,1); vm.reorderLists();"
             dnd-effect-allowed="move"
             dnd-selected="vm.selectedList = list"
-            ng-class="{'drag-selected':vm.selectedList === list}"
             class="ibox float-e-margins list-item">
-            <div class="ibox-title" ng-style="{'background-color': vm.board.color}" style="color:white !important">
+            <div class="ibox-title" ng-style="{'background-color': vm.board.color}">
                 <!--<a href="#" editable-text="user.name" e-label="User Name">{{ user.name || 'empty' }}</a>-->
                 <div class="row">
                     <div class="col-xs-10">
@@ -44,7 +43,7 @@
                         </h5>
                     </div>
                     <div class="col-xs-2">
-                        <i ng-click="vm.listSettings(list);" class="fa fa-tasks list-settings"></i>
+                        <i ng-click="vm.listSettings(list);" class="fa fa-close list-settings"></i>
                     </div>
                 </div>
                 </div>
