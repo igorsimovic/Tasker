@@ -62,7 +62,7 @@ namespace Tasker.Controllers.API
         public void Post([FromBody]string value)
         {
         }
-      
+
 
         [HttpPut]
         [Route("{id}/changePassword")]

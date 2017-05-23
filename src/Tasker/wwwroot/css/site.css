@@ -116,6 +116,7 @@ select {
     border-color: black;
     position: absolute;
     box-shadow: 2px 2px 2px 2px #888888;
+    z-index: 1024;
 }
 
 .nav-tabs > li {
@@ -201,7 +202,7 @@ select {
     background-color: rgba(26, 179, 148, 0.77);
     padding: 10px 10px 10px 5px;
     margin-bottom: 10px;
-    white-space:normal;
+    white-space: normal;
 }
 
 .new-card-item {
@@ -340,11 +341,11 @@ ul[dnd-list] > li {
     margin-right: 5px;
 }
 
-.card-modal-label-item>span>i {
-    float: right;
-    margin-top: 2px;
-    margin-left: 3px;
-}
+    .card-modal-label-item > span > i {
+        float: right;
+        margin-top: 2px;
+        margin-left: 3px;
+    }
 
 .card-comment {
     overflow: hidden;
@@ -355,9 +356,9 @@ ul[dnd-list] > li {
     margin-bottom: 5px !important;
 }
 
-.comment-panel>.panel-body {
-    padding: 10px !important;
-}
+    .comment-panel > .panel-body {
+        padding: 10px !important;
+    }
 
 .theme-config {
     position: absolute;
@@ -374,4 +375,20 @@ ul[dnd-list] > li {
 
 .skin-settings-margin {
     margin-right: -150px;
+}
+
+.border-right-only {
+    border-right: 2px solid;
+}
+
+.main-header {
+    background-color: #1ab394;
+}
+
+.body-wrapper {
+    background-color: #92e0d0;
+}
+
+.body-wrapper-bottom {
+    background-color: black;
 }

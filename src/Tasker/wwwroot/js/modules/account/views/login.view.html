@@ -2,32 +2,35 @@
     <div ng-hide="message == ''" class="alert alert-danger">
         {{message}}
     </div>
-    <div class="col-sm-6">
-        <h4>Not a member?</h4>
-        <p>You can create an account:</p>
-        <p class="">
-            <a href="#!/register">
-                <i class="fa fa-sign-in big-icon"></i>
-            </a>
-        </p>
-        <a href="#!/register">Create an account</a>
-    </div>
-    <div class="col-sm-6">
-        <h2 class="m-t-none m-b ng-binding">Sign In</h2>
-        <p>Sign in for more expirience.</p>
-        <form class="ng-pristine ng-valid" role="form">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" class="form-control" placeholder="Enter Username" ng-model="user.UserName" required>
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" class="form-control" placeholder="Enter Password" ng-model="user.Password" required>
-            </div>
-            <div>
-                <button class="btn btn-sm btn-primary m-t-n-xs" ng-click="login()" type="submit">Sign in</button>
-            </div>
-            
-        </form>
+
+    <div class="col-sm-offset-4">
+        <div class="col-sm-3 border-right-only">
+            <h4>Not a member?</h4>
+            <p>You can create an account:</p>
+            <p class="">
+                <a href="#!/register">
+                    <i class="fa fa-sign-in big-icon"></i>
+                </a>
+            </p>
+            <a href="#!/register">Create an account</a>
+        </div>
+        <div class="col-sm-4">
+            <h2 class="m-t-none m-b ng-binding">Sign In</h2>
+            <p>Sign in for more expirience.</p>
+            <form class="ng-pristine ng-valid" role="form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" placeholder="Enter Username" ng-model="user.UserName" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" class="form-control" placeholder="Enter Password" ng-model="user.Password" required>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-primary m-t-n-xs" ng-click="login()" type="submit">Sign in</button>
+                </div>
+
+            </form>
+        </div>
     </div>
 </div>

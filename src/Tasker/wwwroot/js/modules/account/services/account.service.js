@@ -25,10 +25,11 @@
 
         this.getUser = function () {
             var userFromLS = JSON.parse(localStorage.getItem('authData'));
-            if(userFromLS){
+            if (userFromLS) {
                 user = userFromLS;
+                return user;
             }
-            return user;
+            return null;;
         }
         this.setUser = function (newUser) {
             user = newUser;
@@ -45,8 +46,8 @@
 
             var deferred = $q.defer();
 
-            $http.post('/api/v1/jwt/login', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).success(function (response) {
-
+            $http.post('/api/v1/jwt/login', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
+                response = response.data;
                 localStorage.setItem('authData', JSON.stringify({ token: response.access_token, userId: response.user_id, userName: user.UserName }));
 
                 authData.isAuth = true;
@@ -55,8 +56,8 @@
 
                 deferred.resolve(response);
 
-            }).error(function (err, status) {
-                deferred.reject(err);
+            }, function (err) {
+                deferred.reject(err)
             });
 
             return deferred.promise;
@@ -71,6 +72,6 @@
             $location.path('/login');
         }
 
-     
+
     }
 })();

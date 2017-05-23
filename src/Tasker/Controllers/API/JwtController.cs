@@ -25,7 +25,7 @@ namespace Tasker.Controllers.API
         private readonly ILogger _logger;
         private readonly JsonSerializerSettings _serializerSettings;
 
-        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory , IUserRepository repo)
+        public JwtController(IOptions<JwtIssuerOptions> jwtOptions, ILoggerFactory loggerFactory, IUserRepository repo)
         {
             repo_ = repo;
             _jwtOptions = jwtOptions.Value;
@@ -73,7 +73,7 @@ namespace Tasker.Controllers.API
             var response = new
             {
                 access_token = encodedJwt,
-                expires_in = (int)_jwtOptions.ValidFor.TotalSeconds,
+                expires_in = 3600,//(int)_jwtOptions.ValidFor.TotalSeconds,
                 user_id = u.Id
             };
 
@@ -90,7 +90,7 @@ namespace Tasker.Controllers.API
 
             return new OkObjectResult(new { });
         }
-        
+
         private static void ThrowIfInvalidOptions(JwtIssuerOptions options)
         {
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -114,7 +114,7 @@ namespace Tasker.Controllers.API
         /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)
           => (long)Math.Round((date.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
-        
+
         /// <summary>
         /// Ovde treba provera kredencijala iz mongo_repo<ApplicationUser>
         /// </summary>
@@ -122,16 +122,16 @@ namespace Tasker.Controllers.API
         {
 
             UserDTO u = repo_.GetUserByCredentials(user.UserName, user.Password);
-            
+
             if (u != null)
             {
                 return Task.FromResult(new ClaimsIdentity(new GenericIdentity(user.UserName, "Token"),
-                  new[] { new Claim("TaskerUser", "RegularUser")} ));
+                  new[] { new Claim("TaskerUser", "RegularUser") }));
             }
 
             // Credentials are invalid, or account doesn't exist
             return Task.FromResult<ClaimsIdentity>(null);
         }
-        
+
     }
 }

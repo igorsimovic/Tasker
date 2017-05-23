@@ -8,13 +8,19 @@
     loginController.$inject = ['$stateParams', '$location', '$scope', '$rootScope', 'accountService'];
 
     function loginController($stateParams, $location, $scope, $rootScope, accountService) {
-        
+        console.log('Entering loginController');
         $scope.user = {
-            UserName : "",
-            Password : ""
+            UserName: "",
+            Password: ""
         }
 
         $scope.message = '';
+
+        (function activate() {
+            if (accountService.getUser()) {
+                $location.path('/boards');
+            }
+        })();
 
         $scope.login = function () {
             accountService.login($scope.user).then(function (response) {

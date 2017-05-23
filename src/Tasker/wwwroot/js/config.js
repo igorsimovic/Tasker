@@ -12,6 +12,7 @@ var ApplicationConfiguration = (function () {
         'colorpicker.module',
         'ui.bootstrap',
         'xeditable',
+        'ngCookies'
     ];
 
     // Add a new vertical module

@@ -27,15 +27,15 @@
 </head>
 <body class="top-navigation" style="padding-top: 0px;">
     <div id="wrapper">
-        <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom white-bg">
-                <nav  class="navbar navbar-static-top" role="navigation" ng-controller="headerController as vm">
-                     <div ng-if="vm.user.userId">
+        <div id="page-wrapper" class="body-wrapper">
+            <div class="row">
+                <nav class="navbar main-header" role="navigation" ng-controller="headerController as vm">
+                    <span class="navbar-brand"><i class="fa fa-graduation-cap"></i> Tasker</span>
+                    <div ng-if="vm.user.userId">
                         <div class="navbar-header">
                             <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
                                 <i class="fa fa-reorder"></i>
                             </button>
-                            <a href="#" class="navbar-brand">Tasker</a>
                         </div>
                         <div class="navbar-collapse collapse" click-off="vm.closeSections();" id="navbar">
                             <ul class="nav navbar-nav">
@@ -148,7 +148,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="ibox-content" style="min-height:1270px;">
+                                <div @*class="ibox-content"*@ style="min-height:600px;">
                                     @RenderBody()
                                 </div>
                             </div>
@@ -178,6 +178,7 @@
         <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
         <script src="~/lib/angular-xeditable/dist/js/xeditable.js"></script>
         <script src="~/lib/angular-sanitize/angular-sanitize.js"></script>
+        <script src="~/lib/angular-cookies/angular-cookies.min.js"></script>
         <script src="~/js/config.js"></script>
         <script src="~/js/app.js"></script>
         <script src="~/js/consts.js"></script>
