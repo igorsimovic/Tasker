@@ -8,7 +8,7 @@
         "bin/Debug/DataLayer.dll": {}
       },
       "runtime": {
-        "../packages/MongoDB.Bson.2.2.4/lib/net45/MongoDB.Bson.dll": {},
+        "../packages/MongoDB.Bson.2.4.3/lib/net45/MongoDB.Bson.dll": {},
         "../packages/MongoDB.Driver.2.2.4/lib/net45/MongoDB.Driver.dll": {},
         "../packages/MongoDB.Driver.Core.2.2.4/lib/net45/MongoDB.Driver.Core.dll": {},
         "bin/Debug/DataLayer.dll": {}

@@ -36,7 +36,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpPro
 //  }
 //]);
 
- //Redirect to home view when route not found
+//Redirect to home view when route not found
 angular.module(ApplicationConfiguration.applicationModuleName).config(['$urlRouterProvider',
   function ($urlRouterProvider) {
       $urlRouterProvider.otherwise('/boards');
@@ -49,7 +49,7 @@ angular.element(document).ready(function () {
     angular.bootstrap(document.body, [ApplicationConfiguration.applicationModuleName], { strictDi: true });
 });
 
-angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInterceptorService', ['$q', '$location', function ($q, $location) {
+angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInterceptorService', ['$q', '$location', '$cookies', function ($q, $location, $cookies) {
 
     var authInterceptorServiceFactory = {};
 
@@ -57,11 +57,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInte
 
         config.headers = config.headers || {};
 
-        var authDataString = localStorage.getItem('authData');
-        var authData = JSON.parse(authDataString);
 
+        var authData = $cookies.getObject('authData');
         if (authData) {
-            config.headers.Authorization = 'Bearer ' + authData.token;
+            config.headers.Authorization = 'Bearer ' + authData.AccessToken;
         }
 
         return config;
@@ -70,7 +69,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInte
     var _responseError = function (rejection) {
 
         if (rejection.status === 401) {
-            localStorage.removeItem('authData');
+            $cookies.remove('authData');
             $location.path('/login');
         }
         return $q.reject(rejection);

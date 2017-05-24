@@ -43,6 +43,21 @@ namespace DataLayer
             //return result;
         }
 
+        internal void SetUserSession(CredentialsModel credentials)
+        {
+            try
+            {   
+                //FOr future use for now we will not store UserSession in db
+               // db_.GetCollection<CredentialsModel>("UserSession").InsertOne(credentials);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
         internal IEnumerable<UserDTO> GetBoardCollaborators(string boardId)
         {
             var result = new List<UserDTO>();

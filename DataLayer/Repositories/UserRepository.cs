@@ -91,5 +91,19 @@ namespace DataLayer.Repositories
                 throw new Exception(ex.Message);
             }
         }
+
+        public bool StartUserSession(CredentialsModel credentials)
+        {
+            try
+            {
+                db.SetUserSession(credentials);
+                return true;
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
     }
 }

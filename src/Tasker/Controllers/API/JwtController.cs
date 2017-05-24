@@ -70,15 +70,24 @@ namespace Tasker.Controllers.API
             UserDTO u = repo_.GetUserByCredentials(user.UserName, user.Password);
 
             // Serialize and return the response
-            var response = new
+
+            var response = new CredentialsModel
             {
-                access_token = encodedJwt,
-                expires_in = 3600,//(int)_jwtOptions.ValidFor.TotalSeconds,
-                user_id = u.Id
+                AccessToken = encodedJwt,
+                Duration = 86400, //juan day
+                UserID = u.Id
             };
 
-            var json = JsonConvert.SerializeObject(response, _serializerSettings);
-            return new OkObjectResult(json);
+            var ok = repo_.StartUserSession(response);
+            if (ok)
+            {
+                var json = JsonConvert.SerializeObject(response, _serializerSettings);
+                return new OkObjectResult(json);
+            }
+            else
+            {
+                return new BadRequestResult();
+            }
         }
 
         [HttpPost("register")]
@@ -86,7 +95,7 @@ namespace Tasker.Controllers.API
         public async Task<IActionResult> Register([FromBody] ApplicationUser user)
         {
             //Ovde kreirati korisnika u bazi
-            repo_.CreateUser(new UserDTO { FullName = user.FullName, UserName = user.UserName, NewPassword = user.Password, Bio = user.Bio });
+            repo_.CreateUser(new UserDTO { FullName = user.FullName, UserName = user.UserName, NewPassword = user.Password, Bio = user.Bio , Email = user.Email,Initials = user.Initials });
 
             return new OkObjectResult(new { });
         }

@@ -14,7 +14,8 @@
             Email: "",
             UserName: "",
             Password: "",
-            Bio: ""
+            Bio: "",
+            Initials:""
         }
 
         $scope.register = function () {

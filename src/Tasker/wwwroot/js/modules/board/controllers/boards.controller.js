@@ -9,6 +9,7 @@
 
     function boardsController(boardService, $scope, userService, accountService) {
         var vm = this;
+        vm.currentUser = accountService.getUser();
         vm.title = 'This is the board page';
         vm.starred = [];
         vm.boards = [];
@@ -24,12 +25,13 @@
         activate();
         vm.creationMode = false;
 
+
         function toggleCreationMode() {
             vm.creationMode = !vm.creationMode;
         }
 
         function createBoard() {
-            vm.newBoard.userCreatedBy = accountService.getUser().userId;
+            vm.newBoard.userCreatedBy = accountService.getUser().UserID;
             vm.newBoard.orderNo = vm.boards.length;
             boardService.createBoard(vm.newBoard).then(function (response) {
                 //vm.boards.push(response.data);
@@ -110,11 +112,22 @@
         }
 
         function activate() {
+            getAllCollaborators();
             refreshBoards();//inital board get
+        }
+        function getAllCollaborators() {
+            userService.getUserList().then(function (response) {
+                response.data = response.data.filter(function (item) {
+                    return item.id !== vm.currentUser.UserID;
+                });
+                vm.searchableUsers = response.data;
+            }, function (err) {
+                console.log(err);
+            });
         }
 
         function refreshBoards() {
-            boardService.refreshBoards(accountService.getUser().userId).then(function (response) {
+            boardService.refreshBoards(vm.currentUser.UserID).then(function (response) {
                 vm.starred = response.data.filter(function (item) {
                     return item.starred;
                 });

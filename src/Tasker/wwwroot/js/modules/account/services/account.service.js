@@ -5,9 +5,9 @@
         .module('account')
         .service('accountService', account);
 
-    account.$inject = ['$http', '$q', '$location'];
+    account.$inject = ['$http', '$q', '$location', '$cookies'];
 
-    function account($http, $q, $location) {
+    function account($http, $q, $location, $cookies) {
 
         var authData = {
             isAuth: false,
@@ -24,7 +24,7 @@
         this.user = user;
 
         this.getUser = function () {
-            var userFromLS = JSON.parse(localStorage.getItem('authData'));
+            var userFromLS = $cookies.getObject('authData');
             if (userFromLS) {
                 user = userFromLS;
                 return user;
@@ -48,10 +48,13 @@
 
             $http.post('/api/v1/jwt/login', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
                 response = response.data;
-                localStorage.setItem('authData', JSON.stringify({ token: response.access_token, userId: response.user_id, userName: user.UserName }));
-
+                var cookieDuration = response.Duration / 3600 / 24;//in Seconds to days;
+                var today = new Date();
+                var expirationDate = new Date(today.setDate(today.getDate() + cookieDuration));
+                // localStorage.setItem('authData', JSON.stringify({ token: response.AccessToken, userId: response.UserID, userName: user.UserName }));
+                $cookies.putObject('authData', response, { expires: expirationDate });
                 authData.isAuth = true;
-                authData.userId = response.user_id;
+                authData.userId = response.UserID;
                 authData.userName = user.UserName;
 
                 deferred.resolve(response);
@@ -65,7 +68,7 @@
 
 
         function logout() {
-            localStorage.removeItem('authData');
+            $cookies.remove('authData');
             authData.isAuth = false;
             authData.userId = "";
             authData.userName = "";

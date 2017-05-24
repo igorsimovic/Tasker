@@ -13,6 +13,9 @@
         this.getUser = getUser;
         this.setApplicationUser = setApplicationUser;
         this.changePassword = changePassword;
+        this.getUserList = getUserList;
+
+
         var user = {};
 
         this.getAplicationUser = function () {
@@ -32,6 +35,10 @@
 
         function saveUser(user) {
             return $http.put('/api/v1/user/' + user.id, user);
+        }
+
+        function getUserList() {
+            return $http.get('/api/v1/user/forSearch');
         }
     }
 })();

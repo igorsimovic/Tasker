@@ -1,8 +1,8 @@
-﻿<h1>{{vm.title}}</h1>
+﻿<!--<h1>{{vm.title}}</h1>-->
 <div class="container boards-body">
     <div class="row">
         <div class="board-group-heading">
-            <h1><i style="color:yellow;" class="fa fa-star fa-1x"></i> Stared Boards</h1>
+            <h2><i class="fa fa-star"></i> Stared Boards</h2>
         </div>
         <div class="col-md-12">
             <ul dnd-list="vm.starred"
@@ -24,9 +24,6 @@
                                     {{board.boardName}}
                                 </a>
                             </div>
-                            <div class="col-md-offset-3 col-md-1">
-                                <i style="color:yellow; font-size:30px;" class="fa fa-star-o"></i>
-                            </div>
                         </div>
                     </div>
                 </li>
@@ -35,10 +32,10 @@
     </div>
     <div class="row">
         <div class="board-group-heading">
-            <h1><i class="fa fa-user fa-1x" aria-hidden="true"></i>Personal boards</h1>
+            <h2><i class="fa fa-user" aria-hidden="true"></i>Personal boards</h2>
         </div>
         <div class="col-md-12 boards-container">
-            <div class="row">
+            <div>
                 <ul dnd-list="vm.boards" class="list-inline board-list"
                     dnd-horizontal-list="true"
                     dnd-drop="vm.toggleStarredStatus(event, index, item,external, type , 'boards')"
@@ -75,9 +72,23 @@
                                             </div>
                                             <div class="creation-item-body">
                                                 <div class="form-group">
-                                                    <label class="pull-left" style="color:black;">Title</label>
+                                                    <label style="color:black;">Board Title</label>
                                                     <input type="text" ng-model="vm.newBoard.boardName" class="form-control">
                                                 </div>
+                                                <!--<ui-select ng-model="vm.userToInvite"
+                                                           style="min-width: 300px; z-index:900000000;"
+                                                           title="Add a member..."
+                                                           append-to-body="true"
+                                                           on-select="vm.inviteEvent()">
+                                                    <ui-select-match placeholder="Search a user by user">{{$select.selected.fullName}}</ui-select-match>
+                                                    <ui-select-choices repeat="user in vm.searchableUsers | propsFilter: {fullName: $select.search}">
+                                                        <div ng-bind-html="user.fullName | highlight: $select.search"></div>
+                                                        <small>
+                                                            email: {{user.email}}
+                                                        </small>
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                               
                                                 <!--<div class="form-group">
                                                     <label class="pull-left" style="color:black;">Title</label>
                                                     <div>
@@ -91,11 +102,11 @@
                                                         </ui-select>
                                                     </div>
                                                 </div>-->
-                                                <div class="form-group">
+                                                <!--<div class="form-group">
                                                     <input class="form-control" style="color:black;" colorpicker="rgba" type="text" ng-model="vm.newBoard.color" />
-                                                </div>
+                                                </div>-->
                                                 <div>
-                                                    <button class="btn-primary" ng-click="vm.createBoard()">Create Board</button>
+                                                    <button class="btn btn-primary" ng-click="vm.createBoard()">Create Board</button>
                                                 </div>
                                             </div>
                                         </div>

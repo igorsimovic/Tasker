@@ -16,5 +16,7 @@ namespace DomainModel.Repositories
         void ChangePassword(UserDTO model);
 
         IEnumerable<UserDTO> GetUsers();
+
+        bool StartUserSession(CredentialsModel credentials);
     }
 }

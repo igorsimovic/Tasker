@@ -41,7 +41,7 @@
                     console.error(err);
                 });
 
-                listService.getUserList().then(function (response) {
+                userService.getUserList().then(function (response) {
                     response.data = response.data.filter(function (item) {
                         return item.id !== vm.userId;
                     });

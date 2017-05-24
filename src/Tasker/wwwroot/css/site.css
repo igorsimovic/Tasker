@@ -69,10 +69,11 @@ select {
 .board-box {
     border-style: solid;
     border-width: 1px;
-    min-width: 270px;
-    min-height: 120px !important;
+    min-width: 250px;
+    height: 100px !important;
     border-radius: 5px;
     margin-bottom: 5px;
+    background-color:#005B8F;
 }
 
 .board-item {

@@ -20,8 +20,8 @@
         $scope.$on('loginCtrl:login', function (e, user) {
             console.log('this is the user', user);
             vm.user = user;
-            vm.user.userId = user.user_id;
-            userService.getUser(vm.user.user_id).then(function (response) {
+            vm.user.userId = user.UserID;
+            userService.getUser(vm.user.UserID).then(function (response) {
                 //vm.user = response.data;
                 //console.log('user response', vm.user);
                 vm.user.bio = response.data.bio;
@@ -61,7 +61,8 @@
             if (!vm.user) {
                 vm.user = accountService.getUser();
                 if (vm.user) {
-                    userService.getUser(vm.user.userId).then(function (response) {
+                    vm.closeSections();
+                    userService.getUser(vm.user.UserID).then(function (response) {
                         //vm.user = response.data;
                         //console.log('user response', vm.user);
                         vm.user.bio = response.data.bio;
