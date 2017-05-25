@@ -18,5 +18,6 @@ namespace DomainModel.Repositories
         IEnumerable<UserDTO> GetUsers();
 
         bool StartUserSession(CredentialsModel credentials);
+        void LeaveBoard(string userId, string boardId);
     }
 }

@@ -34,6 +34,7 @@
             if (accountService.getUser()) {
                 $location.path('/boards');
             }
+            $rootScope.$broadcast('loginCtrl:notAuth');
         })();
 
         $scope.login = function () {

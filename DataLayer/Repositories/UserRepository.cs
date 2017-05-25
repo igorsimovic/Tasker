@@ -112,5 +112,18 @@ namespace DataLayer.Repositories
                 return false;
             }
         }
+
+        public void LeaveBoard(string userId, string boardId)
+        {
+            try
+            {
+                db.LeaveBoard(userId, boardId);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

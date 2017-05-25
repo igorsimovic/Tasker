@@ -21,6 +21,7 @@
             console.log('this is the user', user);
             vm.user = user;
             vm.user.userId = user.UserID;
+
             userService.getUser(vm.user.UserID).then(function (response) {
                 //vm.user = response.data;
                 //console.log('user response', vm.user);
@@ -31,6 +32,10 @@
                 vm.user.userName = response.data.userName;
                 userService.setApplicationUser(vm.user);
             });
+        });
+
+        $scope.$on('loginCtrl:notAuth', function () { //failsafe- patch for now until i figure out auth proccess
+            vm.user = null;
         });
         vm.showSection = showSection;
         vm.closeSections = closeSections;

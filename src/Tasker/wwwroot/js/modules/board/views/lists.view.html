@@ -9,7 +9,6 @@
                 e-reqired="true"
                 style="color:white">
                 Welcome to: {{vm.board.boardName}}
-
             </h1>
         </div>
         <div ng-if="vm.board.userCreatedBy !== vm.userId">
@@ -68,7 +67,6 @@
                         </ul>
                         <a href="" ng-click="vm.openCard(card, vm.board.allLabels)">{{card.name}}</a>
                     </li>
-
                 </ul>
             </div>
             <div class="ibox-footer">
@@ -146,6 +144,9 @@
                             log4
                         </li>
                     </ul>
+                </div>
+                <div ng-if="vm.board.userCreatedBy !== vm.userId" class="settings-item-subitem">
+                    <button class="btn btn-default" ng-click="vm.leaveBoard();">Levave board</button>
                 </div>
             </div>
         </div>

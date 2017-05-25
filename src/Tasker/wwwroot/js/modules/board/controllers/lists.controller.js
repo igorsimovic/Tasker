@@ -29,6 +29,7 @@
         vm.insertCard = insertCard;
         vm.toggleConfigBox = toggleConfigBox;
         vm.inviteEvent = inviteEvent;
+        vm.leaveBoard = leaveBoard;
         var boardId = $stateParams.id || null;
         //
 
@@ -74,6 +75,15 @@
                 console.log(err);
             }).finally(function () {
                 vm.userToInvite = null;
+            });
+        }
+
+        function leaveBoard() {
+            boardService.leaveBoard(vm.userId, boardId).then(function () {
+                console.log('board leave successful');
+                $state.go('boards');
+            }, function (err) {
+                console.log('somethin went wrong leave board event', err);
             });
         }
 

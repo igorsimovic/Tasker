@@ -46,9 +46,9 @@ namespace DataLayer
         internal void SetUserSession(CredentialsModel credentials)
         {
             try
-            {   
+            {
                 //FOr future use for now we will not store UserSession in db
-               // db_.GetCollection<CredentialsModel>("UserSession").InsertOne(credentials);
+                // db_.GetCollection<CredentialsModel>("UserSession").InsertOne(credentials);
 
             }
             catch (Exception ex)
@@ -99,6 +99,22 @@ namespace DataLayer
             var update = Builders<ListModel>.Update.Pull(l => l.Cards, cardObjectId);
 
             db_.GetCollection<ListModel>("Lists").UpdateOne(filter, update);
+        }
+
+        internal void LeaveBoard(string userId, string boardId)
+        {
+            try
+            {
+                var filter = Builders<UserModel>.Filter.Eq(u => u.Id, new ObjectId(userId));
+                var update = Builders<UserModel>.Update.Pull(u => u.Boards, new ObjectId(boardId));
+                db_.GetCollection<UserModel>("User").UpdateOne(filter, update);
+
+            }
+            catch (Exception)
+            {
+
+                throw new Exception("Leave board event fail");
+            }
         }
 
         internal void ChangePassword(UserDTO model)
@@ -164,7 +180,9 @@ namespace DataLayer
             {
                 FullName = u.FullName,
                 Email = u.Email,
-                Id = u.Id.ToString()
+                Id = u.Id.ToString(),
+                Initials = u.Initials,
+                UserName = u.UserName,
             });
             return result.AsEnumerable();
         }
@@ -267,7 +285,15 @@ namespace DataLayer
 
                 var filter = Builders<UserModel>.Filter.Eq(u => u.Id, boardModel.UserCreatedBy);
                 var update = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
-
+                //collaborators
+                //foreach (var userCollaborator in board.Collaborators)
+                //{
+                //userIDs;
+                var collaboratorFilter = Builders<UserModel>.Filter.In(u => u.Id, new List<ObjectId>(board.Collaborators.Select(bc => new ObjectId(bc))));//Eq(u => u.Id, new ObjectId(userCollaborator));
+                var collaboratorUpdate = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
+                db_.GetCollection<UserModel>("User").UpdateMany(collaboratorFilter, collaboratorUpdate);
+                //}
+                //collaborators
                 db_.GetCollection<UserModel>("User").UpdateOne(filter, update);
                 board.Id = boardModel.Id.ToString();
 

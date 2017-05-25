@@ -23,6 +23,7 @@ namespace DomainModel.Entities
 
         public string UserCreatedBy { get; set; }
         public List<LabelDTO> AllLabels { get; set; }
+        public List<String> Collaborators { get; set; }
 
         public BoardDTO()
         {
@@ -39,7 +40,7 @@ namespace DomainModel.Entities
 
         }
 
-        public BoardDTO(string id, string boardName, bool stared, string color, string userCreatedBy ,IEnumerable<ListDTO> lists)
+        public BoardDTO(string id, string boardName, bool stared, string color, string userCreatedBy, IEnumerable<ListDTO> lists)
         {
             this.Id = id;
             this.BoardName = boardName;

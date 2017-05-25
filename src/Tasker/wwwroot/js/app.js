@@ -21,6 +21,10 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpPro
   }
 ]);
 
+angular.module(ApplicationConfiguration.applicationModuleName).config(['$qProvider', function ($qProvider) {
+    $qProvider.errorOnUnhandledRejections(false);
+}]);
+
 // Intercept state change errors
 //angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Notify', '$state',
 //  function ($rootScope, Notify, $state) {
@@ -49,7 +53,7 @@ angular.element(document).ready(function () {
     angular.bootstrap(document.body, [ApplicationConfiguration.applicationModuleName], { strictDi: true });
 });
 
-angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInterceptorService', ['$q', '$location', '$cookies', function ($q, $location, $cookies) {
+angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInterceptorService', ['$q', '$location', '$cookies'/*, 'accountService'*/, function ($q, $location, $cookies/* accountService*/) {
 
     var authInterceptorServiceFactory = {};
 
@@ -67,7 +71,7 @@ angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInte
     };
 
     var _responseError = function (rejection) {
-
+        debugger;
         if (rejection.status === 401) {
             $cookies.remove('authData');
             $location.path('/login');

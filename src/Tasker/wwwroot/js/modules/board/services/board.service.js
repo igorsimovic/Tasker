@@ -14,6 +14,7 @@
         this.createBoard = createBoard;
         this.refreshBoards = refreshBoards;
         this.updateName = updateName;
+        this.leaveBoard = leaveBoard;
 
         function getAll() {
             return $http.get('/api/v1/boards');
@@ -37,6 +38,9 @@
 
         function updateName(id, newName) {
             return $http.put('api/v1/boards/' + id + '/name', { name: newName });
+        }
+        function leaveBoard(userId, boardId) {
+            return $http.post('/api/v1/user/' + userId + '/leave/' + boardId);
         }
     }
 })();

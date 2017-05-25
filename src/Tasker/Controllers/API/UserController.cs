@@ -110,5 +110,26 @@ namespace Tasker.Controllers.API
         public void Delete(int id)
         {
         }
+
+        [HttpPost]
+        [Route("{id}/leave/{boardId}")]
+        [Authorize(Policy = "TaskerUser")]
+        public HttpResponseMessage LeaveBoard(string id, string boardId)
+        {
+            try
+            {
+
+                repo_.LeaveBoard(id, boardId);
+            
+                return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
+
+            }
+            catch (Exception ex)
+            {
+
+                return new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError);
+            }
+        }
+
     }
 }

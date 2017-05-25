@@ -5,9 +5,9 @@
         .module('board')
         .controller('boardsController', boardsController);
 
-    boardsController.$inject = ['boardService', '$scope', 'userService', 'accountService'];
+    boardsController.$inject = ['boardService', '$scope', '$state', 'userService', 'accountService'];
 
-    function boardsController(boardService, $scope, userService, accountService) {
+    function boardsController(boardService, $scope, $state, userService, accountService) {
         var vm = this;
         vm.currentUser = accountService.getUser();
         vm.title = 'This is the board page';
@@ -33,6 +33,11 @@
         function createBoard() {
             vm.newBoard.userCreatedBy = accountService.getUser().UserID;
             vm.newBoard.orderNo = vm.boards.length;
+            if (vm.usersToInvite) {
+                vm.newBoard.collaborators = vm.usersToInvite.map(function (item) {
+                    return item.id;
+                });
+            }
             boardService.createBoard(vm.newBoard).then(function (response) {
                 //vm.boards.push(response.data);
                 vm.creationMode = false;
@@ -112,8 +117,13 @@
         }
 
         function activate() {
-            getAllCollaborators();
-            refreshBoards();//inital board get
+            if (vm.currentUser) {
+                //inital board get
+                getAllCollaborators();
+                refreshBoards();
+            } else {
+                $state.go('login');
+            }
         }
         function getAllCollaborators() {
             userService.getUserList().then(function (response) {
@@ -121,6 +131,8 @@
                     return item.id !== vm.currentUser.UserID;
                 });
                 vm.searchableUsers = response.data;
+                //console.log('searchable users', vm.searchableUsers);
+
             }, function (err) {
                 console.log(err);
             });

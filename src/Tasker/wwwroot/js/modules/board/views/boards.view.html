@@ -75,20 +75,11 @@
                                                     <label style="color:black;">Board Title</label>
                                                     <input type="text" ng-model="vm.newBoard.boardName" class="form-control">
                                                 </div>
-                                                <!--<ui-select ng-model="vm.userToInvite"
-                                                           style="min-width: 300px; z-index:900000000;"
-                                                           title="Add a member..."
-                                                           append-to-body="true"
-                                                           on-select="vm.inviteEvent()">
-                                                    <ui-select-match placeholder="Search a user by user">{{$select.selected.fullName}}</ui-select-match>
-                                                    <ui-select-choices repeat="user in vm.searchableUsers | propsFilter: {fullName: $select.search}">
-                                                        <div ng-bind-html="user.fullName | highlight: $select.search"></div>
-                                                        <small>
-                                                            email: {{user.email}}
-                                                        </small>
-                                                    </ui-select-choices>
-                                                </ui-select>-->
-                                               
+                                                <div class="">
+                                                    <label>Invite members to team</label>
+                                                    <search-select ng-model="vm.usersToInvite" display-prop-header="'userName'" data-data-source="vm.searchableUsers"></search-select>
+                                                </div>
+
                                                 <!--<div class="form-group">
                                                     <label class="pull-left" style="color:black;">Title</label>
                                                     <div>
@@ -105,8 +96,8 @@
                                                 <!--<div class="form-group">
                                                     <input class="form-control" style="color:black;" colorpicker="rgba" type="text" ng-model="vm.newBoard.color" />
                                                 </div>-->
-                                                <div>
-                                                    <button class="btn btn-primary" ng-click="vm.createBoard()">Create Board</button>
+                                                <div class="text-center">
+                                                    <button class="btn btn-primary bottom-button" ng-click="vm.createBoard()">Create Board</button>
                                                 </div>
                                             </div>
                                         </div>
