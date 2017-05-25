@@ -8,12 +8,26 @@
     loginController.$inject = ['$stateParams', '$location', '$scope', '$rootScope', 'accountService'];
 
     function loginController($stateParams, $location, $scope, $rootScope, accountService) {
-        console.log('Entering loginController');
+        //$scope.test = [];
+        //$scope.dataSource = [
+        //{ UserName: 'mstajic10', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'mstajic11', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'mstajic12', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'mstajic13', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'jura', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'stefan', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'nikola', email: 'mrdjan@asdasd.com' },
+        //{ UserName: 'djole', email: 'mrdjan@asdasd.com' },
+        //];
+
+        //$scope.$watch('test', function () {
+        //    console.log('login:ctrl', $scope.test);
+        //});
+
         $scope.user = {
             UserName: "",
             Password: ""
         }
-
         $scope.message = '';
 
         (function activate() {

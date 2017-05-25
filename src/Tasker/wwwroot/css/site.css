@@ -73,7 +73,7 @@ select {
     height: 100px !important;
     border-radius: 5px;
     margin-bottom: 5px;
-    background-color:#005B8F;
+    background-color: #005B8F;
 }
 
 .board-item {
@@ -392,4 +392,34 @@ ul[dnd-list] > li {
 
 .body-wrapper-bottom {
     background-color: black;
+}
+
+.search-select-body {
+    width: 280px;
+}
+
+.search-select-querry {
+    border: 1px solid !important;
+    border-bottom: none !important;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #F3F3F4 !important;
+}
+
+.search-select-querry-borderles {
+    border: none !important;
+    background-color: white !important;
+}
+
+.search-select-list {
+    position: relative;
+    width: 100%;
+    padding-left: 0;
+    list-style: none;
+    box-sizing: border-box;
+    height: 200px;
+    overflow: auto;
+    background-color: #F3F3F4;
+    border: 1px solid !important;
+    border-top: none !important;
 }

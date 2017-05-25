@@ -1,0 +1,13 @@
+﻿<div id="search-select" tabindex="-1" class="search-select-body form-group">
+    <input ng-model="searchQuerry" placeholder="Search team members" ng-class="{'search-select-querry-borderles' : !showListOptions }" class="form-control search-select-querry" type="text" ng-focus="focus()" />
+    <ul ng-show="showListOptions" class="search-select-list list-group">
+        <li class="list-group-item" ng-repeat="item in dataSource  |filterItems:searchQuerry:displayPropHeader track by $index">
+            <input type="checkbox"
+                   value="item[displayPropHeader]"
+                   name="selectedUsers"
+                   ng-click="item.Checked = !item.Checked;toggleChecked(item,$index)">
+            {{item[displayPropHeader]}}
+        </li>
+    </ul>
+</div>
+
