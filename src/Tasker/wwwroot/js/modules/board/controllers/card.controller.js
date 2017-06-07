@@ -11,7 +11,7 @@
         $scope.card = card;
         $scope.showLabels = false;
         $scope.showChecklist = false;
-        
+        $scope.card.checkLists = [];
         $scope.labelsToAdd = [];
 
         $scope.$watch('card.labels', function () {
@@ -24,6 +24,16 @@
             else
                 $scope.labels = labels;
         });
+        (function init() {
+            //get check lists for now
+            cardsService.getCheckLists($scope.card.id).then(function (result) {
+                $scope.card.checkLists = result.data;
+            }, function (err) {
+                console.error(err);
+            });
+
+            //duedate check;
+        })();
 
         $scope.deleteCard = function (id) {
             cardsService.deleteCard(id);
@@ -116,5 +126,13 @@
                 console.log('Error removing label');
             });
         };
+        $scope.addCheckList = function () {
+            cardsService.addCheckList($scope.card.id, $scope.checkListName).then(function (result) {
+                $scope.showChecklist = false;
+                $scope.checkListName = null;
+            }, function (err) {
+                console.err(err);
+            });
+        }
     }
 })();

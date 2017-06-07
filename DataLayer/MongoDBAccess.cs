@@ -34,13 +34,6 @@ namespace DataLayer
                 throw new Exception("User not found");
             }
             return userResult;
-            //var result = new UserDTO(userResult.Id.ToString(), userResult.FullName, userResult.UserName, userResult.Initials, userResult.Bio, userResult.Picture);
-            //var boardFilter = Builders<BoardModel>.Filter.In("_id", userResult.Boards);
-            //var boardList = db_.GetCollection<BoardModel>("Boards").Find(boardFilter).ToEnumerable<BoardModel>();
-            //List<BoardDTO> boardsDTO = boardList.Select(b => new BoardDTO(b.Id.ToString(),b.BoardName,b.Starred,b.Color,b.OrderNo)).ToList();
-
-            //result.Boards = boardsDTO;
-            //return result;
         }
 
         internal void SetUserSession(CredentialsModel credentials)
@@ -88,6 +81,76 @@ namespace DataLayer
             var update = Builders<ListModel>.Update.Push(l => l.Cards, cardObjectId);
 
             db_.GetCollection<ListModel>("Lists").UpdateOne(filter, update);
+        }
+
+        internal CheckListDTO AddCheckList(string id, string name)
+        {
+            CheckListModel model = new CheckListModel
+            {
+                Name = name,
+                CheckItems = new List<ObjectId>(),
+            };
+
+            db_.GetCollection<CheckListModel>("CheckLists").InsertOne(model);
+
+            var filter = Builders<CardModel>.Filter.Eq("_id", new ObjectId(id));
+            var update = Builders<CardModel>.Update.Push(card => card.CheckLists, model.Id);
+            db_.GetCollection<CardModel>("Cards").UpdateOne(filter, update);
+            return new CheckListDTO
+            {
+                ID = model.Id.ToString(),
+                Name = model.Name
+            };
+
+        }
+
+        internal CheckItemDTO AddCheckListItem(string chekListId, CheckItemDTO model)
+        {
+            var ciModel = new CheckItemModel
+            {
+                Checked = false,
+                Value = model.Value,
+            };
+            db_.GetCollection<CheckItemModel>("CheckItem").InsertOne(ciModel);
+
+            model.ID = ciModel.Id.ToString();
+
+            var filter = Builders<CheckListModel>.Filter.Eq("_id", new ObjectId(chekListId));
+            var update = Builders<CheckListModel>.Update.Push(clm => clm.CheckItems, ciModel.Id);
+            db_.GetCollection<CheckListModel>("CheckLists").UpdateOne(filter, update);
+
+            return model;
+        }
+
+        internal void CheckListItem(CheckItemDTO model)
+        {
+            UpdateField<bool, CheckItemModel>(model.ID, "Checked", model.Checked, "CheckItem");
+        }
+
+        internal IEnumerable<CheckListDTO> GetChekListsByCardId(string id)
+        {
+            var filter = Builders<CardModel>.Filter.Eq(c => c.Id, new ObjectId(id));
+            var cardCheckLists = db_.GetCollection<CardModel>("Cards").Find(filter).FirstOrDefault();
+            List<CheckListDTO> result = new List<CheckListDTO>();
+            foreach (var checkListId in cardCheckLists.CheckLists)
+            {
+                var checkListFilter = Builders<CheckListModel>.Filter.Eq(cl => cl.Id, checkListId);
+                var checkListResult = db_.GetCollection<CheckListModel>("CheckLists").Find(checkListFilter).FirstOrDefault<CheckListModel>();
+                var checkItemFilter = Builders<CheckItemModel>.Filter.In(chi => chi.Id, checkListResult.CheckItems);
+                var checkItems = db_.GetCollection<CheckItemModel>("CheckItem").Find(checkItemFilter).ToEnumerable<CheckItemModel>();
+                result.Add(new CheckListDTO
+                {
+                    ID = checkListResult.Id.ToString(),
+                    Name = checkListResult.Name,
+                    CheckItems = checkItems.Select(clm => new CheckItemDTO
+                    {
+                        Checked = clm.Checked,
+                        ID = clm.Id.ToString(),
+                        Value = clm.Value,
+                    })
+                });
+            }
+            return result;
         }
 
         internal void RemoveCardFromList(string cardId, string listId)
@@ -277,7 +340,9 @@ namespace DataLayer
                     BoardName = board.BoardName,
                     OrderNo = board.OrderNo,
                     Lists = new List<ObjectId>(),
-                    UserCreatedBy = new ObjectId(board.UserCreatedBy)
+                    UserCreatedBy = new ObjectId(board.UserCreatedBy),
+
+
                 };
 
                 db_.GetCollection<BoardModel>("Boards").InsertOne(boardModel);
@@ -285,14 +350,12 @@ namespace DataLayer
 
                 var filter = Builders<UserModel>.Filter.Eq(u => u.Id, boardModel.UserCreatedBy);
                 var update = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
+
                 //collaborators
-                //foreach (var userCollaborator in board.Collaborators)
-                //{
-                //userIDs;
                 var collaboratorFilter = Builders<UserModel>.Filter.In(u => u.Id, new List<ObjectId>(board.Collaborators.Select(bc => new ObjectId(bc))));//Eq(u => u.Id, new ObjectId(userCollaborator));
                 var collaboratorUpdate = Builders<UserModel>.Update.Push(u => u.Boards, boardModel.Id);
                 db_.GetCollection<UserModel>("User").UpdateMany(collaboratorFilter, collaboratorUpdate);
-                //}
+
                 //collaborators
                 db_.GetCollection<UserModel>("User").UpdateOne(filter, update);
                 board.Id = boardModel.Id.ToString();
@@ -481,7 +544,8 @@ namespace DataLayer
                     Order = card.Order,
                     Description = card.Description,
                     Labels = new List<ObjectId>(),
-                    Comments = new List<CommentModel>()
+                    Comments = new List<CommentModel>(),
+                    CheckLists = new List<ObjectId>(),
                 };
 
                 db_.GetCollection<CardModel>("Cards").InsertOne(cardModel);

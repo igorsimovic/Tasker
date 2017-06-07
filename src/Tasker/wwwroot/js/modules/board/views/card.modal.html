@@ -1,35 +1,48 @@
 ﻿<div class="modal-header">
     <h2 class="font-bold modal-title" editable-text="card.name" e-ng-change="updateName($data)" buttons="no" blur="submit">{{card.name}}</h2>
     <h4 class="card-description" editable-text="card.description" e-ng-change="updateDescription($data)" buttons="no" blur="submit">{{card.description || 'Add description'}}</h4>
-    <ul class="card-label-list" data-ng-if="card.labels.length" style="margin-top: 10px;">
-        <li data-ng-repeat="label in card.labels" class="card-modal-label-item">
+    <ul class="card-label-list" ng-if="card.labels.length" style="margin-top: 10px;">
+        <li ng-repeat="label in card.labels" class="card-modal-label-item">
             <span class="card-label" ng-style="{'background-color': label.color}">
                 {{label.title}}
-                <i class="fa fa-close" data-ng-click="removeLabel(label.id)"></i>
+                <i class="fa fa-close" ng-click="removeLabel(label.id)"></i>
             </span>
         </li>
     </ul>
+
 </div>
 <div class="modal-body" style="min-height: 200px;">
     <div class="col-md-8">
+        <div ng-if="card.checkLists.length">
+            <h3 class="font-bold">
+                Todo`s
+            </h3>
+            <div ng-repeat="checkList in card.checkLists">
+                <h4 class="font-bold">
+                    <i class="fa fa-list-alt" aria-hidden="true"></i>
+                    {{checkList.name}}
+                </h4>
+                <check-list check-list-id="checkList.id" data-data-source="checkList.checkItems"></check-list>
+            </div>
+        </div>
         <form>
             <h3 class="font-bold">
                 <i style="margin-right: 5px;" class="fa fa-comment"></i>
                 Add comment
             </h3>
             <div class="form-group">
-                <textarea class="form-control" style="width: 100%;" placeholder="Write a comment..." data-ng-model="comment"></textarea>
+                <textarea class="form-control" style="width: 100%;" placeholder="Write a comment..." ng-model="comment"></textarea>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary" data-ng-click="saveComment()" data-ng-disabled="!comment">Send</button>
+                <button type="submit" class="btn btn-primary" ng-click="saveComment()" ng-disabled="!comment">Send</button>
             </div>
         </form>
-        <div data-ng-show="card.comments.length">
+        <div ng-show="card.comments.length">
             <h3 class="font-bold">
                 <i style="margin-right: 5px;" class="fa fa-list"></i>
                 Comments
             </h3>
-            <div class="panel panel-default comment-panel" data-ng-repeat="comment in card.comments">
+            <div class="panel panel-default comment-panel" ng-repeat="comment in card.comments">
                 <div class="panel-body">
                     <div class="card-comment">{{comment.text}}</div>
                 </div>
@@ -41,10 +54,10 @@
         <h3 class="font-bold">
             Add
         </h3>
-        <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" data-ng-click="toggleShowLabels($event)">Labels</button>
-        <ul class="card-label-list" data-ng-show="showLabels">
-            <li data-ng-repeat="label in labels">
-                <!--<a class="btn btn-default btn-xs card-label-edit-button" href="" data-ng-click="updateLabel(label)">
+        <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="toggleShowLabels($event)">Labels</button>
+        <ul class="card-label-list" ng-show="showLabels">
+            <li ng-repeat="label in labels">
+                <!--<a class="btn btn-default btn-xs card-label-edit-button" href=""  ng-click="updateLabel(label)">
                     <i class="fa fa-pencil"></i>
                 </a>-->
                 <span class="card-label" ng-style="{'background-color': label.color}" ng-click="toggleSelectLabel(label.id)">
@@ -53,18 +66,23 @@
                 </span>
             </li>
             <li>
-                <button type="button" class="btn btn-sm btn-default labels-btn pull-right" data-ng-click="cancelLabels()">
+                <button type="button" class="btn btn-sm btn-default labels-btn pull-right" ng-click="cancelLabels()">
                     Cancel
                 </button>
-                <button type="button" class="btn btn-sm btn-primary labels-btn pull-right" data-ng-show="labelsToAdd.length" data-ng-click="insertLabels()">
+                <button type="button" class="btn btn-sm btn-primary labels-btn pull-right" ng-show="labelsToAdd.length" ng-click="insertLabels()">
                     Save
                 </button>
             </li>
         </ul>
-        <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" data-ng-click="toggleShowChecklist($event)">Checklist</button>
-        <ul class="card-label-list" data-ng-show="showChecklist">
-            <li style="font-style: italic;">Comming Soon</li>
-        </ul>
+        <button type="button" auto-close class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="toggleShowChecklist($event)">Checklist</button>
+        <div class="card-label-list" ng-show="showChecklist">
+            <h3>Add check list</h3>
+            <h4>Tittle</h4>
+            <div class="form-group">
+                <input class="form-control" ng-model="checkListName" />
+            </div>
+            <button class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="addCheckList();">Add</button>
+        </div>
     </div>
 </div>
 <div class="modal-footer" style="border-top: none;">

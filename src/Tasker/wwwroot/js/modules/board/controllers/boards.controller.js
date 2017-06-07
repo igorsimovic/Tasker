@@ -37,6 +37,8 @@
                 vm.newBoard.collaborators = vm.usersToInvite.map(function (item) {
                     return item.id;
                 });
+            } else {
+                vm.newBoard.collaborators = [];
             }
             boardService.createBoard(vm.newBoard).then(function (response) {
                 //vm.boards.push(response.data);

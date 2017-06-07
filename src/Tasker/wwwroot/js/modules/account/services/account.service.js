@@ -48,11 +48,11 @@
 
             $http.post('/api/v1/jwt/login', data, { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).then(function (response) {
                 response = response.data;
-                var cookieDuration = response.Duration / 3600 / 24;//in Seconds to days;
-                var today = new Date();
-                var expirationDate = new Date(today.setDate(today.getDate() + cookieDuration));
+                //var cookieDuration = response.Duration / 3600 / 24;//in Seconds to days;
+                //var today = new Date();
+                //var expirationDate = new Date(today.setDate(today.getDate() + cookieDuration));
                 // localStorage.setItem('authData', JSON.stringify({ token: response.AccessToken, userId: response.UserID, userName: user.UserName }));
-                $cookies.putObject('authData', response, { expires: expirationDate });
+                $cookies.putObject('authData', response);
                 authData.isAuth = true;
                 authData.userId = response.UserID;
                 authData.userName = user.UserName;

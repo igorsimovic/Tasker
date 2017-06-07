@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="DataModel\MongoData\BoardModel.cs" />
     <Compile Include="DataModel\MongoData\CardModel.cs" />
+    <Compile Include="DataModel\MongoData\CheckItemModel.cs" />
+    <Compile Include="DataModel\MongoData\CheckListModel.cs" />
     <Compile Include="DataModel\MongoData\LabelModel.cs" />
     <Compile Include="DataModel\MongoData\CommentModel.cs" />
     <Compile Include="DataModel\MongoData\ListModel.cs" />

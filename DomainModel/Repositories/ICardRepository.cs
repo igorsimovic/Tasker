@@ -25,5 +25,9 @@ namespace DomainModel.Repositories
         bool UpdateOrder(IEnumerable<UpdateOrderModel> model);
 
         bool MoveCard(string id, MoveModel model);
+        CheckListDTO AddCheckList(string id, string name);
+        IEnumerable<CheckListDTO> GetCheckListsByCardID(string id);
+        CheckItemDTO AddCheckListItem(string id,CheckItemDTO model);
+        void CheckItem(CheckItemDTO model);
     }
 }

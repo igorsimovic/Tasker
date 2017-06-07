@@ -41,10 +41,10 @@ namespace DataLayer.Repositories
         public IEnumerable<CardDTO> GetCardsByListId(string listId)
         {
             var result = db_.GetCardsByListId(listId)
-                            .Select(c => new CardDTO(c.Id.ToString(), 
+                            .Select(c => new CardDTO(c.Id.ToString(),
                                 c.Name,
-                                c.Order, 
-                                c.Description, 
+                                c.Order,
+                                c.Description,
                                 listId,
                                 c.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
                                 c.Labels.Select(l => db_.GetLabelById(l)).ToList()));
@@ -93,6 +93,29 @@ namespace DataLayer.Repositories
         {
             var result = db_.RemoveLabel(cardId, labelId);
             return result;
+        }
+
+        public CheckListDTO AddCheckList(string id, string name)
+        {
+            var result = db_.AddCheckList(id, name);
+            return result;
+        }
+
+        public IEnumerable<CheckListDTO> GetCheckListsByCardID(string id)
+        {
+            var result = db_.GetChekListsByCardId(id);
+            return result;
+        }
+
+        public CheckItemDTO AddCheckListItem(string id, CheckItemDTO model)
+        {
+            var result = db_.AddCheckListItem(id,model);
+            return result;
+        }
+
+        public void CheckItem(CheckItemDTO model)
+        {
+            db_.CheckListItem(model);
         }
     }
 }

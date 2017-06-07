@@ -15,6 +15,7 @@ namespace DomainModel.Entities
         public string ListId { get; set; }
         public IEnumerable<LabelDTO> Labels { get; set; }
         public IEnumerable<CommentDTO> Comments { get; set; }
+        public IEnumerable<CheckListDTO> CheckLists { get; set; }
 
         public CardDTO(string id, string name, int order, string description, string listId, List<CommentDTO> comments, List<LabelDTO> labels)
         {

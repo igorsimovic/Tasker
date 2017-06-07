@@ -74,7 +74,6 @@ namespace Tasker.Controllers.API
             var response = new CredentialsModel
             {
                 AccessToken = encodedJwt,
-                Duration = 86400, //juan day
                 UserID = u.Id
             };
 

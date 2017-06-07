@@ -23,6 +23,22 @@ namespace Tasker.Controllers.API
         }
 
 
+        [HttpGet("{id}/checkLists")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult GetCheckLists(string id)
+        {
+            try
+            {
+                var result = card_repo_.GetCheckListsByCardID(id);
+                return this.Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         // POST api/cards
         [HttpPost("")]
         [Authorize(Policy = "TaskerUser")]
@@ -39,6 +55,39 @@ namespace Tasker.Controllers.API
                 throw ex;
             }
         }
+
+        [HttpPost("{id}/addCheckList/{name}")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult PostCheckList(string id, string name)
+        {
+            try
+            {
+                var result = card_repo_.AddCheckList(id, name);
+                return this.Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [HttpPost("chekList/{checkListId}")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult PostCheckListItem(string checkListId, [FromBody] CheckItemDTO model)
+        {
+            try
+            {
+                var result = card_repo_.AddCheckListItem(checkListId, model);
+                return this.Ok(result);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
 
         [HttpPut("{id}/name")]
         [Authorize(Policy = "TaskerUser")]
@@ -151,6 +200,25 @@ namespace Tasker.Controllers.API
             {
 
                 throw ex;
+            }
+        }
+
+        [HttpPut("checkItem")]
+        [Authorize(Policy = "TaskerUser")]
+
+        public ActionResult CheckItem([FromBody] CheckItemDTO model)
+        {
+            try
+            {
+
+                return this.BadRequest();
+                card_repo_.CheckItem(model);
+                return this.Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 

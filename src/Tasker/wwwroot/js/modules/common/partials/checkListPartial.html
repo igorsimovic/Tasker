@@ -1,0 +1,20 @@
+﻿<div class="check-items-body">
+    <h3>{{noOfCheckedItems}}/{{dataSource.length}}</h3>
+    <div>
+        <ul class="check-items-list">
+            <li class="list-group-item" ng-repeat="item in dataSource track by $index">
+                <input type="checkbox"
+                       value="item.id"
+                       name="selectedUsers"
+                       ng-checked="item.checked"
+                       ng-click="item.checked = !item.checked;toggleChecked(item,$index)">
+                {{item.value}}
+            </li>
+        </ul>
+        <button ng-if="!creationMode" ng-click="startCreationMode()" class="btn btn-primary card-modal-button">Add item</button>
+        <div class="form-group" ng-if="creationMode">
+            <input class="form-control" ng-model="checkItemName" placeholder="Add item" />
+            <buttom ng-disabled="checkItemName.length === 0" class="btn btn-primary card-modal-button" ng-click="addCheckItem(checkItemName)">Add</buttom>
+        </div>
+    </div>
+</div>

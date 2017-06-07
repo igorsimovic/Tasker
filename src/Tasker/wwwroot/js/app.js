@@ -71,7 +71,6 @@ angular.module(ApplicationConfiguration.applicationModuleName).factory('AuthInte
     };
 
     var _responseError = function (rejection) {
-        debugger;
         if (rejection.status === 401) {
             $cookies.remove('authData');
             $location.path('/login');

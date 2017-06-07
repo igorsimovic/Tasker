@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -43,7 +42,7 @@ namespace Tasker
         public IConfigurationRoot Configuration { get; }
 
 
-        private const string SecretKey = "SuperDuperMilos!$#%^#$@#$%@";
+        private const string SecretKey = "SuperDuperMrdjan!$#%^#$@#$%@";
         private readonly SymmetricSecurityKey _signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(SecretKey));
 
 
@@ -60,15 +59,7 @@ namespace Tasker
 
 
 
-            services.AddMvc(
-                config =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                     .RequireAuthenticatedUser()
-                     .Build();
-                config.Filters.Add(new AuthorizeFilter(policy));
-            }
-            );
+
 
 
             // Use policy auth.
@@ -97,7 +88,19 @@ namespace Tasker
                 options.Issuer = jwtAppSettingOptions[nameof(JwtIssuerOptions.Issuer)];
                 options.Audience = jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)];
                 options.SigningCredentials = new SigningCredentials(_signingKey, SecurityAlgorithms.HmacSha256);
+                //options.ValidFor = TimeSpan.FromMinutes(1); //this should be some reasonable stuff.
+
             });
+
+            services.AddMvc(
+              config =>
+              {
+                  var policy = new AuthorizationPolicyBuilder()
+                         .RequireAuthenticatedUser()
+                         .Build();
+                  config.Filters.Add(new AuthorizeFilter(policy));
+              }
+          );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -135,8 +138,8 @@ namespace Tasker
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = _signingKey,
 
-                RequireExpirationTime = true,
-                ValidateLifetime = true,
+                RequireExpirationTime = false,
+                ValidateLifetime = false, //this should be set to true when refresh token functionality is added.
 
                 ClockSkew = TimeSpan.Zero
             };

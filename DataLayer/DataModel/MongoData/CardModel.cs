@@ -26,5 +26,8 @@ namespace DataLayer.DataModel.MongoData
 
         [BsonElement("Comments")]
         public IEnumerable<CommentModel> Comments { get; set; }
+
+        [BsonElement("CheckLists")]
+        public IEnumerable<ObjectId> CheckLists { get; set; }
     }
 }

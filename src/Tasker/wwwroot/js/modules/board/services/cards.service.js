@@ -18,6 +18,10 @@
         this.removeLabel = removeLabel;
         this.updateOrder = updateOrder;
         this.moveCard = moveCard;
+        this.checkItem = checkItem;
+        this.addCheckList = addCheckList;
+        this.getCheckLists = getCheckLists;
+        this.addCheckItem = addCheckItem;
 
         function getByListId(id) {
             return $http.get('/api/v1/lists/' + id);
@@ -41,7 +45,7 @@
         };
 
         function insertComment(id, userId, text) {
-            return $http.put('api/v1/cards/' + id + '/comments', { UserId: userId, Text: text});
+            return $http.put('api/v1/cards/' + id + '/comments', { UserId: userId, Text: text });
         };
 
         function insertLabels(id, labelIds) {
@@ -58,6 +62,19 @@
 
         function moveCard(id, oldListId, newListId) {
             return $http.put('api/v1/cards/' + id + '/move', { destinationId: oldListId, targetId: newListId });
+        }
+
+        function checkItem(id, value) {
+            return $http.put('api/v1/cards/checkItem/', { ID: id, Checked: value });
+        }
+        function addCheckList(cardId, checklistName) {
+            return $http.post('api/v1/cards/' + cardId + '/addCheckList/' + checklistName);
+        }
+        function getCheckLists(cardId) {
+            return $http.get('api/v1/cards/' + cardId + '/checkLists');
+        }
+        function addCheckItem(id, content) {
+            return $http.post('api/v1/cards/chekList/' + id, { Value: content });
         }
     }
 })();

@@ -9,16 +9,16 @@
 
     function loginController($stateParams, $location, $scope, $rootScope, accountService) {
         //$scope.test = [];
-        //$scope.dataSource = [
-        //{ UserName: 'mstajic10', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'mstajic11', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'mstajic12', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'mstajic13', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'jura', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'stefan', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'nikola', email: 'mrdjan@asdasd.com' },
-        //{ UserName: 'djole', email: 'mrdjan@asdasd.com' },
-        //];
+        $scope.dataSource = [
+        { Value: 'mstajic10', email: 'mrdjan@asdasd.com', Checked: true, },
+        { Value: 'mstajic11', email: 'mrdjan@asdasd.com', Checked: true },
+        { Value: 'mstajic12', email: 'mrdjan@asdasd.com', Checked: true },
+        { Value: 'mstajic13', email: 'mrdjan@asdasd.com' },
+        { Value: 'jura', email: 'mrdjan@asdasd.com' },
+        { Value: 'stefan', email: 'mrdjan@asdasd.com' },
+        { Value: 'nikola', email: 'mrdjan@asdasd.com' },
+        { Value: 'djole', email: 'mrdjan@asdasd.com' },
+        ];
 
         //$scope.$watch('test', function () {
         //    console.log('login:ctrl', $scope.test);

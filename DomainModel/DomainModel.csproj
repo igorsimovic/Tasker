@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\CardDTO.cs" />
+    <Compile Include="Entities\CheckItemDTO.cs" />
+    <Compile Include="Entities\CheckListDTO.cs" />
     <Compile Include="Entities\CommentDTO.cs" />
     <Compile Include="Entities\CredentialsModel.cs" />
     <Compile Include="Entities\LabelDTO.cs" />
