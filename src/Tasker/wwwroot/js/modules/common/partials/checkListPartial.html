@@ -12,7 +12,7 @@
             </li>
         </ul>
         <button ng-if="!creationMode" ng-click="startCreationMode()" class="btn btn-primary card-modal-button">Add item</button>
-        <div class="form-group" ng-if="creationMode">
+        <div ng-if="creationMode">
             <input class="form-control" ng-model="checkItemName" placeholder="Add item" />
             <buttom ng-disabled="checkItemName.length === 0" class="btn btn-primary card-modal-button" ng-click="addCheckItem(checkItemName)">Add</buttom>
         </div>

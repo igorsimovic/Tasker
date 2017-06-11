@@ -89,6 +89,22 @@ namespace Tasker.Controllers.API
             }
         }
 
+        [HttpPut("{id}/starStatus")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult StarStatus(string id, [FromBody] BoardDTO model)
+        {
+            try
+            {
+                board_repo_.StarStatus(id, model.Starred);
+                return this.Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         // PUT api/values/5
         [HttpPut("{id}")]
         [Authorize(Policy = "TaskerUser")]

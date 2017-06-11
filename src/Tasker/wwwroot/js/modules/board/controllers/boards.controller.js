@@ -88,7 +88,7 @@
             item.starred = !item.starred;
             item.orderNo = index;
             item.originalIndex = originalIndex;
-            boardService.updateBoard(item).then(function () {
+            boardService.toggleStarStatus(item.id, item.starred).then(function () {
                 refreshBoards();
             }, function (err) {
                 rollBack(originalStarred, originalBoards);

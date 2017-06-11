@@ -18,6 +18,7 @@ namespace DomainModel.Repositories
         void UpdateName(string id, UpdateNameModel model);
         void InviteUser(string id, string user);
         IEnumerable<UserDTO> GetBoardCollaborators(string boardId);
+        void StarStatus(string id, bool starred);
 
         //List<BoardDTO> GetBoardsByUserID(string userID);
     }

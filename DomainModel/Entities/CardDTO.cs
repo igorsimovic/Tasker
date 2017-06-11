@@ -16,8 +16,9 @@ namespace DomainModel.Entities
         public IEnumerable<LabelDTO> Labels { get; set; }
         public IEnumerable<CommentDTO> Comments { get; set; }
         public IEnumerable<CheckListDTO> CheckLists { get; set; }
+        public string DueDate { get; set; }
 
-        public CardDTO(string id, string name, int order, string description, string listId, List<CommentDTO> comments, List<LabelDTO> labels)
+        public CardDTO(string id, string name, int order, string description, string listId, List<CommentDTO> comments, List<LabelDTO> labels, string dueDate)
         {
             this.Id = id;
             this.Name = name;
@@ -26,6 +27,7 @@ namespace DomainModel.Entities
             this.Comments = comments;
             this.Labels = labels;
             this.ListId = listId;
+            this.DueDate = dueDate;
         }
     }
 }

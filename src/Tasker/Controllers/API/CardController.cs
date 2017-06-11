@@ -63,7 +63,7 @@ namespace Tasker.Controllers.API
             try
             {
                 var result = card_repo_.AddCheckList(id, name);
-                return this.Ok();
+                return this.Ok(result);
             }
             catch (Exception)
             {
@@ -105,6 +105,21 @@ namespace Tasker.Controllers.API
             }
         }
 
+        [HttpPut("{id}/dueDate")]
+        [Authorize(Policy = "TaskerUser")]
+        public ActionResult DueDate(string id , [FromBody] DueDateDTO model)
+        {
+            try
+            {
+                card_repo_.SetDueDate(id, model.Date);
+                return this.Ok();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
         [HttpPut("{id}/description")]
         [Authorize(Policy = "TaskerUser")]
         public ActionResult PutDescription(string id, [FromBody] CardDTO card)
@@ -211,7 +226,6 @@ namespace Tasker.Controllers.API
             try
             {
 
-                return this.BadRequest();
                 card_repo_.CheckItem(model);
                 return this.Ok();
             }

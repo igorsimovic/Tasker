@@ -21,9 +21,9 @@ angular.module(ApplicationConfiguration.applicationModuleName).config(['$httpPro
   }
 ]);
 
-angular.module(ApplicationConfiguration.applicationModuleName).config(['$qProvider', function ($qProvider) {
-    $qProvider.errorOnUnhandledRejections(false);
-}]);
+//angular.module(ApplicationConfiguration.applicationModuleName).config(['$qProvider', function ($qProvider) {
+//    $qProvider.errorOnUnhandledRejections(false);
+//}]);
 
 // Intercept state change errors
 //angular.module(ApplicationConfiguration.applicationModuleName).run(['$rootScope', 'Notify', '$state',

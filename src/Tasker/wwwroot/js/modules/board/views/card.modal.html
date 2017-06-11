@@ -1,13 +1,16 @@
 ﻿<div class="modal-header">
     <h2 class="font-bold modal-title" editable-text="card.name" e-ng-change="updateName($data)" buttons="no" blur="submit">{{card.name}}</h2>
     <h4 class="card-description" editable-text="card.description" e-ng-change="updateDescription($data)" buttons="no" blur="submit">{{card.description || 'Add description'}}</h4>
-    <ul class="card-label-list" ng-if="card.labels.length" style="margin-top: 10px;">
+    <ul class="card-option-list" ng-if="card.labels.length" style="margin-top: 10px;">
         <li ng-repeat="label in card.labels" class="card-modal-label-item">
             <span class="card-label" ng-style="{'background-color': label.color}">
                 {{label.title}}
                 <i class="fa fa-close" ng-click="removeLabel(label.id)"></i>
             </span>
         </li>
+    </ul>
+    <ul class="card-option-list" ng-if="card.dueDate" style="margin-top: 10px;">
+        Due to -  {{card.dueDate}};
     </ul>
 
 </div>
@@ -55,7 +58,7 @@
             Add
         </h3>
         <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="toggleShowLabels($event)">Labels</button>
-        <ul class="card-label-list" ng-show="showLabels">
+        <ul class="card-option-list" ng-show="showLabels">
             <li ng-repeat="label in labels">
                 <!--<a class="btn btn-default btn-xs card-label-edit-button" href=""  ng-click="updateLabel(label)">
                     <i class="fa fa-pencil"></i>
@@ -74,14 +77,18 @@
                 </button>
             </li>
         </ul>
-        <button type="button" auto-close class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="toggleShowChecklist($event)">Checklist</button>
-        <div class="card-label-list" ng-show="showChecklist">
+        <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="toggleShowChecklist($event)">Checklist</button>
+        <div class="card-option-list" ng-show="showChecklist">
             <h3>Add check list</h3>
             <h4>Tittle</h4>
             <div class="form-group">
                 <input class="form-control" ng-model="checkListName" />
             </div>
-            <button class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="addCheckList();">Add</button>
+            <button class="btn btn-block btn-outline btn-primary card-modal-button" ng-disabled="!checkListName.length" ng-click="addCheckList();">Add</button>
+        </div>
+        <button type="button" class="btn btn-block btn-outline btn-primary card-modal-button" ng-click="toggleShowDueDate($event)">Due date</button>
+        <div class="card-option-list" ng-show="showDueDate">
+            <date-picker-wrapper ng-model="card.dueDate"></date-picker-wrapper>
         </div>
     </div>
 </div>

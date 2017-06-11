@@ -99,7 +99,8 @@ namespace DataLayer
             return new CheckListDTO
             {
                 ID = model.Id.ToString(),
-                Name = model.Name
+                Name = model.Name,
+                CheckItems = new List<CheckItemDTO>()
             };
 
         }
@@ -120,6 +121,11 @@ namespace DataLayer
             db_.GetCollection<CheckListModel>("CheckLists").UpdateOne(filter, update);
 
             return model;
+        }
+
+        internal void SetDueDate(string id, string date)
+        {
+            UpdateField<string, CardModel>(id, "DueDate", date, "Cards");
         }
 
         internal void CheckListItem(CheckItemDTO model)
@@ -667,7 +673,8 @@ namespace DataLayer
                         result.Description,
                         "",
                         result.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
-                        result.Labels.Select(l => this.GetLabelById(l)).ToList());
+                        result.Labels.Select(l => this.GetLabelById(l)).ToList(),
+                        result.DueDate);
         }
 
         public CardDTO RemoveLabel(string cardId, string labelId)
@@ -688,7 +695,8 @@ namespace DataLayer
                         result.Description,
                         "",
                         result.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
-                        result.Labels.Select(l => this.GetLabelById(l)).ToList());
+                        result.Labels.Select(l => this.GetLabelById(l)).ToList(),
+                        result.DueDate);
         }
 
         #endregion

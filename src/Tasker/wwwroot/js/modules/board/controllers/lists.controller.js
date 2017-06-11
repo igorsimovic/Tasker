@@ -195,6 +195,7 @@
         }
 
         function openCard(card, labels) {
+            console.log('caraarada', card);
             $uibModal.open({
                 animation: true,
                 templateUrl: 'js/modules/board/views/card.modal.html',

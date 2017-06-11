@@ -71,13 +71,14 @@ namespace DataLayer.Repositories
                     var tempCards = db_.GetCardsByListId(list.Id);
                     if (tempCards != null)
                     {
-                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(), 
-                            c.Name, 
+                        list.Cards = tempCards.Select(c => new CardDTO(c.Id.ToString(),
+                            c.Name,
                             c.Order,
                             c.Description,
                             list.Id.ToString(),
                             c.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
-                            c.Labels.Select(l => db_.GetLabelById(l)).ToList()))
+                            c.Labels.Select(l => db_.GetLabelById(l)).ToList(),
+                            c.DueDate))
                             .OrderBy(c => c.Order);
                     }
                 }
@@ -102,6 +103,11 @@ namespace DataLayer.Repositories
 
                 throw new Exception(ex.Message);
             }
+        }
+
+        public void StarStatus(string id, bool starred)
+        {
+            db_.UpdateBoardField<bool>(id, "Starred", starred);
         }
 
         public void update(BoardDTO model)

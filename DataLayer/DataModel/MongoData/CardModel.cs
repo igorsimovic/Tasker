@@ -29,5 +29,8 @@ namespace DataLayer.DataModel.MongoData
 
         [BsonElement("CheckLists")]
         public IEnumerable<ObjectId> CheckLists { get; set; }
+
+        [BsonElement("DueDate")]
+        public string DueDate { get; set; }
     }
 }

@@ -299,7 +299,7 @@ ul[dnd-list] > li {
     border-bottom: none !important;
 }
 
-.card-label-list {
+.card-option-list {
     list-style: none;
     padding-left: 0;
 }

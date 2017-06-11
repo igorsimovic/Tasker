@@ -22,6 +22,7 @@
         this.addCheckList = addCheckList;
         this.getCheckLists = getCheckLists;
         this.addCheckItem = addCheckItem;
+        this.updateDueDate = updateDueDate;
 
         function getByListId(id) {
             return $http.get('/api/v1/lists/' + id);
@@ -75,6 +76,9 @@
         }
         function addCheckItem(id, content) {
             return $http.post('api/v1/cards/chekList/' + id, { Value: content });
+        }
+        function updateDueDate(id, date) {
+            return $http.put('api/v1/cards/' + id + '/dueDate', { Date: date })
         }
     }
 })();

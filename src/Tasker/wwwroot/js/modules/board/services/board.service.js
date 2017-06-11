@@ -15,7 +15,7 @@
         this.refreshBoards = refreshBoards;
         this.updateName = updateName;
         this.leaveBoard = leaveBoard;
-
+        this.toggleStarStatus = toggleStarStatus;
         function getAll() {
             return $http.get('/api/v1/boards');
         }
@@ -41,6 +41,9 @@
         }
         function leaveBoard(userId, boardId) {
             return $http.post('/api/v1/user/' + userId + '/leave/' + boardId);
+        }
+        function toggleStarStatus(boardId, starStatus) {
+            return $http.put('api/v1/boards/' + boardId + '/starStatus', { Starred: starStatus });
         }
     }
 })();

@@ -29,5 +29,6 @@ namespace DomainModel.Repositories
         IEnumerable<CheckListDTO> GetCheckListsByCardID(string id);
         CheckItemDTO AddCheckListItem(string id,CheckItemDTO model);
         void CheckItem(CheckItemDTO model);
+        void SetDueDate(string id, string date);
     }
 }

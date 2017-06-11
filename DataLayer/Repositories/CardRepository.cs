@@ -47,7 +47,7 @@ namespace DataLayer.Repositories
                                 c.Description,
                                 listId,
                                 c.Comments.Select(com => new CommentDTO(com.Id.ToString(), com.UserId.ToString(), com.Text)).ToList(),
-                                c.Labels.Select(l => db_.GetLabelById(l)).ToList()));
+                                c.Labels.Select(l => db_.GetLabelById(l)).ToList(),c.DueDate));
             return result;
         }
 
@@ -116,6 +116,11 @@ namespace DataLayer.Repositories
         public void CheckItem(CheckItemDTO model)
         {
             db_.CheckListItem(model);
+        }
+
+        public void SetDueDate(string id, string date)
+        {
+            db_.SetDueDate(id, date);
         }
     }
 }

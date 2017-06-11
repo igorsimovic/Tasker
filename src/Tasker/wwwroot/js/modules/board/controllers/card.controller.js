@@ -13,7 +13,6 @@
         $scope.showChecklist = false;
         $scope.card.checkLists = [];
         $scope.labelsToAdd = [];
-
         $scope.$watch('card.labels', function () {
             if ($scope.card.labels && $scope.card.labels.length)
                 $scope.labels = labels.filter(function (l) {
@@ -23,6 +22,13 @@
                 });
             else
                 $scope.labels = labels;
+        });
+        $scope.$on('datePicker:saveDate', function (event, data) {
+            cardsService.updateDueDate($scope.card.id, $scope.card.dueDate).then(function (result) {
+            }, function (err) {
+                console.err(err);
+            });
+
         });
         (function init() {
             //get check lists for now
@@ -61,6 +67,7 @@
 
         $scope.toggleShowLabels = function ($event) {
             $scope.showChecklist = false;
+            $scope.showDueDate = false;
             $scope.showLabels = !$scope.showLabels;
             if (!$scope.showLabels) {
                 $event.currentTarget.blur();
@@ -69,11 +76,22 @@
 
         $scope.toggleShowChecklist = function ($event) {
             $scope.showLabels = false;
+            $scope.showDueDate = false;
             $scope.showChecklist = !$scope.showChecklist;
             if (!$scope.showChecklist) {
                 $event.currentTarget.blur();
             }
         };
+        $scope.toggleShowDueDate = function ($event) {
+            $scope.showChecklist = false;
+            $scope.showLabels = false;
+            $scope.showDueDate = !$scope.showDueDate;
+            if (!$scope.showDueDate) {
+                $event.currentTarget.blur();
+            }
+
+
+        }
 
         $scope.updateName = function (name) {
             cardsService.updateCardName($scope.card.id, name);
@@ -130,6 +148,7 @@
             cardsService.addCheckList($scope.card.id, $scope.checkListName).then(function (result) {
                 $scope.showChecklist = false;
                 $scope.checkListName = null;
+                $scope.card.checkLists.push(result.data);
             }, function (err) {
                 console.err(err);
             });
